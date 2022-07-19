@@ -1,0 +1,32 @@
+{
+  "name": "freelance-crm",
+  "version": "1.0.0",
+  "description": "A demo CRM for practicing back-end technologies and full-stack development.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "devStart": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedpoilly/freelance-crm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cedpoilly/freelance-crm/issues"
+  },
+  "homepage": "https://github.com/cedpoilly/freelance-crm#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.5"
+  }
+}

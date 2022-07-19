@@ -1,0 +1,23 @@
+GET http://localhost:3000
+
+###
+
+GET http://localhost:3000/projects/
+
+###
+
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "title": "API Tool",
+  "techs": ["Vue.js", "Front-End", "JavaScript"],
+  "requirements": "Build & maintain the validator. | Teach Fernando how the code works and help him understand how JavaScript works.",
+  "milestones": ["Build the first version.", "Coach Fernando on the first version.", "Plan for the next version."],
+   "paymentMethod": "paypal",
+  "budget": 140,
+  "hasDownPayment": false,
+  "isComplete": false,
+  "hasDownPayment": false,
+  "client": { "_id": "62d68b5ad71e6ed2cdee72d2" }
+}

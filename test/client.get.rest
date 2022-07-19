@@ -1,0 +1,6 @@
+GET http://localhost:3000/clients/
+
+### Replace with existing ID
+GET http://localhost:3000/clients/62d68b5ad71e6ed2cdee72d2
+
+

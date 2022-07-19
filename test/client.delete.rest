@@ -1,0 +1,2 @@
+### Delete Launch Ventures
+DELETE http://localhost:3000/clients/62d68b5ad71e6ed2cdee72d2

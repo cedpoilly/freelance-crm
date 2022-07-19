@@ -1,0 +1,31 @@
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Fernando",
+  "isCodementor": true,
+  "email": "fernando.nj@gmail.com",
+   "whatsAppNumber": "+1 (973) 851-3343",
+  "level": "intermediate",
+  "serviceType": "individual",
+  "rate": 35,
+  "tags": ["JavaScript", "Vue.js", "Front-End"]
+}
+
+###
+
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Launch",
+  "lastName": "Ventures",
+  "isCodementor": false,
+  "email": "karan@launchventures.co",
+   "whatsAppNumber": "+91 98332 19777",
+  "level": "advanced",
+  "serviceType": "team",
+  "rate": 20,
+  "tags": ["JavaScript", "Vue.js", "Front-End"]
+}

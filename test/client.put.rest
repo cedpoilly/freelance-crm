@@ -1,0 +1,15 @@
+PUT http://localhost:3000/clients/62d68b5ad71e6ed2cdee72d2
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Fernando",
+  "isCodementor": true,
+  "email": "fernando.nj@gmail.com",
+   "whatsAppNumber": "+1 (973) 851-3343",
+  "level": "intermediate",
+  "serviceType": "individual",
+  "rate": 35,
+  "tags": ["JavaScript", "Vue.js", "Front-End"],
+  "projects": [{ "_id": "62d6bb409574d16aa8788cec" }]
+}
