@@ -26,4 +26,17 @@ const projectRouter = require("./controllers/Project")
 app.use("/projects", projectRouter)
 
 
+process.on('unhandledRejection', error => {
+  throw error
+})
+
+process.on('uncaughtException', error => {
+  console.log(error.message)
+  // const message = error.message
+  // const isCannotRead = message.toLowerCase().includes("cannot read")
+  // if (isCannotRead) {
+  //   process.exit(1)
+  // }
+})
+
 app.listen("3000")

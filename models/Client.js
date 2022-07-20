@@ -1,5 +1,7 @@
 const { default: mongoose, Mongoose, Schema } = require("mongoose")
 
+const Project = require("./Project")
+
 const validateEmail = (email) => {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   return re.test(email)
@@ -60,6 +62,17 @@ const clientSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "Project"
   }]
+})
+
+clientSchema.pre('remove', async function (next) {
+  try {
+    await Project.remove({
+      "_id": this.projects
+    })
+    next()
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = mongoose.model("Client", clientSchema)

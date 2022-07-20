@@ -2,13 +2,27 @@ const express = require("express")
 const router = express.Router()
 
 const Project = require("../models/Project")
+const Client = require("../models/Client")
+
 
 router.post("/", async function projectPostHandler(req, res) {
   const projectDocument = new Project({ ...req.body })
+
   try {
     const createdProject = await projectDocument.save()
+    await Client.findByIdAndUpdate(
+      createdProject.client._id,
+      { $push: { projects: createdProject } },
+      {
+        new: true,
+        // * avoids deprecation warning
+        // * https://mongoosejs.com/docs/5.x/docs/deprecations.html#findandmodify
+        useFindAndModify: false
+      }
+    )
     res.send(createdProject)
   }
+  // todo: move to global error handler?
   catch (error) {
     console.error(error.message)
     res.send(error.message)
@@ -16,7 +30,7 @@ router.post("/", async function projectPostHandler(req, res) {
 })
 
 router.get("/", async function getAllProjectsHandler(req, res) {
-  const projects = await Project.find().populate("client")
+  const projects = await Project.find().populate("client", "-projects").select("-__v")
   res.send(projects)
 })
 

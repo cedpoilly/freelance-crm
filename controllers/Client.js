@@ -16,7 +16,9 @@ router.post("/", async function clientPostHandler(req, res) {
 })
 
 router.get("/", async function getAllClientsHandler(req, res) {
-  const clients = await Client.find().populate("projects")
+  const clients = await Client.find()
+    .populate("projects")
+    .select("-__v")
   res.json(clients)
 })
 
@@ -33,10 +35,21 @@ router.route("/:id")
     res.json(updatedClient)
   })
 
-  .delete(async function clientDeleteHandler(req, res) {
+  .delete(async function clientDeleteHandler(req, res, next) {
     const { id } = req.params
-    const deletedClient = await Client.deleteOne({ _id: id })
-    res.json(deletedClient)
+    const foundClient = await Client.findById(id)
+
+    if (!foundClient) {
+      // * Message to be handled by the front-end application.
+      // * The front-end has the liberty to decide how to inform the user.
+      return res.json({ message: "cannot_delete_not_found_client" })
+    }
+
+    // * To trigger the `pre` middleware in the model (to remove linked entities, ie, `projects`)
+    // * we need to call the `.remove` method on a **ModelDocument**.
+    // * Hence why first call `Model.findById`, and call `.remove` on it's response.
+    const response = await foundClient.remove()
+    res.json(response)
   })
 
 router.param("id", function clientRouterParamIdHandler(req, res, next, id) {

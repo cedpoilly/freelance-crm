@@ -1,11 +1,10 @@
-GET http://localhost:3000
-
 ###
-
 GET http://localhost:3000/projects/
 
-###
+### Replace with existing ID
+DELETE http://localhost:3000/projects/62d7c641ad6dc2fe272dd836
 
+###
 POST http://localhost:3000/projects
 Content-Type: application/json
 
@@ -19,5 +18,5 @@ Content-Type: application/json
   "hasDownPayment": false,
   "isComplete": false,
   "hasDownPayment": false,
-  "client": { "_id": "62d68b5ad71e6ed2cdee72d2" }
+  "client": "62d7c677ad6dc2fe272dd842"
 }
