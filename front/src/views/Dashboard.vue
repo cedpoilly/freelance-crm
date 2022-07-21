@@ -16,6 +16,32 @@ async function fetchData() {
   initialData = [...dataFromServer]
 }
 
+function filter(field, value) {
+  switch (field) {
+    case "is-from-codementor": {
+      if (!value) { return data.value = initialData }
+
+      data.value = initialData.filter(item => item.isCodementor === value)
+      break
+    }
+
+    case "tags": {
+      if (!value || !value.length) { return data.value = initialData }
+
+      const filteredData = initialData
+        .filter(item => value.every(tag => !!item.tags.includes(tag)))
+
+      data.value = filteredData || initialData
+      break
+    }
+
+    default: {
+      data.value = initialData
+      break
+    }
+  }
+}
+
 function filterData(searchString) {
   const noSearchString = !searchString
   if (noSearchString) {
@@ -38,7 +64,8 @@ function filterData(searchString) {
 
 <template>
   <div class="view-container">
-    <Toolbar @search-input="filterData" />
+    <Toolbar @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
+      @selected-tags="filter('tags', $event)" />
 
     <DataTable v-if="data.length" :data="data" />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">

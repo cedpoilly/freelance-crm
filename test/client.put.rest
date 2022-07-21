@@ -1,4 +1,4 @@
-PUT http://localhost:3000/clients/62d68b5ad71e6ed2cdee72d2
+PUT http://localhost:3000/clients/62d81cf3b93448627fbe2246
 Content-Type: application/json
 
 {
@@ -10,6 +10,6 @@ Content-Type: application/json
   "level": "intermediate",
   "serviceType": "individual",
   "rate": 35,
-  "tags": ["JavaScript", "Vue.js", "Front-End"],
+  "tags": ["JavaScript", "Vue.js", "Front-End", "Mongoose", "MongoDB"],
   "projects": [{ "_id": "62d6bb409574d16aa8788cec" }]
 }

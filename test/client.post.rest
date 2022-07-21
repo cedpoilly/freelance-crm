@@ -28,5 +28,5 @@ Content-Type: application/json
   "level": "advanced",
   "serviceType": "team",
   "rate": 20,
-  "tags": ["JavaScript", "Vue.js", "Front-End"]
+  "tags": ["JavaScript", "Vue.js", "Front-End", "Mongoose", "MongoDB"]
 }
