@@ -1,0 +1,61 @@
+{
+  "alert": {
+    "warning": {
+      "title": "😬 OOPS! 😬"
+    },
+    "careful": {
+      "title": "🚨 CAREFUL! 🚨"
+    },
+    "success": {
+      "title": "SUCCESS! 🥳"
+    },
+    "hello": {
+      "title": "Hello 🧐"
+    }
+  },
+  "features": {
+    "context-menu": {
+      "delete": {
+        "message": "Are you sure you want to delete this __props.itemName__?"
+      }
+    },
+    "offline": {
+      "alert": {
+        "message": "Application is now ready for offline. 🙂"
+      }
+    },
+    "registered": {
+      "alert": {
+        "message": "Application registered. 🙂"
+      }
+    },
+    "need-refresh": {
+      "alert": {
+        "message": "Application will now reload."
+      }
+    },
+    "backup": {
+      "success": {
+        "message": "Your backup file is downloading. Please check for this file: __fileName__. 😊"
+      }
+    },
+    "upload": {
+      "warning": {
+        "message": "🚨 ALL of your current data will be deleted! 🚨 Are you sure you want to continue? 👀"
+      },
+      "success": {
+        "message": "Restore complete! 😃\nRedirecting to the topics list. 🙂"
+      }
+    }
+  },
+  "labels": {
+    "backup-button": {
+      "in-progress": "Downloading ...",
+      "default": "Download file"
+    },
+    "upload-button": {
+      "in-progress": "Uploading ...",
+      "default": "Upload backup"
+    }
+  }
+}

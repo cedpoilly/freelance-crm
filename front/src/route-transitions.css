@@ -1,0 +1,36 @@
+/* 
+  Forwards and Upwards are for the destination route only.
+  Backwards and Downwards are for the origin route only.
+ */
+
+.forwards-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+.forwards-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.backwards-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}
+.backwards-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.upwards-enter-from {
+  opacity: 0;
+  transform: translateY(100px);
+}
+.upwards-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.downwards-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
+}
+.downwards-leave-active {
+  transition: all 0.3s ease-out;
+}
