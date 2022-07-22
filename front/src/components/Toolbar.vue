@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import BaseSelect from './BaseSelect.vue'
+import BaseToggle from './BaseToggle.vue'
 
 const emits = defineEmits(["search-input", "is-from-codementor", "selected-tags"])
 
@@ -36,10 +37,8 @@ function filterViaTags(options) {
     </form>
 
     <form @submit.prevent>
-      <label for="isCodeMentor" class="px-5 py-2 rounded-md" @click="toggleIsCodeMentorFilter">
-        <span>Only from CodeMentor </span>
-        <input type="checkbox" name="isCodeMentor" :checked="isCodeMentor">
-      </label>
+      <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
+        @toggled="toggleIsCodeMentorFilter" />
     </form>
 
     <form @submit.prevent>

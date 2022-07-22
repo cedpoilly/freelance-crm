@@ -144,7 +144,7 @@ function formatListoString(list, joinString) {
 }
 
 .select-trigger {
-  @apply w-80 px-4 py-3 mb-3 border rounded flex justify-between bg-white
+  @apply w-80 mx-2 px-4 py-3 mb-3 border rounded flex justify-between bg-white
 }
 
 .select-trigger__icon {
