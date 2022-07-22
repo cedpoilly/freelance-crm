@@ -29,16 +29,16 @@ function filterViaTags(options) {
     <h3 class="toolbar-title">Filter the table's data.</h3>
 
     <div class="filters">
-      <form @submit.prevent class="mr-3">
-        <BaseSearchInput label="Search" field-name="search" @input="search($event)" />
+      <form @submit.prevent class="filter">
+        <BaseSearchInput label="Search" field-name="search" placeholder="Search any field" @input="search($event)" />
       </form>
 
-      <form @submit.prevent class="mr-3">
+      <form @submit.prevent class="filter">
         <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
           @toggled="toggleIsCodeMentorFilter" />
       </form>
 
-      <form @submit.prevent>
+      <form @submit.prevent class="filter">
         <BaseSelect label="one or more tags." :list="tagList" :is-multi="true" @selected-tags="filterViaTags" />
       </form>
     </div>
@@ -55,6 +55,23 @@ function filterViaTags(options) {
 }
 
 .filters {
+  @apply grid justify-center content-center;
+}
+
+.filter {
   @apply flex justify-center
+}
+
+@media (min-width: 900px) {
+  .filters {
+    @apply w-auto mx-auto gap-3;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+}
+
+@media (min-width: 1368px) {
+  .filters {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.view-container {
+  @apply w-full mx-auto
+}
+
+@layer base {
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .link {
+    @apply break-all font-medium underline text-sky-500 hover:font-bold
+  }
+
+  .select-element {
+    @apply 
+      appearance-none block px-3 py-1.5 bg-clip-padding 
+      text-base font-normal text-slate-700 dark:text-slate-100
+      bg-clip-padding bg-no-repeat bg-slate-100 dark:bg-slate-700
+      rounded border border-solid border-gray-300 dark:border-slate-600  
+      transition ease-in-out m-0 
+      focus:text-gray-700 focus:bg-white focus:border-sky-600 
+  }
+
+  .light {
+    --ripple-main:rgba(26, 145, 255, 0.8);
+    --ripple-bg: rgba(26, 145, 255, 0.333);
+    --ripple-rg-1: transparent;
+    --ripple-rg-2: rgba(26, 145, 255, 0.333);
+  }
+  
+  .dark {
+    --ripple-main:rgba(26, 145, 255, 0.933);
+    --ripple-bg: rgba(26, 145, 255, 0.333);
+    --ripple-rg-1: transparent;
+    --ripple-rg-2: rgba(26, 145, 255, 0.333);
+  }
+  
+  .ripple {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .ripple:hover {
+    background: var(--ripple-bg) radial-gradient(circle, var(--ripple-rg-1) 1%, var(--ripple-rg-2) 1%) center/15000%;
+  }
+  .ripple:active {
+    background-color: var(--ripple-main);
+    background-size: 100%;
+    transition: background 0s;
+  }
+  
+  .screen-styling {
+    overflow-x:hidden;
+  }
+  
+  .dark.just-black .screen-styling { background-color: #000000; }
+  .dark.just-black .dark\:bg-slate-900 { opacity: 1; background-color: #000000 }
+  .dark.just-black .dark\:bg-slate-800 { opacity: 1; background-color: #111111 }
+  .dark.just-black .dark\:bg-slate-700 { opacity: 1; background-color: #222222 }
+  .dark.just-black .dark\:bg-slate-600 { opacity: 1; background-color: #333333 }
+  .dark.just-black .dark\:bg-slate-500 { opacity: 1; background-color: #444444 }
+  .dark.just-black .dark\:bg-slate-400 { opacity: 1; background-color: #555555 }
+  .dark.just-black .dark\:bg-slate-300 { opacity: 1; background-color: #666666 }
+  .dark.just-black .dark\:bg-slate-200 { opacity: 1; background-color: #777777 }
+  .dark.just-black .dark\:bg-slate-100 { opacity: 1; background-color: #888888 }
+  
+  ._sepia:not(.dark) .screen-styling { background-color: #70421411; }
+  ._sepia:not(.dark) .bg-slate-900 { opacity: 1; background-color: #70421499 }
+  ._sepia:not(.dark) .bg-slate-800 { opacity: 1; background-color: #70421488 }
+  ._sepia:not(.dark) .bg-slate-700 { opacity: 1; background-color: #70421477 }
+  ._sepia:not(.dark) .bg-slate-600 { opacity: 1; background-color: #70421466 }
+  ._sepia:not(.dark) .bg-slate-500 { opacity: 1; background-color: #70421455 }
+  ._sepia:not(.dark) .bg-slate-400 { opacity: 1; background-color: #70421444 }
+  ._sepia:not(.dark) .bg-slate-300 { opacity: 1; background-color: #70421433 }
+  ._sepia:not(.dark) .bg-slate-200 { opacity: 1; background-color: #70421422 }
+  ._sepia:not(.dark) .bg-slate-100 { opacity: 1; background-color: #70421411 }
+  
+  ._sepia:not(.dark) .bg-blue { opacity: 1; background-color: #704214aa }
+}
+
+@layer components {
+  .button-text {
+    @apply bg-slate-700 dark:bg-slate-600 dark:text-slate-100 rounded-full text-white py-1 px-2
+  }
+
+  .button-text.button-text--action {
+    @apply bg-blue
+  }
+
+  .button-text.button-text--action:disabled {
+    @apply bg-gray-700 text-gray-400 cursor-not-allowed
+  }
+  
+  .button-text.button-text--cancel {
+    @apply bg-slate-400 dark:bg-neutral-800
+    text-slate-100 dark:text-slate-300
+  }
+
+  .button-icon {
+    @apply rounded-full bg-slate-200 dark:bg-slate-700 w-10 p-2
+  }
+
+  .button-icon--with-emoji {
+    @apply px-0 
+  }
+
+  .button-icon-svg {
+    @apply w-6 h-6
+  }
+
+  .button-icon-path {
+    @apply dark:fill-sky-400 rounded-full fill-blue
+  }
+
+  ._sepia:not(.dark) .button-icon-path { opacity: 1; fill: #70421466 }
+
+
+  .button-icon-path--disabled {
+    @apply fill-slate-500 dark:fill-slate-800
+  }
+
+  ._sepia:not(.dark) .button-icon-path--disabled { opacity: 1; fill: #888888 }
+
+  .button-icon-path-red {
+    @apply fill-red-400 /*can be changed later on*/ dark:fill-red-400
+  }
+}
+
+@layer utilities {
+  .text-micro {
+    font-size: 10px;
+  }
+}

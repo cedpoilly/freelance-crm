@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
 import Toolbar from '../components/Toolbar.vue'
 import DataTable from '../components/DataTable.vue'
 
 import useHelpers from "../app/helpers"
+import ClientModal from "../components/ClientModal.vue"
 
 const { searchStringInList } = useHelpers()
 
@@ -12,6 +13,8 @@ fetchData()
 
 let initialData = []
 const data = ref([])
+const modal = ref(null)
+const selectedClient = ref({})
 
 async function fetchData() {
   const response = await fetch("http://localhost:3000/clients/")
@@ -57,15 +60,23 @@ function filterData(searchString) {
   data.value = [...filteredList]
 }
 
-function openModal({ mode }) {
+async function openModal(response) {
+  const {mode, index} = response
   switch (mode) {
     case "view": {
-      alert("Open view modal! 😃")
+      // alert("Open view modal! 😃")
+      selectedClient.value = data.value[index]
+      await nextTick()
+      modal.value.open()
       break
     }
 
     case "edit": {
-      alert("Open edit modal! 🖊️")
+      // alert("Open edit modal! 🖊️")
+      debugger
+      selectedClient.value = data.value[index]
+      await nextTick()
+      modal.value.open()
       break
     }
 
@@ -87,5 +98,7 @@ function openModal({ mode }) {
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
       No data to show at the moment.
     </h2>
+
+    <ClientModal ref="modal" :client="selectedClient" title="View/Edit the client"  />
   </div>
 </template>

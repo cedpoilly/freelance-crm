@@ -104,7 +104,7 @@ function openEditModal(rowIndex) {
 
     <div class="table-body">
       <div class="table-body-row flex hover:scale-101" title="Click to view all details." v-for="(row, index) in data"
-        :key="index" @click="openViewModal">
+        :key="index" @click="openViewModal(index)">
         <span class="data-cell" :class="headers[cellIndex].width" v-for="(cell, cellIndex) in row">{{
             cell
         }}

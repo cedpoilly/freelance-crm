@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import './style.css'
+import './index.scss'
 import "./route-transitions.css"
 
 import App from './App.vue'

@@ -10,6 +10,7 @@ const emits = defineEmits(["selected-tags"])
 const props = defineProps({
   label: { type: String, required: true },
   list: { type: Array, required: true },
+  initialSelection: { type: [Array, String], required: false },
   isMulti: { type: Boolean, default: false },
 })
 
@@ -31,6 +32,15 @@ const isNotEmpty = computed(() => {
 
 watch(() => props.list, (newValue) => {
   data.value = newValue
+}, { immediate: true })
+
+watch(() => props.initialSelection, (newValue) => {
+  if (props.isMulti) {
+    selectedList.value = newValue || selectedList.value
+    return
+  }
+
+  selected.value = newValue || selected.value
 }, { immediate: true })
 
 function toggleActive() {
@@ -65,6 +75,20 @@ function toggleViaKeyboard(event) {
   const isNotEnterNorSpace = !["enter", "space"].includes(event.code.toLowerCase())
   if (isNotEnterNorSpace) { return }
   toggleActive()
+}
+
+function toggleOptionViaKeyboard(event, option) {
+  event.preventDefault()
+  event.stopPropagation()
+  const isNotEnterNorSpace = !["enter", "space"].includes(event.code.toLowerCase())
+  if (isNotEnterNorSpace) { return }
+  selectOption(option)
+}
+
+function preventSpacebarScroll(event) {
+  if (event.keyCode === 32) {  
+    event.preventDefault()  
+  }
 }
 
 function searchItem(event) {
@@ -117,7 +141,7 @@ function formatListoString(list, joinString) {
         Select {{ label }}
       </span>
 
-      <span class="px-1" v-else-if="props.isMulti">
+      <span class="multi-selected" v-else-if="props.isMulti">
         {{ formatListoString(selectedList, ", ") }}
       </span>
 
@@ -139,7 +163,7 @@ function formatListoString(list, joinString) {
       </div>
 
       <ul class="options">
-        <li class="option" v-for="(option, index) in data" :key="index" @click="selectOption(option)">
+        <li class="option" tabindex="0" v-for="(option, index) in data" :key="index" @click="selectOption(option)" @keydown="preventSpacebarScroll" @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)">
           {{ option }}
           <span v-if="props.isMulti && isInSelectedList(option)">✔️</span>
         </li>
@@ -172,6 +196,14 @@ function formatListoString(list, joinString) {
 
 .select-trigger.active .select-trigger__icon {
   transform: rotate(180deg)
+}
+
+.multi-selected {
+  white-space: nowrap;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 12rem;
 }
 
 .content {

@@ -8,8 +8,15 @@ module.exports = {
     extend: {
       scale: {
         '101': '1.005',
+      },
+
+      colors: {
+        blue: '#1A91FF'
       }
     }
   },
+
+  darkMode: 'class',
+
   plugins: [],
 }
