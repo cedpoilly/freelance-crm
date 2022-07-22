@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import BaseSelect from './BaseSelect.vue'
 import BaseToggle from './BaseToggle.vue'
+import BaseSearchInput from './BaseSearchInput.vue'
 
 const emits = defineEmits(["search-input", "is-from-codementor", "selected-tags"])
 
@@ -30,10 +31,7 @@ function filterViaTags(options) {
   rounded-md
   bg-gray-100 ">
     <form @submit.prevent>
-      <label for="search">
-        <span class="px-5">Search </span>
-        <input type="text" name="search" class="px-5 py-2 rounded-md" @input="search($event)">
-      </label>
+      <BaseSearchInput label="Search" field-name="search" @input="search($event)" />
     </form>
 
     <form @submit.prevent>

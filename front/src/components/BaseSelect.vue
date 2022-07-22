@@ -140,11 +140,11 @@ function formatListoString(list, joinString) {
 
 <style lang="scss">
 .select {
-  @apply w-80 px-3 items-stretch;
+  @apply w-80 h-16 px-3 items-stretch;
 }
 
 .select-trigger {
-  @apply w-80 mx-2 px-4 py-3 mb-3 border rounded flex justify-between bg-white
+  @apply w-80 h-16 mx-2 px-4 py-3 mb-3 border rounded flex justify-between items-center bg-white
 }
 
 .select-trigger__icon {
