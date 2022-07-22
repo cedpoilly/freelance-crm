@@ -116,27 +116,27 @@ function openModal() {
 }
 
 .header {
-  @apply w-full flex
+  @apply w-full flex h-16 border-t border-b overflow-hidden
 }
 
 .header-cell,
 .data-cell {
-  @apply px-3 py-2
+  @apply px-3 py-2 flex items-center
 }
 
 .header-cell {
-  @apply font-bold border bg-gray-100 rounded
+  @apply font-bold bg-gray-100
 }
 
 .data-cell {
-  @apply border bg-gray-100
+  @apply bg-gray-100
 }
 
 .table-body {
-  @apply w-full flex flex-col rounded overflow-x-hidden overflow-y-auto max-h-60;
+  @apply w-full flex flex-col overflow-x-hidden overflow-y-auto max-h-60;
 }
 
 .table-body-row {
-  @apply w-full transform-gpu ease-in duration-75;
+  @apply w-full h-16 border-b transform-gpu ease-in duration-75;
 }
 </style>
