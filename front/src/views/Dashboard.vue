@@ -4,6 +4,10 @@ import { ref } from 'vue'
 import Toolbar from '../components/Toolbar.vue'
 import DataTable from '../components/DataTable.vue'
 
+import useHelpers from "../app/helpers"
+
+const { searchStringInList } = useHelpers()
+
 fetchData()
 
 let initialData = []
@@ -49,15 +53,7 @@ function filterData(searchString) {
     return
   }
 
-  const filteredList = [...initialData].filter(item => {
-    const values = Object.values(item)
-
-    return !!values.some(value => !!value.includes &&
-      !!value.toLowerCase &&
-      value.toLowerCase().includes(searchString.toLowerCase())
-    )
-  })
-
+  const filteredList = searchStringInList(data.value, searchString, { isObejectList: true })
   data.value = [...filteredList]
 }
 </script>

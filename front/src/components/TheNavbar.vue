@@ -18,7 +18,7 @@ function isActiveRoute(routeName) {
   </nav>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .navbar {
   @apply w-full flex justify-end;
 }

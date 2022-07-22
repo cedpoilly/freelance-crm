@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import BaseSelect from './BaseSelect.vue'
 
 const emits = defineEmits(["search-input", "is-from-codementor", "selected-tags"])
 
@@ -16,11 +17,8 @@ function toggleIsCodeMentorFilter() {
   emits("is-from-codementor", isCodeMentor.value)
 }
 
-function updateTagList(event) {
-  const selectedOptions = [...event.target.options]
-    .filter((item) => !!item.selected)
-    .map(item => item.value)
-  emits('selected-tags', selectedOptions)
+function filterViaTags(options) {
+  emits('selected-tags', options)
 }
 </script>
 
@@ -45,13 +43,7 @@ function updateTagList(event) {
     </form>
 
     <form @submit.prevent>
-      <label for="tags" class="px-5 py-2 rounded-md" @click="filterTags">
-        <span>Client's Tags </span>
-        <select name="tage" id="tags" multiple @input="updateTagList">
-          <option value="null">Select a tag</option>
-          <option :value="tag" v-for="(tag, index) in tagList" :key="index">{{ tag }}</option>
-        </select>
-      </label>
+      <BaseSelect label="one or more tags." :list="tagList" :is-multi="true" @selected-tags="filterViaTags" />
     </form>
   </nav>
 </template>

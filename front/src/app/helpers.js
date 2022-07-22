@@ -5,7 +5,8 @@ export default function useHelpers() {
     replaceURLs,
     replaceURLsBase,
     isLastItem,
-    replace
+    replace,
+    searchStringInList
   }
 }
 
@@ -70,4 +71,26 @@ function isLastItem(key, list) {
 function replace(string, text) {
   const parts = string.split("__")
   return `${parts[0]}${text}${parts[2]}`
+}
+
+function searchStringInList(list, searchString, options = { isObejectList: false }) {
+  return [...list].filter(item => {
+    const searchStringLowerCase = searchString.toLowerCase()
+    const { isObejectList } = options
+
+    if (isObejectList) {
+      const values = Object.values(item)
+
+      return !!values.some(value => isString(value) &&
+        value.toLowerCase().includes(searchStringLowerCase)
+      )
+    }
+
+    const lowerCaseItem = item.toLowerCase()
+    return lowerCaseItem.includes(searchStringLowerCase)
+  })
+
+  function isString(input) {
+    return !!input.includes && !!input.toLowerCase
+  }
 }
