@@ -86,23 +86,22 @@ function openModal() {
 </script>
 
 <template>
-  <div id="datatable" class="w-3/4 mx-auto mt-6 pt-6 overflow-x-hidden">
-    <div class="header w-full flex">
-      <span :class="header.width" class="header-cell border bg-gray-100 rounded" v-for="(header, index) in headers"
-        :key="index">{{
-            header.name
-        }}</span>
+  <div id="datatable" class="data-table">
+    <div class="header">
+      <span :class="header.width" class="header-cell" v-for="(header, index) in headers" :key="index">{{
+          header.name
+      }}</span>
     </div>
 
-    <div class="body w-full flex flex-col contents rounded">
-      <div class="w-full flex hover:scale-101 transform-gpu ease-in	duration-75" title="Click to view all details."
-        @click="openModal" v-for="(row, index) in data" :key="index">
-        <span class="data-cell border bg-gray-100" :class="headers[cellIndex].width" v-for="(cell, cellIndex) in row">{{
+    <div class="table-body">
+      <div class="table-body-row flex hover:scale-101" title="Click to view all details." @click="openModal"
+        v-for="(row, index) in data" :key="index">
+        <span class="data-cell" :class="headers[cellIndex].width" v-for="(cell, cellIndex) in row">{{
             cell
         }}
         </span>
 
-        <span class="data-cell border bg-gray-100" :class="headers[row.length].width">{{ headers[row.length].width
+        <span class="data-cell" :class="headers[row.length].width">{{ headers[row.length].width
         }}
         </span>
       </div>
@@ -112,12 +111,32 @@ function openModal() {
 </template>
 
 <style lang="scss">
+.data-table {
+  @apply w-3/4 mx-auto mt-6 pt-6 overflow-hidden;
+}
+
+.header {
+  @apply w-full flex
+}
+
 .header-cell,
 .data-cell {
   @apply px-3 py-2
 }
 
 .header-cell {
-  @apply font-bold
+  @apply font-bold border bg-gray-100 rounded
+}
+
+.data-cell {
+  @apply border bg-gray-100
+}
+
+.table-body {
+  @apply w-full flex flex-col rounded overflow-x-hidden overflow-y-auto max-h-60;
+}
+
+.table-body-row {
+  @apply w-full transform-gpu ease-in duration-75;
 }
 </style>
