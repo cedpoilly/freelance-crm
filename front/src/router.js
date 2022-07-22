@@ -7,7 +7,7 @@ import Settings from "./views/Settings.vue"
 import NotFound from "./views/NotFound.vue"
 
 const routes = [
-  { path: "/dashboard", name: "dashboard", component: Dashboard },
+  { path: "/dashboard", alias: "/", name: "dashboard", component: Dashboard },
   { path: "/settings", name: "settings", component: Settings },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 
