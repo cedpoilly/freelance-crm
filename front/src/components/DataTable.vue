@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from "vue"
+import BaseButton from "./BaseButton.vue"
 
 const props = defineProps({
   data: {
@@ -7,6 +8,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const emits = defineEmits(["open-modal"])
 
 const { dataHeaders, headers } = getHeadersFromList(props.data)
 const data = ref([])
@@ -80,8 +83,14 @@ function getRowsFromList(list, headers) {
   return list.map(item => headers.map(header => item[header.id]))
 }
 
-function openModal() {
-  alert("TODO: Open modal! 😃")
+
+function openViewModal(rowIndex) {
+  emits("open-modal", { mode: "view", index: rowIndex })
+}
+
+function openEditModal(rowIndex) {
+  emits("open-modal", { mode: "edit", index: rowIndex })
+
 }
 </script>
 
@@ -94,15 +103,15 @@ function openModal() {
     </div>
 
     <div class="table-body">
-      <div class="table-body-row flex hover:scale-101" title="Click to view all details." @click="openModal"
-        v-for="(row, index) in data" :key="index">
+      <div class="table-body-row flex hover:scale-101" title="Click to view all details." v-for="(row, index) in data"
+        :key="index" @click="openViewModal">
         <span class="data-cell" :class="headers[cellIndex].width" v-for="(cell, cellIndex) in row">{{
             cell
         }}
         </span>
 
-        <span class="data-cell" :class="headers[row.length].width">{{ headers[row.length].width
-        }}
+        <span class="data-cell" :class="headers[row.length].width">
+          <BaseButton class="action-button hover:bg-yellow-100" @button-click="openEditModal(index)">Edit</BaseButton>
         </span>
       </div>
     </div>
@@ -152,6 +161,10 @@ function openModal() {
 }
 
 .table-body-row {
-  @apply w-full h-16 border-b transform-gpu ease-in duration-75;
+  @apply w-full h-16 border-b transform-gpu ease-in duration-75 cursor-pointer;
+}
+
+.action-button {
+  @apply bg-white;
 }
 </style>

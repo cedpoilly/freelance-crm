@@ -56,6 +56,26 @@ function filterData(searchString) {
   const filteredList = searchStringInList(initialData, searchString, { isObejectList: true })
   data.value = [...filteredList]
 }
+
+function openModal({ mode }) {
+  switch (mode) {
+    case "view": {
+      alert("Open view modal! 😃")
+      break
+    }
+
+    case "edit": {
+      alert("Open edit modal! 🖊️")
+      break
+    }
+
+    default: {
+      console.log("Open modal mode is not recognised. 🤷‍♂️")
+      break
+    }
+  }
+
+}
 </script>
 
 <template>
@@ -63,7 +83,7 @@ function filterData(searchString) {
     <Toolbar @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)" />
 
-    <DataTable v-if="data.length" :data="data" />
+    <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
       No data to show at the moment.
     </h2>
