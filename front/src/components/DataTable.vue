@@ -133,7 +133,22 @@ function openModal() {
 }
 
 .table-body {
-  @apply w-full flex flex-col overflow-x-hidden overflow-y-auto max-h-60;
+  @apply w-full flex flex-col overflow-x-hidden overflow-y-auto max-h-40;
+
+  &::-webkit-scrollbar {
+    @apply w-10;
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 2rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 2rem;
+  }
 }
 
 .table-body-row {
