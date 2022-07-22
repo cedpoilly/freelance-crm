@@ -33,11 +33,6 @@ watch(() => props.list, (newValue) => {
   data.value = newValue
 }, { immediate: true })
 
-
-watch(() => isActive.value, (newValue) => {
-  console.log(newValue)
-}, { immediate: true })
-
 function toggleActive() {
   isActive.value = !isActive.value
 
@@ -64,6 +59,12 @@ function selectOption(option) {
 function clearSelection() {
   selected.value = null
   selectedList.value = []
+}
+
+function toggleViaKeyboard(event) {
+  const isNotEnterNorSpace = !["enter", "space"].includes(event.code.toLowerCase())
+  if (isNotEnterNorSpace) { return }
+  toggleActive()
 }
 
 function searchItem(event) {
@@ -110,7 +111,7 @@ function formatListoString(list, joinString) {
 </script>
 
 <template>
-  <div class="select" v-click-outside="() => close()">
+  <div class="select" tabindex="0" v-click-outside="() => close()" @keyup="toggleViaKeyboard">
     <div :class="{ 'active': isActive }" class="select-trigger" @click="toggleActive">
       <span class="px-1" v-if="showLabel">
         Select {{ label }}
