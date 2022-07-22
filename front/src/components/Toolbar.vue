@@ -25,28 +25,36 @@ function filterViaTags(options) {
 </script>
 
 <template>
-  <nav class="
-  w-3/4 mx-auto px-6 py-7 mt-5
-  flex
-  rounded-md
-  bg-gray-100 ">
-    <form @submit.prevent class="mr-3">
-      <BaseSearchInput label="Search" field-name="search" @input="search($event)" />
-    </form>
+  <section class="toolbar">
+    <h3 class="toolbar-title">Filter the table's data.</h3>
 
-    <form @submit.prevent class="mr-3">
-      <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
-        @toggled="toggleIsCodeMentorFilter" />
-    </form>
+    <div class="filters">
+      <form @submit.prevent class="mr-3">
+        <BaseSearchInput label="Search" field-name="search" @input="search($event)" />
+      </form>
 
-    <form @submit.prevent>
-      <BaseSelect label="one or more tags." :list="tagList" :is-multi="true" @selected-tags="filterViaTags" />
-    </form>
-  </nav>
+      <form @submit.prevent class="mr-3">
+        <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
+          @toggled="toggleIsCodeMentorFilter" />
+      </form>
+
+      <form @submit.prevent>
+        <BaseSelect label="one or more tags." :list="tagList" :is-multi="true" @selected-tags="filterViaTags" />
+      </form>
+    </div>
+  </section>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
+<style lang="scss" scoped>
+.toolbar {
+  @apply w-3/4 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md bg-gray-100
+}
+
+.toolbar-title {
+  @apply mb-4 text-xl text-center font-bold
+}
+
+.filters {
+  @apply flex justify-center
 }
 </style>
