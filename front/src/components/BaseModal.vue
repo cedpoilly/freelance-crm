@@ -43,7 +43,7 @@ defineExpose({ open, close, isCancelled, uid, isAlert, isConfirm })
           <BaseCloseButton :action="cancelAndClose" />
         </div>
 
-        <div class="modal-content">
+        <div class="modal-content" :class="{ [props.width]: props.width }">
           <p v-if="isConfirm">
             <slot name="content"></slot>
           </p>
@@ -53,9 +53,9 @@ defineExpose({ open, close, isCancelled, uid, isAlert, isConfirm })
           </slot>
         </div>
 
-        <div class="modal-actions">
+        <div class="modal-actions" :class="{ [props.width]: !!props.width }">
           <slot v-if="props.isAlert" name="actions">
-            <button class="button-text button-text--action" @click="cancelAndClose">OK</button>
+            <button class="button-text button-text--action" :class="{ [props.width]: !!props.width }" @click="cancelAndClose">OK</button>
           </slot>
 
           <slot v-else-if="isConfirm" name="actions">
@@ -70,7 +70,7 @@ defineExpose({ open, close, isCancelled, uid, isAlert, isConfirm })
                 props?.actions?.cancel?.label || 'CANCEL'
             }}</button>
 
-            <button class="button-text button-text--action" data-cy="modal-action-confirm"
+            <button class="button-text button-text--action" :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }" data-cy="modal-action-confirm"
               :disabled="props?.actions?.confirm?.isDisabled" @click="confirm">{{ props?.actions?.confirm?.label || 'OK'
               }}</button>
           </slot>

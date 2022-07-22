@@ -75,7 +75,7 @@ async function setIsOpen(shouldOpen) {
 </script>
 
 <template>
-  <BaseModal v-if="isOpen" :is-default-actions="true" role="dialog" ref="dialog" key="EDIT_TOPIC_DIALOG">
+  <BaseModal v-if="isOpen" width="!w-[46rem]" actions-push-left="mr-6" :is-default-actions="true" role="dialog" ref="dialog" key="EDIT_TOPIC_DIALOG">
     <template #title>
       {{ currentAction }} client
       <span v-if="isEditing">
@@ -89,43 +89,43 @@ async function setIsOpen(shouldOpen) {
 
     <template #content>
       <form class="client-form container">
-        <div>
+        <div class="form-group">
           <BaseInput :value="props.client.firstName" class="first-name" field-name="firstname" label="First Name"
             ref="mainInput" data-cy="edit-client-firstname" />
         </div>
-        <div>
+
+        <div class="form-group">
           <BaseInput :value="props.client.lastName" class="last-name" field-name="lastname" label="Last Name"
             data-cy="edit-client-lastname" />
         </div>
 
-        <div>
+        <div class="form-group">
           <BaseInput :value="props.client.whatsAppNumber" class="whatsapp-number" field-name="whatsappnumber"
             label="WhatsApp Number" data-cy="edit-client-whatsapp" />
         </div>
 
-        <div>
+        <div class="form-group">
           <span class="base-input-label"> Is CodeMentor </span>
-          {{ props.client.isCodementor }}
           <BaseToggle :is-checked="props.client.isCodementor" class="is-codementor" field-name="iscodementor"
             label="Is CodeMentor" data-cy="edit-client-iscodementor" />
         </div>
 
-        <div class="level">
+        <div class="form-group level">
           <span class="base-input-label"> Level/Experience </span>
           <BaseSelect label="client's level" :list="LEVEL" :initial-selection="props.client.level" @selected-tags="updateClientLevel" />
         </div>
 
-        <div class="service-type">
+        <div class="form-group service-type">
           <span class="base-input-label"> Service type </span>
           <BaseSelect label="client's level" :list="SERVICE_TYPE" :initial-selection="props.client.serviceType"  
             @selected-tags="updateClientServiceType" />
         </div>
 
-        <div class="rate">
+        <div class="form-group rate">
           <BaseInput :value="props.client.rate" field-name="rate" label="Rate" data-cy="edit-client-rate" />
         </div>
 
-        <div class="tags">
+        <div class="form-group tags">
           <span class="base-input-label"> Tags </span>
           <BaseSelect :value="props.client.tags" :list="TAGS" :initial-selection="props.client.tags" :is-multi="true" field-name="tags" label="Tags"
             data-cy="edit-client-tags" />
@@ -141,8 +141,13 @@ async function setIsOpen(shouldOpen) {
   grid-template-columns: 1fr 1fr;
   grid-auto-flow: row;
   gap: 1rem;
+
+  width: 40rem;
 }
 
+.form-group {
+  @apply flex flex-col justify-center;
+}
 .client-name-input {
   @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
 }

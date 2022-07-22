@@ -4,6 +4,8 @@ export const config = {
   isAlert: { type: Boolean, default: false },
   isConfirm: { type: Boolean, default: false },
   isDefaultActions: { type: Boolean, default: false },
+  width: { type: String, default: false },
+  actionsPushLeft: { type: String, default: false },
   actions: {
     type: Object, require: false,
     default() {
