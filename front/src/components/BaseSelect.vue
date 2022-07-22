@@ -112,9 +112,18 @@ function formatListoString(list, joinString) {
 <template>
   <div class="select" v-click-outside="() => close()">
     <div :class="{ 'active': isActive }" class="select-trigger" @click="toggleActive">
-      <span class="px-1" v-if="showLabel">Select {{ label }}</span>
-      <span class="px-1" v-else-if="props.isMulti">{{ formatListoString(selectedList, ", ") }}</span>
-      <span class="px-1" v-else>{{ selected }}</span>
+      <span class="px-1" v-if="showLabel">
+        Select {{ label }}
+      </span>
+
+      <span class="px-1" v-else-if="props.isMulti">
+        {{ formatListoString(selectedList, ", ") }}
+      </span>
+
+      <span class="px-1" v-else>
+        {{ selected }}
+      </span>
+
       <div class="icons-wrapper px-1">
         <span v-if="isNotEmpty" class="select-trigger__icon--clear" @click="clearSelection">❌</span>
         <span class="select-trigger__icon">🔻</span>
@@ -140,11 +149,11 @@ function formatListoString(list, joinString) {
 
 <style lang="scss">
 .select {
-  @apply w-80 h-16 px-3 items-stretch;
+  @apply w-80 h-16 items-stretch;
 }
 
 .select-trigger {
-  @apply w-80 h-16 px-4 py-3 mb-3 border rounded flex justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-3 border rounded flex justify-between items-center bg-white
 }
 
 .select-trigger__icon {
@@ -165,7 +174,7 @@ function formatListoString(list, joinString) {
 }
 
 .content {
-  @apply w-80 px-3 py-3 bg-white border;
+  @apply w-80 px-3 py-3 mt-3 bg-white border;
   position: absolute;
   z-index: 10;
 }
