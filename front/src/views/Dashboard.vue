@@ -53,7 +53,7 @@ function filterData(searchString) {
     return
   }
 
-  const filteredList = searchStringInList(data.value, searchString, { isObejectList: true })
+  const filteredList = searchStringInList(initialData, searchString, { isObejectList: true })
   data.value = [...filteredList]
 }
 </script>
