@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import Toolbar from '../components/Toolbar.vue'
 import DataTable from '../components/DataTable.vue'
@@ -7,9 +7,19 @@ import DataTable from '../components/DataTable.vue'
 import useHelpers from "../app/helpers"
 import ClientModal from "../components/ClientModal.vue"
 
+import { persistClient } from "../api/client"
+
 const { searchStringInList } = useHelpers()
 
 fetchData()
+
+onMounted(() => {
+  document.onkeydown = async (event) => {
+    await saveOnCtrlS(event)
+    await saveOnCtrlEnter(event)
+    showHintsOnCtrlH(event)
+  }
+})
 
 let initialData = []
 const data = ref([])
@@ -60,23 +70,59 @@ function filterData(searchString) {
   data.value = [...filteredList]
 }
 
+async function saveOnCtrlS(event) {
+  if (event.ctrlKey && event.key === 's') {
+    event.preventDefault()
+    await modal.value.close()
+  }
+}
+
+async function saveOnCtrlEnter(event) {
+  if (event.ctrlKey && event.key === 'Enter') {
+    event.preventDefault()
+    await modal.value.close()
+  }
+}
+
+function showHintsOnCtrlH(event) {
+  if (event.ctrlKey && event.key === 'h') {
+    event.preventDefault()
+    alert("Use [ctrl + s] or [ctrl + enter] to save the updates.")
+  }
+}
+
+async function updateLocalData(index, client) {
+  const hasNoClient = !client
+  if (hasNoClient) { return }
+
+  const response = await persistClient(client)
+  const { acknowledged } = response
+  if (!acknowledged) {
+    alert("Client was not modified!")
+    return
+  }
+
+  data.value[index] = client
+
+  // * No need to ensure flow of events as it is the last action
+  // * Hence we do not use the await here
+  fetchData()
+}
+
 async function openModal(response) {
-  const {mode, index} = response
+  const { mode, index } = response
   switch (mode) {
     case "view": {
-      // alert("Open view modal! 😃")
       selectedClient.value = data.value[index]
-      await nextTick()
-      modal.value.open()
+      const client = await modal.value.open()
+      updateLocalData(index, client)
       break
     }
 
     case "edit": {
-      // alert("Open edit modal! 🖊️")
-      debugger
       selectedClient.value = data.value[index]
-      await nextTick()
-      modal.value.open()
+      const client = await modal.value.open()
+      updateLocalData(index, client)
       break
     }
 
@@ -99,6 +145,6 @@ async function openModal(response) {
       No data to show at the moment.
     </h2>
 
-    <ClientModal ref="modal" :client="selectedClient" title="View/Edit the client"  />
+    <ClientModal ref="modal" :client="selectedClient" title="View/Edit the client" />
   </div>
 </template>

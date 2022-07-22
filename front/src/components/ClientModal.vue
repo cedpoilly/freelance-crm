@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, toRaw, watch } from 'vue'
 
 import BaseModal from './BaseModal.vue'
 import BaseInput from './BaseInput.vue'
@@ -25,11 +25,8 @@ watch(
   (updated) => client.value = updated
 )
 
-function updateClientLevel(levels) {
-  client.value.levels = levels
-}
-function updateClientServiceType(serviceType) {
-  client.value.serviceType = serviceType
+function updateClient(fieldName, value) {
+  client.value[fieldName] = value
 }
 
 /** Inteactions */
@@ -41,7 +38,7 @@ async function open(callback) {
   focusInput()
 
   await dialog?.value?.open(callback)
-  const ret = dialog.value?.isCancelled ? '' : client.value.firstName
+  const ret = dialog.value?.isCancelled ? '' : toRaw(client.value)
 
   await setIsOpen(false)
   return ret
@@ -75,7 +72,8 @@ async function setIsOpen(shouldOpen) {
 </script>
 
 <template>
-  <BaseModal v-if="isOpen" width="!w-[46rem]" actions-push-left="mr-6" :is-default-actions="true" role="dialog" ref="dialog" key="EDIT_TOPIC_DIALOG">
+  <BaseModal v-if="isOpen" width="!w-[46rem]" tabindex="0" actions-push-left="mr-6" :is-default-actions="true"
+    role="dialog" ref="dialog" key="EDIT_TOPIC_DIALOG">
     <template #title>
       {{ currentAction }} client
       <span v-if="isEditing">
@@ -91,44 +89,47 @@ async function setIsOpen(shouldOpen) {
       <form class="client-form container">
         <div class="form-group">
           <BaseInput :value="props.client.firstName" class="first-name" field-name="firstname" label="First Name"
-            ref="mainInput" data-cy="edit-client-firstname" />
+            ref="mainInput" data-cy="edit-client-firstname" @input="updateClient('firstName', $event.target.value)" />
         </div>
 
         <div class="form-group">
           <BaseInput :value="props.client.lastName" class="last-name" field-name="lastname" label="Last Name"
-            data-cy="edit-client-lastname" />
+            data-cy="edit-client-lastname" @input="updateClient('lastName', $event.target.value)" />
         </div>
 
         <div class="form-group">
           <BaseInput :value="props.client.whatsAppNumber" class="whatsapp-number" field-name="whatsappnumber"
-            label="WhatsApp Number" data-cy="edit-client-whatsapp" />
+            label="WhatsApp Number" data-cy="edit-client-whatsapp"
+            @input="updateClient('whatsAppNumber', $event.target.value)" />
         </div>
 
         <div class="form-group">
           <span class="base-input-label"> Is CodeMentor </span>
           <BaseToggle :is-checked="props.client.isCodementor" class="is-codementor" field-name="iscodementor"
-            label="Is CodeMentor" data-cy="edit-client-iscodementor" />
+            label="Is CodeMentor" data-cy="edit-client-iscodementor" @toggled="updateClient('isCodementor', $event)" />
         </div>
 
         <div class="form-group level">
           <span class="base-input-label"> Level/Experience </span>
-          <BaseSelect label="client's level" :list="LEVEL" :initial-selection="props.client.level" @selected-tags="updateClientLevel" />
+          <BaseSelect label="client's level" :list="LEVEL" :initial-selection="props.client.level"
+            @selected-tags="updateClient('level', $event)" />
         </div>
 
         <div class="form-group service-type">
           <span class="base-input-label"> Service type </span>
-          <BaseSelect label="client's level" :list="SERVICE_TYPE" :initial-selection="props.client.serviceType"  
-            @selected-tags="updateClientServiceType" />
+          <BaseSelect label="Service Type" :list="SERVICE_TYPE" :initial-selection="props.client.serviceType"
+            @selected-tags="updateClient('serviceType', $event)" />
         </div>
 
         <div class="form-group rate">
-          <BaseInput :value="props.client.rate" field-name="rate" label="Rate" data-cy="edit-client-rate" />
+          <BaseInput :value="props.client.rate" field-name="rate" label="Rate" data-cy="edit-client-rate"
+            @input="updateClient('rate', $event.target.value)" />
         </div>
 
         <div class="form-group tags">
           <span class="base-input-label"> Tags </span>
-          <BaseSelect :value="props.client.tags" :list="TAGS" :initial-selection="props.client.tags" :is-multi="true" field-name="tags" label="Tags"
-            data-cy="edit-client-tags" />
+          <BaseSelect :value="props.client.tags" :list="TAGS" :initial-selection="props.client.tags" :is-multi="true"
+            field-name="tags" label="Tags" data-cy="edit-client-tags" @selected-tags="updateClient('tags', $event)" />
         </div>
       </form>
     </template>
@@ -148,6 +149,7 @@ async function setIsOpen(shouldOpen) {
 .form-group {
   @apply flex flex-col justify-center;
 }
+
 .client-name-input {
   @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
 }
