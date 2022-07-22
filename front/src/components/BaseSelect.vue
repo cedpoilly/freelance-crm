@@ -153,7 +153,7 @@ function formatListoString(list, joinString) {
 }
 
 .select-trigger {
-  @apply w-80 h-16 px-4 py-3 border rounded flex justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white
 }
 
 .select-trigger__icon {
