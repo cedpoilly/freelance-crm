@@ -14,8 +14,57 @@ Content-Type: application/json
   "tags": ["JavaScript", "Vue.js", "Front-End"]
 }
 
-###
 
+###
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Jay",
+  "lastName": "Wilburn",
+  "isCodementor": true,
+  "email": "jay@dummy.com",
+   "whatsAppNumber": "+1 (000) 000-0000",
+  "level": "advanced",
+  "serviceType": "individual",
+  "rate": 30,
+  "tags": ["JavaScript", "Vue.js", "HTML", "Front-End"]
+}
+
+###
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Tom",
+  "lastName": "Doe",
+  "isCodementor": true,
+  "email": "tom@dummy.com",
+   "whatsAppNumber": "+1 (000) 000-0000",
+  "level": "intermediate",
+  "serviceType": "individual",
+  "rate": 40,
+  "tags": ["JavaScript", "Front-End"]
+}
+
+###
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Maria",
+  "lastName": "Anna",
+  "isCodementor": true,
+  "email": "Maria@dummy.com",
+   "whatsAppNumber": "+1 (000) 000-0000",
+  "level": "intermediate",
+  "serviceType": "individual",
+  "rate": 40,
+  "tags": ["JavaScript", "Front-End"]
+}
+
+
+###
 POST http://localhost:3000/clients
 Content-Type: application/json
 
@@ -29,4 +78,20 @@ Content-Type: application/json
   "serviceType": "team",
   "rate": 20,
   "tags": ["JavaScript", "Vue.js", "Front-End", "Mongoose", "MongoDB"]
+}
+
+###
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "firstName": "Vinted",
+  "lastName": "Inc.",
+  "isCodementor": false,
+  "email": "hello@vinted.com",
+   "whatsAppNumber": "+91 12345 12345",
+  "level": "advanced",
+  "serviceType": "team",
+  "rate": 30,
+  "tags": ["JavaScript", "Vue.js", "Front-End"]
 }
