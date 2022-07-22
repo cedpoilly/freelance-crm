@@ -21,7 +21,7 @@ function emitToggle() {
 
 <style lang="scss" scoped>
 .base-toggle {
-  @apply w-80 h-16 mx-2 px-4 py-3 mb-3 border rounded flex justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-3 border rounded flex justify-between items-center bg-white
 }
 
 .base-toggle-label {

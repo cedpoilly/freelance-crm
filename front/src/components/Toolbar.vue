@@ -30,11 +30,11 @@ function filterViaTags(options) {
   flex
   rounded-md
   bg-gray-100 ">
-    <form @submit.prevent>
+    <form @submit.prevent class="mr-3">
       <BaseSearchInput label="Search" field-name="search" @input="search($event)" />
     </form>
 
-    <form @submit.prevent>
+    <form @submit.prevent class="mr-3">
       <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
         @toggled="toggleIsCodeMentorFilter" />
     </form>
