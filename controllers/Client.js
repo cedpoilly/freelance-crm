@@ -3,7 +3,7 @@ const router = express.Router()
 
 const Client = require("../models/Client")
 
-router.post("/", async function clientPostHandler(req, res) {
+router.post("/", async function clientPostHandler(req, res, next) {
   const clientDocument = new Client({ ...req.body })
   try {
     const createdClient = await clientDocument.save()
@@ -11,7 +11,7 @@ router.post("/", async function clientPostHandler(req, res) {
   }
   catch (error) {
     console.error(error.message)
-    res.error(error.message)
+    next(error.message)
   }
 })
 
