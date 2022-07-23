@@ -15,9 +15,8 @@ const props = defineProps({
 })
 
 const dialog = ref(null)
-const mainInput = ref(null)
 
-defineExpose({ open, close })
+defineExpose({ open, close, cancelAndClose })
 
 const client = ref(props.client)
 watch(
@@ -35,7 +34,8 @@ const currentAction = computed(() => isEditing.value ? 'Edit' : 'Create')
 
 async function open(callback) {
   await setIsOpen(true)
-  focusInput()
+
+  focusOnFirstInput()
 
   await dialog?.value?.open(callback)
   const ret = dialog.value?.isCancelled ? '' : toRaw(client.value)
@@ -45,23 +45,12 @@ async function open(callback) {
 }
 
 function close() { return dialog?.value?.close() }
+function cancelAndClose() { return dialog?.value?.cancelAndClose() }
 
-let focusAttempts = 0
-const MAX_ATTEMPTS = 30
-
-function focusInput() {
-  const DELAY = 50
-  setTimeout(recurse, DELAY)
-
-  function recurse() {
-    focusAttempts += 1
-    const hasReachedTheLimit = focusAttempts >= MAX_ATTEMPTS
-    if (hasReachedTheLimit) { return }
-
-    if (!mainInput.value) { focusInput() }
-
-    mainInput.value.focus && mainInput.value.focus()
-  }
+function focusOnFirstInput() {
+  requestAnimationFrame(() => {
+    document.querySelector('[data-ref="first-input"]').focus()
+  })
 }
 
 const isOpen = ref(false)
@@ -73,7 +62,7 @@ async function setIsOpen(shouldOpen) {
 
 <template>
   <BaseModal v-if="isOpen" width="!w-[46rem]" tabindex="0" actions-push-left="mr-6" :is-default-actions="true"
-    role="dialog" ref="dialog" key="EDIT_TOPIC_DIALOG">
+    role="dialog" ref="dialog" key="EDIT_CLIENT_DIALOG">
     <template #title>
       {{ currentAction }} client
       <span v-if="isEditing">
@@ -88,8 +77,8 @@ async function setIsOpen(shouldOpen) {
     <template #content>
       <form class="client-form container">
         <div class="form-group">
-          <BaseInput :value="props.client.firstName" class="first-name" field-name="firstname" label="First Name"
-            ref="mainInput" data-cy="edit-client-firstname" @input="updateClient('firstName', $event.target.value)" />
+          <BaseInput :value="props.client.firstName" data-ref="first-input" class="first-name" field-name="firstname" label="First Name"
+            data-cy="edit-client-firstname" @input="updateClient('firstName', $event.target.value)" />
         </div>
 
         <div class="form-group">

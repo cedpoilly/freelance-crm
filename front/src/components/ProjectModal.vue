@@ -13,15 +13,13 @@ const props = defineProps({
 })
 
 const dialog = ref(null)
-const mainInput = ref(null)
 
 defineExpose({ open, close, cancelAndClose })
 
 const project = ref(props.project)
 watch(
   () => props.project,
-  (updated) => { project.value = updated },
-  {immediate: true}
+  (updated) => { project.value = updated }
 )
 
 function updateProject(fieldName, value) {
@@ -34,7 +32,8 @@ const currentAction = computed(() => isEditing.value ? 'Edit' : 'Create')
 
 async function open(callback) {
   await setIsOpen(true)
-  focusInput()
+
+  focusOnFirstInput()
 
   await dialog?.value?.open(callback)
   const ret = dialog.value?.isCancelled ? '' : toRaw(project.value)
@@ -46,22 +45,10 @@ async function open(callback) {
 function close() { return dialog?.value?.close() }
 function cancelAndClose() { return dialog?.value?.cancelAndClose() }
 
-let focusAttempts = 0
-const MAX_ATTEMPTS = 30
-
-function focusInput() {
-  const DELAY = 50
-  setTimeout(recurse, DELAY)
-
-  function recurse() {
-    focusAttempts += 1
-    const hasReachedTheLimit = focusAttempts >= MAX_ATTEMPTS
-    if (hasReachedTheLimit) { return }
-
-    if (!mainInput.value) { focusInput() }
-
-    mainInput.value.focus && mainInput.value.focus()
-  }
+function focusOnFirstInput() {
+  requestAnimationFrame(() => {
+    document.querySelector('[data-ref="first-input"]').focus()
+  })
 }
 
 const isOpen = ref(false)
@@ -84,7 +71,7 @@ async function setIsOpen(shouldOpen) {
     <template #content>
       <form class="project-form container">
         <div class="form-group">
-          <BaseInput :value="props.project.title" class="title" field-name="title" label="Project Title" ref="mainInput"
+          <BaseInput :value="props.project.title" data-ref="first-input" class="title" field-name="title" label="Project Title" 
             data-cy="edit-project-title" @input="updateProject('title', $event.target.value)" />
         </div>
 
