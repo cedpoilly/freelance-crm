@@ -12,6 +12,9 @@
     "postinstall": "bash ./scripts/build-front-end.sh",
     "start": "node app.js"
   },
+  "engines": {
+    "node": "14"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cedpoilly/freelance-crm.git"
