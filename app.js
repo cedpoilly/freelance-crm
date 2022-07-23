@@ -8,6 +8,9 @@ var cors = require('cors')
 
 const app = express()
 
+app.use(express.static('public'))
+app.use(express.static('files'))
+
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
   extended: true
