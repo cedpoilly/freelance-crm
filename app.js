@@ -2,6 +2,7 @@ require('dotenv').config()
 
 require('./configs/database-connect')
 
+const path = require("path")
 const express = require("express")
 const bodyParser = require('body-parser')
 var cors = require('cors')
@@ -9,7 +10,8 @@ var cors = require('cors')
 const app = express()
 
 app.use(express.static('public'))
-app.use(express.static('files'))
+const options = { index: false }
+app.use(express.static(path.join(__dirname, 'public'), options))
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
@@ -32,6 +34,10 @@ app.use("/clients", clientRouter)
 const projectRouter = require("./controllers/Project")
 app.use("/projects", projectRouter)
 
+
+app.get('*', function (__dirname, res) {
+  res.sendFile(path.resolve(__dirname, './public/index.html'))
+})
 
 process.on('unhandledRejection', error => {
   throw error
