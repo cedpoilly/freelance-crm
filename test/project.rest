@@ -1,6 +1,9 @@
 ###
 GET http://localhost:3000/projects/
 
+###
+GET http://localhost:3000/projects/62db8d03034b488773f876bb
+
 ### Replace with existing ID
 DELETE http://localhost:3000/projects/62d7c641ad6dc2fe272dd836
 
@@ -9,7 +12,7 @@ POST http://localhost:3000/projects
 Content-Type: application/json
 
 {
-  "title": "API Tool",
+  "title": "Learning JavaScript",
   "techs": ["Vue.js", "Front-End", "JavaScript"],
   "requirements": "Build & maintain the validator. | Teach Fernando how the code works and help him understand how JavaScript works.",
   "milestones": ["Build the first version.", "Coach Fernando on the first version.", "Plan for the next version."],
@@ -18,5 +21,25 @@ Content-Type: application/json
   "hasDownPayment": false,
   "isComplete": false,
   "hasDownPayment": false,
-  "client": "62d7c677ad6dc2fe272dd842"
+  "client": "62d81cf3b93448627fbe2246"
+}
+
+
+### UPDATE
+PUT http://localhost:3000/projects/62db8d03034b488773f876bb
+Content-Type: application/json
+
+{
+  "budget": 140,
+  "client": {"_id": "62d81cf3b93448627fbe2246"},
+  "hasDownPayment": false,
+  "isCompleted": false,
+  "isInvoiceSent": false,
+  "milestones": ["Build the first version.", "Coach Fernando on the first version.", "Plan for the next version."],
+  "paymentMethod": "paypal",
+  "requirements": "Build & maintain the validator. | Teach Fernando how the code works and help him understand how JavaScript works.",
+  "techs": ["Vue.js", "Front-End", "JavaScript"],
+  "title": "API Tool UPDATED",
+  "wasPaidInFull": false,
+  "wasPaymentDone": false
 }
