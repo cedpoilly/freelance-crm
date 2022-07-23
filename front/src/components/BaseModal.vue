@@ -6,7 +6,7 @@ import BaseCloseButton from './BaseCloseButton.vue'
 import useBaseModal from './base-modal'
 import { config } from './base-modal.js'
 
-const props = defineProps(config);
+const props = defineProps(config)
 
 const {
   canShow, isCancelled,
@@ -55,7 +55,8 @@ defineExpose({ open, close, cancelAndClose, isCancelled, uid, isAlert, isConfirm
 
         <div class="modal-actions" :class="{ [props.width]: !!props.width }">
           <slot v-if="props.isAlert" name="actions">
-            <button class="button-text button-text--action" :class="{ [props.width]: !!props.width }" @click="cancelAndClose">OK</button>
+            <button :class="{ [props.width]: !!props.width }" class="button-text button-text--action"
+              @click="cancelAndClose">OK</button>
           </slot>
 
           <slot v-else-if="isConfirm" name="actions">
@@ -70,8 +71,9 @@ defineExpose({ open, close, cancelAndClose, isCancelled, uid, isAlert, isConfirm
                 props?.actions?.cancel?.label || 'CANCEL'
             }}</button>
 
-            <button class="button-text button-text--action" :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }" data-cy="modal-action-confirm"
-              :disabled="props?.actions?.confirm?.isDisabled" @click="confirm">{{ props?.actions?.confirm?.label || 'OK'
+            <button :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }" data-cy="modal-action-confirm"
+              class="button-text button-text--action" :disabled="props?.actions?.confirm?.isDisabled"
+              @click="confirm">{{ props?.actions?.confirm?.label || 'OK'
               }}</button>
           </slot>
         </div>
