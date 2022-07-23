@@ -10,8 +10,6 @@ var cors = require('cors')
 const app = express()
 
 app.use(express.static('public'))
-const options = { index: false }
-app.use(express.static(path.join(__dirname, 'public'), options))
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
@@ -35,8 +33,9 @@ const projectRouter = require("./controllers/Project")
 app.use("/projects", projectRouter)
 
 
-app.get('*', function (__dirname, res) {
-  res.sendFile(path.resolve(__dirname, './public/index.html'))
+app.get('*', function (res, res) {
+  const filePath = path.resolve(__dirname, './public/index.html')
+  res.sendFile(filePath)
 })
 
 process.on('unhandledRejection', error => {
