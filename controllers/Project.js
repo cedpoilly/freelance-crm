@@ -30,7 +30,16 @@ router.post("/", async function projectPostHandler(req, res) {
 })
 
 router.get("/", async function getAllProjectsHandler(req, res) {
-  const projects = await Project.find().populate("client", "-projects").select("-__v")
+  const clientId = req.query.clientId
+
+  const query = clientId
+    ? Project.find({ client: clientId })
+    : Project.find()
+
+  const projects = await query
+    .populate("client", "-projects")
+    .select("-__v")
+
   res.send(projects)
 })
 
