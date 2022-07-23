@@ -12,6 +12,8 @@ function isActiveRoute(routeName) {
     <div class="routes">
       <router-link :class="{ active: isActiveRoute('dashboard') }" class="nav-route" to="/dashboard">Dashboard
       </router-link>
+      <router-link :class="{ active: isActiveRoute('projects') }" class="nav-route" to="/projects">Projects
+      </router-link>
       <router-link :class="{ active: isActiveRoute('settings') }" class="nav-route" to="/settings">Settings
       </router-link>
     </div>

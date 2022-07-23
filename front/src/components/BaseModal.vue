@@ -28,7 +28,7 @@ function cancel() {
   return isCancelled.value
 }
 
-defineExpose({ open, close, isCancelled, uid, isAlert, isConfirm })
+defineExpose({ open, close, cancelAndClose, isCancelled, uid, isAlert, isConfirm })
 </script>
 
 <template>
