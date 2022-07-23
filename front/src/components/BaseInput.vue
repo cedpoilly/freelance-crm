@@ -26,7 +26,7 @@ function search(searchString) {
 }
 
 .base-input-label {
-  @apply mr-1 my-auto w-80;
+  @apply mr-1 w-80;
   grid-row: 1/1;
   z-index: 1;
 }
