@@ -47,24 +47,9 @@ function setRoutingDirection({ name: origin }, { name: destination }) {
     }
   }
 
-  switch (destination) {
-    case "dashboard": {
-      originIs("settings") && setDirection("backwards")
-      originIs("projects") && setDirection("backwards")
-      break
-    }
-
-    case "projects": {
-      originIs("settings") && setDirection("backwards")
-      originIs("dashboard") && setDirection("backwards")
-      break
-    }
-  }
-
   const { routingDirection } = useGlobalState()
   routingDirection.value = direction
 
   function setDirection(dir) { direction = dir }
   function destinationIs(dest) { return destination === dest }
-  function originIs(orig) { return origin === orig }
 }
