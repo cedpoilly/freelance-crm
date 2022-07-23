@@ -5,7 +5,7 @@ const connectionString = process.env.NODE_ENV === "prod"
   ? `mongodb+srv://dbuser:${DB_USER_PASSWORD}@cluster0.fmcc5.mongodb.net/?retryWrites=true&w=majority`
   : `mongodb://${DB_HOST}/${DB_NAME}`
 
-mongoose.connect(connectionString, { useNewUrlParser: true })
+mongoose.connect(`mongodb+srv://dbuser:${DB_USER_PASSWORD}@cluster0.fmcc5.mongodb.net/?retryWrites=true&w=majority`, { useNewUrlParser: true })
 
 mongoose.connection
   .once('open', function connected() { console.log("Connected [Mongoose - MongoDB]") })
