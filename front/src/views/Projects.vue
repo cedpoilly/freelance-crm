@@ -47,8 +47,8 @@ async function fetchData() {
   currentClient.value = await fetchClient(clientId)
 
   const url = clientId
-    ? `http://localhost:3000/projects?clientId=${clientId}`
-    : `http://localhost:3000/projects/`
+    ? `/projects?clientId=${clientId}`
+    : `/projects/`
 
   const response = await fetch(url)
 
@@ -59,7 +59,7 @@ async function fetchData() {
 }
 
 async function fetchClient(clientId) {
-  const response = await fetch(`http://localhost:3000/clients/${clientId}`)
+  const response = await fetch(`/clients/${clientId}`)
   return await response.json()
 }
 

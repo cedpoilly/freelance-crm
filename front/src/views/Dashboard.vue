@@ -33,7 +33,7 @@ const dataTable = ref(null)
 const selectedClient = ref({})
 
 async function fetchData() {
-  const response = await fetch("http://localhost:3000/clients/")
+  const response = await fetch("/clients/")
   const dataFromServer = await response.json()
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
