@@ -91,14 +91,14 @@ async function setIsOpen(shouldOpen) {
 
         <div class="form-group">
           <BaseInput :value="props.client.whatsAppNumber" class="whatsapp-number" field-name="whatsappnumber"
-            label="WhatsApp Number" data-cy="edit-client-whatsapp"
+            label="WhatsApp number" data-cy="edit-client-whatsapp"
             @input="updateClient('whatsAppNumber', $event.target.value)" />
         </div>
 
         <div class="form-group">
-          <span class="base-input-label"> Is CodeMentor </span>
+          <span class="base-input-label"> Is from codementor.io </span>
           <BaseToggle :is-checked="props.client.isCodementor" class="is-codementor" field-name="iscodementor"
-            label="Is CodeMentor" data-cy="edit-client-iscodementor" @toggled="updateClient('isCodementor', $event)" />
+            label="Is from codementor.io" data-cy="edit-client-iscodementor" @toggled="updateClient('isCodementor', $event)" />
         </div>
 
         <div class="form-group level">

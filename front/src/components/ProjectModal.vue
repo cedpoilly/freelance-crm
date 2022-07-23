@@ -87,7 +87,7 @@ async function setIsOpen(shouldOpen) {
         </div>
 
         <div class="form-group" v-if="props.project.isCodementor">
-          <span class="base-input-label"> Is CodeMentor </span>
+          <span class="base-input-label"> Is from codementor.io </span>
           <BaseToggle :is-checked="props.project.isCodementor" class="is-completed" field-name="is-completed"
             label="Is Completed" data-cy="edit-project-is-completed"
             @toggled="updateProject('isCompleted', $event)" />
