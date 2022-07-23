@@ -33,7 +33,7 @@ function search(searchString) {
 }
 
 .base-search-input {
-  @apply pl-5 py-2 rounded-md border;
+  @apply pl-5 py-2 rounded-md;
   grid-row: 1/1;
   grid-column: 4/13;
 }

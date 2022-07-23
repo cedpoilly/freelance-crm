@@ -32,7 +32,7 @@ function search(searchString) {
 }
 
 .base-input-box {
-  @apply pl-5 py-1 w-72 rounded-md border;
+  @apply pl-5 py-1 w-72 rounded-md;
   grid-row: 2/2;
 }
 </style>
