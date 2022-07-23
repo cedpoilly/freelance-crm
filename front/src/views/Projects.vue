@@ -13,12 +13,16 @@ import { computed } from '@vue/reactivity'
 
 const route = useRoute()
 
-const { searchStringInList, getCopy } = useHelpers()
+const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
+
+const emits = defineEmits(["focus-navbar"])
 
 let initialData = []
 const data = ref([])
 const currentClient = ref(null)
 const modal = ref(null)
+const toolbar = ref(null)
+const dataTable = ref(null)
 const selectedProject = ref({})
 
 const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
@@ -30,10 +34,12 @@ onMounted(() => {
     await saveOnCtrlS(event)
     await saveOnCtrlEnter(event)
     closeOnEscape(event)
-    showHintsOnCtrlH(event)
+
+    ctrlPlus(event, "F", focusSearch)
+    ctrlPlus(event, "L", focusNavbar)
+    ctrlPlus(event, "H", focusDataTable)
   }
 })
-
 
 async function fetchData() {
   const clientId = route.params.clientId
@@ -115,11 +121,16 @@ async function closeOnEscape(event) {
   }
 }
 
-function showHintsOnCtrlH(event) {
-  if (event.ctrlKey && event.key === 'h') {
-    event.preventDefault()
-    alert("Use [ctrl + s] or [ctrl + enter] to save the updates.")
-  }
+function focusSearch() {
+  toolbar.value.focusSearch()
+}
+
+function focusNavbar() {
+  emits("focus-navbar")
+}
+
+function focusDataTable() {
+  dataTable.value.focus()
 }
 
 async function updateLocalData(index, project) {
@@ -175,14 +186,14 @@ async function openModal(response) {
 
 <template>
   <div class="view-container">
-    <Toolbar class="project-toolbar" @search-input="filterData"
+    <Toolbar class="project-toolbar" ref="toolbar" @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)" @selected-tags="filter('tags', $event)" />
 
     <div v-if="hasCurrentClient" class="client-indication">
       <h2><span class="font-bold">Projects for: </span>{{ currentClient.firstName }} {{ currentClient.lastName }}</h2>
     </div>
 
-    <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
+    <DataTable v-if="data.length" ref="dataTable" :data="data" @open-modal="openModal" />
     <h2 v-else-if="route.params.clientId" class="no-data-message">
       There are no projects available for this client. 🤷
     </h2>

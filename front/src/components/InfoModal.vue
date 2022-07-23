@@ -42,18 +42,18 @@ async function setIsOpen(shouldOpen) {
           <h3 class="section-title">Dashboard / Projects</h3>
 
           <p class="section-instructions">
-            <span class="code">ctrl</span> + <span class="code">F</span> <span class="font-bold">:</span> Focus on the
-            table search.
+            <span class="code">ctrl</span> + <span class="code">F</span>
+            <span class="font-bold"> :</span> Focus on the table search.
           </p>
 
           <p class="section-instructions">
-            <span class="code">ctrl</span> + <span class="code">L</span> <span class="font-bold">:</span> Focus on the
-            navbar.
+            <span class="code">ctrl</span> + <span class="code">L</span>
+            <span class="font-bold"> :</span> Focus on the navbar.
           </p>
 
           <p class="section-instructions">
-            <span class="code">ctrl</span> + <span class="code">D</span> <span class="font-bold">:</span> Focus on the
-            data table.
+            <span class="code">ctrl</span> + <span class="code">H</span>
+            <span class="font-bold"> :</span> Focus on the data table.
           </p>
         </section>
 
