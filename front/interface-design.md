@@ -8,15 +8,17 @@ List all the clients available from the database. \
 
 Navbar:
 
-- Search -> Local search for clients (can evolve to a back-end search)
-- Create client   -> Opens the Create client modal
-- Create project  -> Opens the Create project modal
-- Settings
+- [✔️] Search -> Local search for clients (can evolve to a back-end search)
+- [ ] Create client   -> Opens the Create client modal
+- [✔️] Edit client   -> Opens the Create client modal
+- [ ] Create project  -> Opens the Create project modal
+- [✔️] Edit project  -> Opens the Create project modal
+- [ ] Settings
 
 Topbar:
 
-- IsCodementor filter {toggle}
-- Tags filter         {multi-select}
+- [✔️] IsCodementor filter {toggle}
+- [✔️] Tags filter         {multi-select}
 
 Columns:
 
@@ -30,6 +32,6 @@ Columns:
 
 Actions:
 
-- View all details on click -> View/Edit/Create details modal
-- Archive on button press
-- Open project list -> View projects modal
+- [✔️] View all details on click -> View/Edit/Create details modal
+- [ ] Archive on button press
+- [✔️] Open project list -> View projects -> separate list
