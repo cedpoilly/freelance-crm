@@ -1,7 +1,11 @@
-const { DB_HOST, DB_NAME } = require("./database")
+const { DB_HOST, DB_NAME, DB_USER_PASSWORD } = require("./database")
 const mongoose = require('mongoose')
 
-mongoose.connect(`mongodb://${DB_HOST}/${DB_NAME}`, { useNewUrlParser: true })
+const connectionString = process.env.NODE_ENV === "prod"
+  ? `mongodb+srv://dbuser:${DB_USER_PASSWORD}@cluster0.fmcc5.mongodb.net/?retryWrites=true&w=majority`
+  : `mongodb://${DB_HOST}/${DB_NAME}`
+
+mongoose.connect(connectionString, { useNewUrlParser: true })
 
 mongoose.connection
   .once('open', function connected() { console.log("Connected [Mongoose - MongoDB]") })
