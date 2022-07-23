@@ -29,28 +29,34 @@ function setRoutingDirection({ name: origin }, { name: destination }) {
 
   switch (origin) {
     case "dashboard": {
-      destinationIs("projects") && setDirection("forwards")
       destinationIs("settings") && setDirection("forwards")
+      destinationIs("projects") && setDirection("forwards")
       break
     }
 
     case "projects": {
-      destinationIs("dashboard") && setDirection("backwards")
       destinationIs("settings") && setDirection("forwards")
+      destinationIs("dashboard") && setDirection("backwards")
+      break
+    }
+
+    case "settings": {
+      destinationIs("dashboard") && setDirection("backwards")
+      destinationIs("projects") && setDirection("backwards")
       break
     }
   }
 
   switch (destination) {
     case "dashboard": {
-      originIs("projects") && setDirection("forwards")
       originIs("settings") && setDirection("backwards")
+      originIs("projects") && setDirection("backwards")
       break
     }
 
     case "projects": {
-      originIs("dashboard") && setDirection("backwards")
       originIs("settings") && setDirection("backwards")
+      originIs("dashboard") && setDirection("backwards")
       break
     }
   }
