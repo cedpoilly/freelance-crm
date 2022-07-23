@@ -9,7 +9,8 @@
   "scripts": {
     "start:DB": "bash ./scripts/start-db.sh",
     "devStart": "nodemon app.js",
-    "start": "bash ./scripts/build-front-end.sh && node app.js"
+    "postinstall": "bash ./scripts/build-front-end.sh",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
