@@ -1,5 +1,5 @@
 export async function persistClient(client) {
-  const url = `http://localhost:3000/clients/${client._id}`
+  const url = `/clients/${client._id}`
   client._id = null
   client = Object.entries(client).reduce((acc, current) => {
     const isId = current[0] === "_id"

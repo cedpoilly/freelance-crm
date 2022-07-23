@@ -1,5 +1,5 @@
 export async function persistProject(project) {
-  const url = `http://localhost:3000/projects/${project._id}`
+  const url = `/projects/${project._id}`
   project._id = null
   project = Object.entries(project).reduce((acc, current) => {
     const isId = current[0] === "_id"
