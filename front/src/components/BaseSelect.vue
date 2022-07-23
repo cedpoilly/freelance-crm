@@ -86,8 +86,8 @@ function toggleOptionViaKeyboard(event, option) {
 }
 
 function preventSpacebarScroll(event) {
-  if (event.keyCode === 32) {  
-    event.preventDefault()  
+  if (event.keyCode === 32) {
+    event.preventDefault()
   }
 }
 
@@ -132,6 +132,11 @@ function getUniqueStrings(listOfStrings) {
 function formatListoString(list, joinString) {
   return list.join(joinString)
 }
+
+function captitalise(string) {
+  const [first, ...rest] = string.split("")
+  return `${first.toUpperCase()}${rest.join("")}`
+}
 </script>
 
 <template>
@@ -146,7 +151,7 @@ function formatListoString(list, joinString) {
       </span>
 
       <span class="px-1" v-else>
-        {{ selected }}
+        {{ captitalise(selected) }}
       </span>
 
       <div class="icons-wrapper px-1">
@@ -163,8 +168,9 @@ function formatListoString(list, joinString) {
       </div>
 
       <ul class="options">
-        <li class="option" tabindex="0" v-for="(option, index) in data" :key="index" @click="selectOption(option)" @keydown="preventSpacebarScroll" @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)">
-          {{ option }}
+        <li class="option" tabindex="0" v-for="(option, index) in data" :key="index" @click="selectOption(option)"
+          @keydown="preventSpacebarScroll" @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)">
+          {{ captitalise(option) }}
           <span v-if="props.isMulti && isInSelectedList(option)">✔️</span>
         </li>
       </ul>
