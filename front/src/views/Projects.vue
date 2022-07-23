@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref, toRaw } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import Toolbar from '../components/Toolbar.vue'
 import DataTable from '../components/DataTable.vue'
@@ -9,7 +10,15 @@ import ProjectModal from "../components/ProjectModal.vue"
 
 import { persistProject } from "../api/project"
 
-const { searchStringInList } = useHelpers()
+const route = useRoute()
+
+const { searchStringInList, getCopy } = useHelpers()
+
+let initialData = []
+const data = ref([])
+const currentClient = ref(null)
+const modal = ref(null)
+const selectedProject = ref({})
 
 fetchData()
 
@@ -22,16 +31,27 @@ onMounted(() => {
   }
 })
 
-let initialData = []
-const data = ref([])
-const modal = ref(null)
-const selectedProject = ref({})
 
 async function fetchData() {
-  const response = await fetch("http://localhost:3000/projects/")
+  const clientId = route.params.clientId
+
+  currentClient.value = await fetchClient(clientId)
+
+  const url = clientId 
+    ? `http://localhost:3000/projects?clientId=${clientId}`
+    : `http://localhost:3000/projects/`
+
+  const response = await fetch(url)
+
   const dataFromServer = await response.json()
+
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
+}
+
+async function fetchClient(clientId) {
+  const response = await fetch(`http://localhost:3000/clients/${clientId}`)
+  return await response.json()
 }
 
 function filter(field, value) {
@@ -128,14 +148,14 @@ async function openModal(response) {
   const { mode, index } = response
   switch (mode) {
     case "view": {
-      selectedProject.value = toRaw(data.value[index])
+      selectedProject.value = getCopy(data.value[index])
       const project = await modal.value.open()
       updateLocalData(index, project)
       break
     }
 
     case "edit": {
-      selectedProject.value = toRaw(data.value[index])
+      selectedProject.value = getCopy(data.value[index])
       const project = await modal.value.open()
       updateLocalData(index, project)
       break
@@ -152,14 +172,35 @@ async function openModal(response) {
 
 <template>
   <div class="view-container">
-    <Toolbar @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
+    <Toolbar class="project-toolbar" @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)" />
 
+      <div v-if="currentClient.firstName" class="client-indication">
+        <h2><span class="font-bold">Projects for: </span>{{currentClient.firstName}} {{currentClient.lastName}}</h2>
+      </div>
+
     <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
-    <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
-      No data to show at the moment.
+    <h2 v-else-if="route.params.clientId" class="no-data-message">
+      There are no projects available for this client. 🤷
+    </h2>
+    <h2 v-else class="no-data-message">
+      No data to show at the moment. 🤷
     </h2>
 
     <ProjectModal ref="modal" :project="selectedProject" title="View/Edit the project" />
   </div>
 </template>
+
+<style lang="scss">
+.project-toolbar {
+  @apply mb-10
+}
+
+.no-data-message {
+  @apply text-xl my-10 mx-auto w-full text-center
+}
+
+.client-indication {
+  @apply container mx-auto mt-6 py-5 text-center text-xl
+}
+</style>

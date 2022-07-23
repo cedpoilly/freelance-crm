@@ -65,7 +65,7 @@ function getHeadersFromObject(object, filterList) {
         }
 
         case "title": return {
-          id: "title", name: "Title", width: "w-2/12"
+          id: "title", name: "Title", width: "w-4/12"
         }
 
         case "paymentMethod": return {
@@ -81,9 +81,9 @@ function getHeadersFromObject(object, filterList) {
         }
 
          case "client": return {
-          id: "client", name: "Client", width: "w-2/12",
+          id: "client", name: "Client", width: "w-3/12",
           formatter: (client, row, column) => {
-            return client?.firstName || '<no client 🤷>'
+            return `${client?.firstName} ${client?.lastName}` || '<no client 🤷>'
           }
         }
 
@@ -94,7 +94,7 @@ function getHeadersFromObject(object, filterList) {
   const actionHeader = {
     id: 'actions',
     name: "Actions",
-    width: "w-24",
+    width: "w1/12",
   }
 
   const headers = [...dataHeaders, actionHeader]
@@ -146,7 +146,7 @@ function openEditModal(rowIndex) {
 
 <style lang="scss">
 .data-table {
-  @apply w-11/12 mx-auto mt-6 pt-6 overflow-hidden;
+  @apply w-11/12 mx-auto overflow-hidden;
 }
 
 .header {

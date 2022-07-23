@@ -6,7 +6,8 @@ export default function useHelpers() {
     replaceURLsBase,
     isLastItem,
     replace,
-    searchStringInList
+    searchStringInList,
+    getCopy
   }
 }
 
@@ -93,4 +94,8 @@ function searchStringInList(list, searchString, options = { isObejectList: false
   function isString(input) {
     return !!input.includes && !!input.toLowerCase
   }
+}
+
+function getCopy(data) {
+  return JSON.parse(JSON.stringify(data))
 }

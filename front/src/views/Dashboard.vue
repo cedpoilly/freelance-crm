@@ -9,7 +9,7 @@ import ClientModal from "../components/ClientModal.vue"
 
 import { persistClient } from "../api/client"
 
-const { searchStringInList } = useHelpers()
+const { searchStringInList, getCopy } = useHelpers()
 
 fetchData()
 
@@ -113,14 +113,14 @@ async function openModal(response) {
   const { mode, index } = response
   switch (mode) {
     case "view": {
-      selectedClient.value = data.value[index]
+      selectedClient.value = getCopy(data.value[index])
       const client = await modal.value.open()
       updateLocalData(index, client)
       break
     }
 
     case "edit": {
-      selectedClient.value = data.value[index]
+      selectedClient.value = getCopy(data.value[index])
       const client = await modal.value.open()
       updateLocalData(index, client)
       break
@@ -137,7 +137,7 @@ async function openModal(response) {
 
 <template>
   <div class="view-container">
-    <Toolbar @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
+    <Toolbar class="client-toolbar" @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)" />
 
     <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
@@ -148,3 +148,9 @@ async function openModal(response) {
     <ClientModal ref="modal" :client="selectedClient" title="View/Edit the client" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.client-toolbar {
+  @apply mb-10
+}
+</style>

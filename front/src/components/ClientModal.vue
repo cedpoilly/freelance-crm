@@ -63,7 +63,7 @@ async function setIsOpen(shouldOpen) {
 <template>
   <BaseModal v-if="isOpen" width="!w-[46rem]" tabindex="0" actions-push-left="mr-6" :is-default-actions="true"
     role="dialog" ref="dialog" key="EDIT_CLIENT_DIALOG">
-    <template #title>
+    <template #title class="tile-container">
       {{ currentAction }} client
       <span v-if="isEditing">
         '
@@ -71,14 +71,17 @@ async function setIsOpen(shouldOpen) {
           {{ props.client?.firstName }}
           {{ props.client?.lastName }}
         </span>'
+
+        <router-link :to="`/projects/${props.client._id}`" class="see-projects-link">See projects</router-link>
       </span>
     </template>
 
     <template #content>
       <form class="client-form container">
         <div class="form-group">
-          <BaseInput :value="props.client.firstName" data-ref="first-input" class="first-name" field-name="firstname" label="First Name"
-            data-cy="edit-client-firstname" @input="updateClient('firstName', $event.target.value)" />
+          <BaseInput :value="props.client.firstName" data-ref="first-input" class="first-name" field-name="firstname"
+            label="First Name" data-cy="edit-client-firstname"
+            @input="updateClient('firstName', $event.target.value)" />
         </div>
 
         <div class="form-group">
@@ -141,5 +144,13 @@ async function setIsOpen(shouldOpen) {
 
 .client-name-input {
   @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
+}
+
+.modal-title {
+  @apply flex justify-between
+}
+
+.see-projects-link {
+  @apply link inline-block self-end
 }
 </style>
