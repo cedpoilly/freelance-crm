@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start:DB": "bash ./scripts/start-db.sh",
     "devStart": "nodemon app.js"
   },
   "repository": {
