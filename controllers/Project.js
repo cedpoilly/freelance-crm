@@ -43,8 +43,8 @@ router.route("/:id")
 
   .put(async function projectPutHandler(req, res) {
     const { id } = req.params
-    const projects = await Project.updateOne({ id })
-    res.send(projects)
+    const updateResponse = await Project.updateOne({ _id: id }, { ...req.body })
+    res.send(updateResponse)
   })
 
   .delete(async function projectDeleteHandler(req, res) {
