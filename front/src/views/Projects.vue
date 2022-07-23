@@ -9,6 +9,7 @@ import useHelpers from "../app/helpers"
 import ProjectModal from "../components/ProjectModal.vue"
 
 import { persistProject } from "../api/project"
+import { computed } from '@vue/reactivity'
 
 const route = useRoute()
 
@@ -19,6 +20,8 @@ const data = ref([])
 const currentClient = ref(null)
 const modal = ref(null)
 const selectedProject = ref({})
+
+const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
 
 fetchData()
 
@@ -37,7 +40,7 @@ async function fetchData() {
 
   currentClient.value = await fetchClient(clientId)
 
-  const url = clientId 
+  const url = clientId
     ? `http://localhost:3000/projects?clientId=${clientId}`
     : `http://localhost:3000/projects/`
 
@@ -172,12 +175,12 @@ async function openModal(response) {
 
 <template>
   <div class="view-container">
-    <Toolbar class="project-toolbar" @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
-      @selected-tags="filter('tags', $event)" />
+    <Toolbar class="project-toolbar" @search-input="filterData"
+      @is-from-codementor="filter('is-from-codementor', $event)" @selected-tags="filter('tags', $event)" />
 
-      <div v-if="currentClient.firstName" class="client-indication">
-        <h2><span class="font-bold">Projects for: </span>{{currentClient.firstName}} {{currentClient.lastName}}</h2>
-      </div>
+    <div v-if="hasCurrentClient" class="client-indication">
+      <h2><span class="font-bold">Projects for: </span>{{ currentClient.firstName }} {{ currentClient.lastName }}</h2>
+    </div>
 
     <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
     <h2 v-else-if="route.params.clientId" class="no-data-message">
