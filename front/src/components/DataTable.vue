@@ -11,6 +11,14 @@ const props = defineProps({
 
 const emits = defineEmits(["open-modal"])
 
+const dataTable = ref(null)
+
+function focus() {
+  dataTable.value.focus()
+}
+
+defineExpose({ focus })
+
 const { dataHeaders, headers } = getHeadersFromList(props.data)
 const data = ref([])
 
@@ -76,11 +84,11 @@ function getHeadersFromObject(object, filterList) {
           }
         }
 
-         case "budget": return {
+        case "budget": return {
           id: "budget", name: "Budget", width: "w-2/12"
         }
 
-         case "client": return {
+        case "client": return {
           id: "client", name: "Client", width: "w-3/12",
           formatter: (client, row, column) => {
             return `${client?.firstName} ${client?.lastName}` || '<no client 🤷>'
@@ -118,7 +126,7 @@ function openEditModal(rowIndex) {
 </script>
 
 <template>
-  <div id="datatable" class="data-table">
+  <div id="datatable" ref="dataTable" tabindex="0" class="data-table">
     <div class="header">
       <span :class="header.width" class="header-cell" v-for="(header, index) in headers" :key="index">{{
           header.name
@@ -129,7 +137,7 @@ function openEditModal(rowIndex) {
       <div class="table-body-row flex hover:scale-101" title="Click to view all details." v-for="(row, index) in data"
         :key="index" @click="openViewModal(index)">
         <span class="data-cell" :class="headers[cellIndex].width" v-for="(cell, cellIndex) in row">{{
-            headers[cellIndex].formatter 
+            headers[cellIndex].formatter
               ? headers[cellIndex].formatter(cell)
               : cell
         }}

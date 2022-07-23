@@ -7,7 +7,9 @@ export default function useHelpers() {
     isLastItem,
     replace,
     searchStringInList,
-    getCopy
+    getCopy,
+    ctrlPlus,
+    keyPushed
   }
 }
 
@@ -98,4 +100,16 @@ function searchStringInList(list, searchString, options = { isObejectList: false
 
 function getCopy(data) {
   return JSON.parse(JSON.stringify(data))
+}
+
+function ctrlPlus(event, expectedKey, callback) {
+  const doesNotMatch = !event.ctrlKey || event.key !== expectedKey
+  if (doesNotMatch) { return }
+  callback()
+}
+
+function keyPushed(event, expectedKey, callback) {
+  const doesNotMatch = event.key !== expectedKey
+  if (doesNotMatch) { return }
+  callback()
 }

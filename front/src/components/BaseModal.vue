@@ -1,5 +1,3 @@
-
-
 <script setup>
 import { getCurrentInstance } from 'vue'
 import BaseCloseButton from './BaseCloseButton.vue'

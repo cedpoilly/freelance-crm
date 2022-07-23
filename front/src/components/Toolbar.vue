@@ -6,8 +6,17 @@ import BaseSearchInput from './BaseSearchInput.vue'
 
 const emits = defineEmits(["search-input", "is-from-codementor", "selected-tags"])
 
+defineExpose({focusSearch})
+
+const searchInput = ref(null)
+
 const tagList = ["JavaScript", "HTML", "CSS", "Vue.js", "Front-End", "Back-end", "Node.js", "Express.js", "MongoDB", "Mongoose"]
 const isCodeMentor = ref(false)
+
+
+function focusSearch() {
+  searchInput.value.focus()
+}
 
 function search(event) {
   const searchString = event.target.value
@@ -30,7 +39,7 @@ function filterViaTags(options) {
 
     <div class="filters">
       <form @submit.prevent class="filter">
-        <BaseSearchInput label="Search" field-name="search" placeholder="Search any field" @input="search($event)" />
+        <BaseSearchInput label="Search" ref="searchInput" field-name="search" placeholder="Search any field" @input="search($event)" />
       </form>
 
       <form @submit.prevent class="filter">

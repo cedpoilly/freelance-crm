@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
   label: { type: String, required: true },
   fieldName: { type: String, required: true },
@@ -7,6 +9,12 @@ const props = defineProps({
 
 const emits = defineEmits(["input"])
 
+const input = ref()
+function focus() {
+  input.value.focus()
+}
+
+defineExpose({ focus })
 
 function search(searchString) {
   emits("input", searchString)
@@ -16,7 +24,7 @@ function search(searchString) {
 <template>
   <label class="base-search" :for="props.fieldName">
     <span class="base-search-label">Search </span>
-    <input :id="props.label" :name="props.label" type="text" class="base-search-input" @input="search($event)">
+    <input :id="props.label" :name="props.label" ref="input" type="text" class="base-search-input" @input="search($event)">
   </label>
 </template>
 

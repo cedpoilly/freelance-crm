@@ -1,6 +1,15 @@
 <script setup>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
+
+const firstRoute = ref(null)
+
+function focus() {
+  firstRoute.value.$el.focus()
+}
+
+defineExpose({ focus })
 
 function isActiveRoute(routeName) {
   return route.name === routeName
@@ -10,7 +19,8 @@ function isActiveRoute(routeName) {
 <template>
   <nav class="navbar">
     <div class="routes">
-      <router-link :class="{ active: isActiveRoute('dashboard') }" class="nav-route" to="/dashboard">Dashboard
+      <router-link ref="firstRoute" :class="{ active: isActiveRoute('dashboard') }" class="nav-route" to="/dashboard">
+        Dashboard
       </router-link>
       <router-link :class="{ active: isActiveRoute('projects') }" class="nav-route" to="/projects">Projects
       </router-link>

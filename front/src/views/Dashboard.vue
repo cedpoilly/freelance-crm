@@ -9,7 +9,9 @@ import ClientModal from "../components/ClientModal.vue"
 
 import { persistClient } from "../api/client"
 
-const { searchStringInList, getCopy } = useHelpers()
+const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
+
+const emits = defineEmits(["focus-navbar"])
 
 fetchData()
 
@@ -17,13 +19,17 @@ onMounted(() => {
   document.onkeydown = async (event) => {
     await saveOnCtrlS(event)
     await saveOnCtrlEnter(event)
-    showHintsOnCtrlH(event)
+    ctrlPlus(event, "F", focusSearch)
+    ctrlPlus(event, "L", focusNavbar)
+    ctrlPlus(event, "H", focusDataTable)
   }
 })
 
 let initialData = []
 const data = ref([])
 const modal = ref(null)
+const toolbar = ref(null)
+const dataTable = ref(null)
 const selectedClient = ref({})
 
 async function fetchData() {
@@ -84,11 +90,16 @@ async function saveOnCtrlEnter(event) {
   }
 }
 
-function showHintsOnCtrlH(event) {
-  if (event.ctrlKey && event.key === 'h') {
-    event.preventDefault()
-    alert("Use [ctrl + s] or [ctrl + enter] to save the updates.")
-  }
+function focusSearch() {
+  toolbar.value.focusSearch()
+}
+
+function focusNavbar() {
+  emits("focus-navbar")
+}
+
+function focusDataTable() {
+  dataTable.value.focus()
 }
 
 async function updateLocalData(index, client) {
@@ -137,10 +148,10 @@ async function openModal(response) {
 
 <template>
   <div class="view-container">
-    <Toolbar class="client-toolbar" @search-input="filterData" @is-from-codementor="filter('is-from-codementor', $event)"
-      @selected-tags="filter('tags', $event)" />
+    <Toolbar ref="toolbar" class="client-toolbar" @search-input="filterData"
+      @is-from-codementor="filter('is-from-codementor', $event)" @selected-tags="filter('tags', $event)" />
 
-    <DataTable v-if="data.length" :data="data" @open-modal="openModal" />
+    <DataTable v-if="data.length" :data="data" ref="dataTable" @open-modal="openModal" />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
       No data to show at the moment.
     </h2>
