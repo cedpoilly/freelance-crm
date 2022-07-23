@@ -47,7 +47,7 @@ function filterViaTags(options) {
 
 <style lang="scss" scoped>
 .toolbar {
-  @apply w-3/4 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md bg-gray-100
+  @apply w-11/12 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md bg-gray-100
 }
 
 .toolbar-title {
