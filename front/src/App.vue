@@ -25,9 +25,6 @@
       keyPushed(event, "Escape", closeModal)
       ctrlPlus(event, "i", showHints)
     }
-
-    const val = 0 / 0
-    console.log(val.test.est)
   })
 
   function focusNavbar() {
