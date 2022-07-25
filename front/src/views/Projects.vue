@@ -177,25 +177,16 @@
     fetchTableData()
   }
 
-  function stripProject(project) {
-    project.client = { _id: project.client._id }
-    return project
-  }
-
   async function openModal(response) {
     const { mode, index } = response
     switch (mode) {
       case "view": {
-        selectedProject.value = getCopy(data.value[index])
-        const project = await modal.value.open()
-        updateItemAndFetchData(index, project)
+        editItemViaModal(index)
         break
       }
 
       case "edit": {
-        selectedProject.value = getCopy(data.value[index])
-        const project = await modal.value.open()
-        updateItemAndFetchData(index, project)
+        editItemViaModal(index)
         break
       }
 
@@ -211,14 +202,32 @@
     }
   }
 
+  // * same as `viewClient` client for now; subject to change soon.
+  async function editItemViaModal(itemIndex) {
+    selectedProject.value = getCopy(data.value[itemIndex])
+    const project = await modal.value.open()
+
+    const hasNoProject = !project
+    if (hasNoProject) {
+      return
+    }
+
+    await updateItemAndFetchData(itemIndex, project)
+
+    notify({
+      title: "Successfully Saved!",
+      message: `<span class="italic font-bold">${project.title}</span> was updated!`,
+    })
+  }
+
   async function createItemViaModal(previousItem = null) {
     // * When back-end fails to create the client,
     // * we re-open the modal with the same data
     selectedProject.value = previousItem || new Project()
     const project = await modal.value.open()
 
-    const hasNoClient = !project
-    if (hasNoClient) {
+    const hasNoProject = !project
+    if (hasNoProject) {
       return
     }
 
@@ -252,7 +261,7 @@
       @selected-tags="filter('tags', $event)"
     />
 
-    <div v-if="hasCurrentClient" class="client-indication">
+    <div v-if="hasCurrentClient" class="project-indication">
       <h2>
         <span class="font-bold">Projects for: </span
         >{{ currentClient.firstName }} {{ currentClient.lastName }}
@@ -287,7 +296,7 @@
     @apply text-xl my-10 mx-auto w-full text-center;
   }
 
-  .client-indication {
+  .project-indication {
     @apply container mx-auto mt-6 py-5 text-center text-xl;
   }
 </style>
