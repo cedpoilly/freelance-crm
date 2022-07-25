@@ -1,5 +1,11 @@
+const baseURL = import.meta.env.VITE_BASE_URL
+
+export async function getClients() {
+  return fetch(`${baseURL}/clients/`)
+}
+
 export async function persistClient(client) {
-  const url = `/clients/${client._id}`
+  const url = `${baseURL}/clients/${client._id}`
   client._id = null
   client = Object.entries(client).reduce((acc, current) => {
     const isId = current[0] === "_id"

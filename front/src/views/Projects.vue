@@ -1,15 +1,19 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted, ref } from "vue"
+import { useRoute } from "vue-router"
+import { computed } from "@vue/reactivity"
 
-import Toolbar from '../components/Toolbar.vue'
-import DataTable from '../components/DataTable.vue'
+import Toolbar from "../components/Toolbar.vue"
+import DataTable from "../components/DataTable.vue"
 
 import useHelpers from "../app/helpers"
 import ProjectModal from "../components/ProjectModal.vue"
 
-import { persistProject } from "../api/project"
-import { computed } from '@vue/reactivity'
+import {
+  getProjects,
+  getProjectsByClientId,
+  persistProject,
+} from "../api/project"
 
 const route = useRoute()
 
@@ -30,7 +34,7 @@ const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
 fetchData()
 
 onMounted(() => {
-  document.onkeydown = async (event) => {
+  document.onkeydown = async event => {
     await saveOnCtrlS(event)
     await saveOnCtrlEnter(event)
     closeOnEscape(event)
@@ -44,13 +48,9 @@ onMounted(() => {
 async function fetchData() {
   const clientId = route.params.clientId
 
-  currentClient.value = await fetchClient(clientId)
+  const call = clientId ? getProjectsByClientId(clientId) : getProjects()
 
-  const url = clientId
-    ? `/projects?clientId=${clientId}`
-    : `/projects/`
-
-  const response = await fetch(url)
+  const response = await call
 
   const dataFromServer = await response.json()
 
@@ -66,17 +66,22 @@ async function fetchClient(clientId) {
 function filter(field, value) {
   switch (field) {
     case "is-from-codementor": {
-      if (!value) { return data.value = initialData }
+      if (!value) {
+        return (data.value = initialData)
+      }
 
       data.value = initialData.filter(item => item.isCodementor === value)
       break
     }
 
     case "tags": {
-      if (!value || !value.length) { return data.value = initialData }
+      if (!value || !value.length) {
+        return (data.value = initialData)
+      }
 
-      const filteredData = initialData
-        .filter(item => value.every(tag => !!item.tags.includes(tag)))
+      const filteredData = initialData.filter(item =>
+        value.every(tag => !!item.tags.includes(tag))
+      )
 
       data.value = filteredData || initialData
       break
@@ -96,26 +101,28 @@ function filterData(searchString) {
     return
   }
 
-  const filteredList = searchStringInList(initialData, searchString, { isObejectList: true })
+  const filteredList = searchStringInList(initialData, searchString, {
+    isObejectList: true,
+  })
   data.value = [...filteredList]
 }
 
 async function saveOnCtrlS(event) {
-  if (event.ctrlKey && event.key === 's') {
+  if (event.ctrlKey && event.key === "s") {
     event.preventDefault()
     await modal.value.close()
   }
 }
 
 async function saveOnCtrlEnter(event) {
-  if (event.ctrlKey && event.key === 'Enter') {
+  if (event.ctrlKey && event.key === "Enter") {
     event.preventDefault()
     await modal.value.close()
   }
 }
 
 async function closeOnEscape(event) {
-  if (event.key === 'Escape') {
+  if (event.key === "Escape") {
     event.preventDefault()
     await modal.value.cancelAndClose()
   }
@@ -135,7 +142,9 @@ function focusDataTable() {
 
 async function updateLocalData(index, project) {
   const hasNoProject = !project
-  if (hasNoProject) { return }
+  if (hasNoProject) {
+    return
+  }
 
   const strippedProject = stripProject(project)
 
@@ -180,41 +189,55 @@ async function openModal(response) {
       break
     }
   }
-
 }
 </script>
 
 <template>
   <div class="view-container">
-    <Toolbar class="project-toolbar" ref="toolbar" @search-input="filterData"
-      @is-from-codementor="filter('is-from-codementor', $event)" @selected-tags="filter('tags', $event)" />
+    <Toolbar
+      class="project-toolbar"
+      ref="toolbar"
+      @search-input="filterData"
+      @is-from-codementor="filter('is-from-codementor', $event)"
+      @selected-tags="filter('tags', $event)"
+    />
 
     <div v-if="hasCurrentClient" class="client-indication">
-      <h2><span class="font-bold">Projects for: </span>{{ currentClient.firstName }} {{ currentClient.lastName }}</h2>
+      <h2>
+        <span class="font-bold">Projects for: </span
+        >{{ currentClient.firstName }} {{ currentClient.lastName }}
+      </h2>
     </div>
 
-    <DataTable v-if="data.length" ref="dataTable" :data="data" @open-modal="openModal" />
+    <DataTable
+      v-if="data.length"
+      ref="dataTable"
+      :data="data"
+      @open-modal="openModal"
+    />
     <h2 v-else-if="route.params.clientId" class="no-data-message">
       There are no projects available for this client. 🤷
     </h2>
-    <h2 v-else class="no-data-message">
-      No data to show at the moment. 🤷
-    </h2>
+    <h2 v-else class="no-data-message">No data to show at the moment. 🤷</h2>
 
-    <ProjectModal ref="modal" :project="selectedProject" title="View/Edit the project" />
+    <ProjectModal
+      ref="modal"
+      :project="selectedProject"
+      title="View/Edit the project"
+    />
   </div>
 </template>
 
 <style lang="scss">
 .project-toolbar {
-  @apply mb-10
+  @apply mb-10;
 }
 
 .no-data-message {
-  @apply text-xl my-10 mx-auto w-full text-center
+  @apply text-xl my-10 mx-auto w-full text-center;
 }
 
 .client-indication {
-  @apply container mx-auto mt-6 py-5 text-center text-xl
+  @apply container mx-auto mt-6 py-5 text-center text-xl;
 }
 </style>

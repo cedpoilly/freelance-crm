@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from "vue"
 
-import Toolbar from '../components/Toolbar.vue'
-import DataTable from '../components/DataTable.vue'
+import Toolbar from "../components/Toolbar.vue"
+import DataTable from "../components/DataTable.vue"
 
 import useHelpers from "../app/helpers"
 import ClientModal from "../components/ClientModal.vue"
 
-import { persistClient } from "../api/client"
+import { getClients, persistClient } from "../api/client"
 
 const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
 
@@ -16,7 +16,7 @@ const emits = defineEmits(["focus-navbar"])
 fetchData()
 
 onMounted(() => {
-  document.onkeydown = async (event) => {
+  document.onkeydown = async event => {
     await saveOnCtrlS(event)
     await saveOnCtrlEnter(event)
     ctrlPlus(event, "F", focusSearch)
@@ -33,7 +33,7 @@ const dataTable = ref(null)
 const selectedClient = ref({})
 
 async function fetchData() {
-  const response = await fetch("/clients/")
+  const response = await getClients()
   const dataFromServer = await response.json()
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
@@ -42,17 +42,22 @@ async function fetchData() {
 function filter(field, value) {
   switch (field) {
     case "is-from-codementor": {
-      if (!value) { return data.value = initialData }
+      if (!value) {
+        return (data.value = initialData)
+      }
 
       data.value = initialData.filter(item => item.isCodementor === value)
       break
     }
 
     case "tags": {
-      if (!value || !value.length) { return data.value = initialData }
+      if (!value || !value.length) {
+        return (data.value = initialData)
+      }
 
-      const filteredData = initialData
-        .filter(item => value.every(tag => !!item.tags.includes(tag)))
+      const filteredData = initialData.filter(item =>
+        value.every(tag => !!item.tags.includes(tag))
+      )
 
       data.value = filteredData || initialData
       break
@@ -72,19 +77,21 @@ function filterData(searchString) {
     return
   }
 
-  const filteredList = searchStringInList(initialData, searchString, { isObejectList: true })
+  const filteredList = searchStringInList(initialData, searchString, {
+    isObejectList: true,
+  })
   data.value = [...filteredList]
 }
 
 async function saveOnCtrlS(event) {
-  if (event.ctrlKey && event.key === 's') {
+  if (event.ctrlKey && event.key === "s") {
     event.preventDefault()
     await modal.value.close()
   }
 }
 
 async function saveOnCtrlEnter(event) {
-  if (event.ctrlKey && event.key === 'Enter') {
+  if (event.ctrlKey && event.key === "Enter") {
     event.preventDefault()
     await modal.value.close()
   }
@@ -104,7 +111,9 @@ function focusDataTable() {
 
 async function updateLocalData(index, client) {
   const hasNoClient = !client
-  if (hasNoClient) { return }
+  if (hasNoClient) {
+    return
+  }
 
   const response = await persistClient(client)
   const { acknowledged } = response
@@ -142,26 +151,39 @@ async function openModal(response) {
       break
     }
   }
-
 }
 </script>
 
 <template>
   <div class="view-container">
-    <Toolbar ref="toolbar" class="client-toolbar" @search-input="filterData"
-      @is-from-codementor="filter('is-from-codementor', $event)" @selected-tags="filter('tags', $event)" />
+    <Toolbar
+      ref="toolbar"
+      class="client-toolbar"
+      @search-input="filterData"
+      @is-from-codementor="filter('is-from-codementor', $event)"
+      @selected-tags="filter('tags', $event)"
+    />
 
-    <DataTable v-if="data.length" :data="data" ref="dataTable" @open-modal="openModal" />
+    <DataTable
+      v-if="data.length"
+      :data="data"
+      ref="dataTable"
+      @open-modal="openModal"
+    />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
       No data to show at the moment.
     </h2>
 
-    <ClientModal ref="modal" :client="selectedClient" title="View/Edit the client" />
+    <ClientModal
+      ref="modal"
+      :client="selectedClient"
+      title="View/Edit the client"
+    />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .client-toolbar {
-  @apply mb-10
+  @apply mb-10;
 }
 </style>

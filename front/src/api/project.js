@@ -1,5 +1,15 @@
+const baseURL = import.meta.env.VITE_BASE_URL
+
+export async function getProjects() {
+  return fetch(`${baseURL}/projects/`)
+}
+
+export async function getProjectsByClientId(clientId) {
+  return fetch(`${baseURL}/projects/${clientId}`)
+}
+
 export async function persistProject(project) {
-  const url = `/projects/${project._id}`
+  const url = `${baseURL}/projects/${project._id}`
   project._id = null
   project = Object.entries(project).reduce((acc, current) => {
     const isId = current[0] === "_id"
