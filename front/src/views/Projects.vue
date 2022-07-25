@@ -3,23 +3,31 @@
   import { useRoute } from "vue-router"
   import { computed } from "@vue/reactivity"
 
+  import Project from "../models/Project"
+
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
-
-  import useHelpers from "../app/helpers"
+  import BaseAlertModal from "../components/BaseAlertModal.vue"
   import ProjectModal from "../components/ProjectModal.vue"
 
+  import useHelpers from "../app/helpers"
+  import useAlert from "../app/alert"
+
+  import { getClientById } from "../api/client"
   import {
     getProjects,
     getProjectsByClientId,
-    persistProject,
+    createProject,
+    updateProject,
   } from "../api/project"
 
   const route = useRoute()
 
+  const { alert } = useAlert()
+
   const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
 
-  const emits = defineEmits(["focus-navbar"])
+  const emits = defineEmits(["focus-navbar", "notification"])
 
   let initialData = []
   const data = ref([])
@@ -42,6 +50,7 @@
       ctrlPlus(event, "F", focusSearch)
       ctrlPlus(event, "L", focusNavbar)
       ctrlPlus(event, "H", focusDataTable)
+      ctrlPlus(event, ">", openCreateModal)
     }
   })
 
@@ -59,7 +68,7 @@
   }
 
   async function fetchClient(clientId) {
-    const response = await fetch(`/clients/${clientId}`)
+    const response = await getClientById(clientId)
     return await response.json()
   }
 
@@ -140,15 +149,21 @@
     dataTable.value.focus()
   }
 
-  async function updateLocalData(index, project) {
+  function notify({ title, message }) {
+    emits("notification", { title, message })
+  }
+
+  function openCreateModal() {
+    openModal({ mode: "create" })
+  }
+
+  async function updateItemAndFetchData(index, project) {
     const hasNoProject = !project
     if (hasNoProject) {
       return
     }
 
-    const strippedProject = stripProject(project)
-
-    const response = await persistProject(strippedProject)
+    const response = await updateProject(project)
     const { acknowledged } = response
     if (!acknowledged) {
       alert("Project was not modified!")
@@ -173,14 +188,19 @@
       case "view": {
         selectedProject.value = getCopy(data.value[index])
         const project = await modal.value.open()
-        updateLocalData(index, project)
+        updateItemAndFetchData(index, project)
         break
       }
 
       case "edit": {
         selectedProject.value = getCopy(data.value[index])
         const project = await modal.value.open()
-        updateLocalData(index, project)
+        updateItemAndFetchData(index, project)
+        break
+      }
+
+      case "create": {
+        createItemViaModal()
         break
       }
 
@@ -190,13 +210,43 @@
       }
     }
   }
+
+  async function createItemViaModal(previousItem = null) {
+    // * When back-end fails to create the client,
+    // * we re-open the modal with the same data
+    selectedProject.value = previousItem || new Project()
+    const project = await modal.value.open()
+
+    const hasNoClient = !project
+    if (hasNoClient) {
+      return
+    }
+
+    try {
+      const response = await createProject(project)
+      notify({
+        title: "Successfully created!",
+        message: `<span class="italic font-bold">${project.title}</span> was created!`,
+      })
+    } catch (error) {
+      await alert({
+        title: "⚠️ OOPS! ⚠️",
+        text: `Failed to create the project. Please try again.`,
+      })
+
+      return createItemViaModal(project)
+    }
+
+    await fetchTableData()
+  }
 </script>
 
 <template>
   <div class="view-container">
     <Toolbar
-      class="project-toolbar"
       ref="toolbar"
+      class="project-toolbar"
+      @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)"
@@ -228,7 +278,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .project-toolbar {
     @apply mb-10;
   }

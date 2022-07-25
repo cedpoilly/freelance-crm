@@ -6,6 +6,10 @@ export async function getClients() {
   return fetch(`${baseURL}/clients/`)
 }
 
+export async function getClientById(clientId) {
+  return fetch(`${baseURL}/clients/${clientId}`)
+}
+
 export async function createClient(client) {
   const url = `${baseURL}/clients/`
 

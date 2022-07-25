@@ -246,8 +246,8 @@
 
     <DataTable
       v-if="data.length"
-      :data="data"
       ref="dataTable"
+      :data="data"
       @open-modal="openModal"
     />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">

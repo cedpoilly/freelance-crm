@@ -1,5 +1,7 @@
 const baseURL = import.meta.env.VITE_BASE_URL
 
+import { getConfig, stripItemId } from "./config"
+
 export async function getProjects() {
   return fetch(`${baseURL}/projects/`)
 }
@@ -8,24 +10,26 @@ export async function getProjectsByClientId(clientId) {
   return fetch(`${baseURL}/projects/${clientId}`)
 }
 
-export async function persistProject(project) {
-  const url = `${baseURL}/projects/${project._id}`
-  project._id = null
-  project = Object.entries(project).reduce((acc, current) => {
-    const isId = current[0] === "_id"
-    if (isId) { return acc }
-    return acc = { ...acc, [current[0]]: current[1] }
-  }, {})
+export async function createProject(client) {
+  const url = `${baseURL}/projects/`
 
   const response = await fetch(
     url,
-    {
-      method: "PUT",
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(project)
-    })
+    getConfig(client, "POST")
+  )
+
+  return await response.json()
+}
+
+export async function updateProject(project) {
+  const url = `${baseURL}/projects/${project._id}`
+
+  const strippedClient = stripItemId(client)
+
+  const response = await fetch(
+    url,
+    getConfig(strippedClient, "PUT")
+  )
+
   return await response.json()
 }
