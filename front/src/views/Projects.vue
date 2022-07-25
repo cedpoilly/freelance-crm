@@ -31,7 +31,7 @@
 
   const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
 
-  fetchData()
+  fetchTableData()
 
   onMounted(() => {
     document.onkeydown = async event => {
@@ -45,7 +45,7 @@
     }
   })
 
-  async function fetchData() {
+  async function fetchTableData() {
     const clientId = route.params.clientId
 
     const call = clientId ? getProjectsByClientId(clientId) : getProjects()
@@ -159,7 +159,7 @@
 
     // * No need to ensure flow of events as it is the last action
     // * Hence we do not use the await here
-    fetchData()
+    fetchTableData()
   }
 
   function stripProject(project) {

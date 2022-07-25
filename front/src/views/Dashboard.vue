@@ -1,19 +1,29 @@
 <script setup>
   import { onMounted, ref } from "vue"
 
+  import Client from "../models/Client"
+
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
-
-  import useHelpers from "../app/helpers"
+  import AddItemButton from "../components/AddItemButton.vue"
+  import BaseAlertModal from "../components/BaseAlertModal.vue"
   import ClientModal from "../components/ClientModal.vue"
 
-  import { getClients, persistClient } from "../api/client"
+  import useAlert from "../app/alert"
+
+  import useHelpers from "../app/helpers"
+
+  import { getClients, createClient, updateClient } from "../api/client"
+
+  const { alert } = useAlert()
 
   const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
 
   const emits = defineEmits(["focus-navbar"])
 
-  fetchData()
+  const alertModal = ref(null)
+
+  fetchTableData()
 
   onMounted(() => {
     document.onkeydown = async event => {
@@ -22,6 +32,7 @@
       ctrlPlus(event, "F", focusSearch)
       ctrlPlus(event, "L", focusNavbar)
       ctrlPlus(event, "H", focusDataTable)
+      ctrlPlus(event, ">", openCreateModal)
     }
   })
 
@@ -32,7 +43,7 @@
   const dataTable = ref(null)
   const selectedClient = ref({})
 
-  async function fetchData() {
+  async function fetchTableData() {
     const response = await getClients()
     const dataFromServer = await response.json()
     data.value = [...dataFromServer]
@@ -109,13 +120,17 @@
     dataTable.value.focus()
   }
 
-  async function updateLocalData(index, client) {
+  function openCreateModal() {
+    openModal({ mode: "create" })
+  }
+
+  async function updateItemAndFetchData(index, client) {
     const hasNoClient = !client
     if (hasNoClient) {
       return
     }
 
-    const response = await persistClient(client)
+    const response = await updateClient(client)
     const { acknowledged } = response
     if (!acknowledged) {
       alert("Client was not modified!")
@@ -126,31 +141,83 @@
 
     // * No need to ensure flow of events as it is the last action
     // * Hence we do not use the await here
-    fetchData()
+    fetchTableData()
   }
 
   async function openModal(response) {
     const { mode, index } = response
     switch (mode) {
       case "view": {
-        selectedClient.value = getCopy(data.value[index])
-        const client = await modal.value.open()
-        updateLocalData(index, client)
+        viewClient(index)
         break
       }
 
       case "edit": {
-        selectedClient.value = getCopy(data.value[index])
-        const client = await modal.value.open()
-        updateLocalData(index, client)
+        editClientViaModal(index)
+        break
+      }
+
+      case "create": {
+        createNewClientViaModal()
         break
       }
 
       default: {
+        debugger
         console.log("Open modal mode is not recognised. 🤷‍♂️")
         break
       }
     }
+  }
+
+  async function viewClient(clientIndex) {
+    selectedClient.value = getCopy(data.value[clientIndex])
+    const client = await modal.value.open()
+
+    const hasNoClient = !client
+    if (hasNoClient) {
+      return
+    }
+
+    await updateItemAndFetchData(index, client)
+  }
+
+  // * same as `viewClient` client for now; subject to change soon.
+  async function editClientViaModal(clientIndex) {
+    selectedClient.value = getCopy(data.value[clientIndex])
+    const client = await modal.value.open()
+
+    const hasNoClient = !client
+    if (hasNoClient) {
+      return
+    }
+
+    await updateItemAndFetchData(index, client)
+  }
+
+  async function createNewClientViaModal(previousClient = null) {
+    // * When back-end fails to create the client,
+    // * we re-open the modal with the same data
+    selectedClient.value = previousClient || new Client()
+    const client = await modal.value.open()
+
+    const hasNoClient = !client
+    if (hasNoClient) {
+      return
+    }
+
+    try {
+      const response = await createClient(client)
+    } catch (error) {
+      await alert({
+        title: "⚠️ OOPS! ⚠️",
+        text: `Failed to create the client. Please try again.`,
+      })
+
+      return createNewClientViaModal(client)
+    }
+
+    await fetchTableData()
   }
 </script>
 
@@ -178,6 +245,12 @@
       ref="modal"
       :client="selectedClient"
       title="View/Edit the client"
+    />
+
+    <AddItemButton
+      class="mb-16"
+      :can-add="true"
+      @add-item="openModal({ mode: 'create' })"
     />
   </div>
 </template>

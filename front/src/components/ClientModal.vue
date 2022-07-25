@@ -130,6 +130,17 @@
 
         <div class="form-group">
           <BaseInput
+            :value="props.client.email"
+            class="email"
+            field-name="email"
+            label="Email"
+            data-cy="edit-client-email"
+            @input="updateClient('email', $event.target.value)"
+          />
+        </div>
+
+        <div class="form-group">
+          <BaseInput
             :value="props.client.whatsAppNumber"
             class="whatsapp-number"
             field-name="whatsappnumber"
