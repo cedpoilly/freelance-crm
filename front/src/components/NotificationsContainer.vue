@@ -50,7 +50,7 @@
 <style lang="scss" scoped>
   .notifications {
     z-index: 1;
-    @apply absolute px-16 w-full h-96 top-20 right-0 justify-end grid gap-4;
+    @apply absolute px-16 min-w-0 h-0 top-20 right-0 justify-end grid gap-4;
     grid-template-rows: repeat(6, 5rem);
   }
 
