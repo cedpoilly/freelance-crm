@@ -212,24 +212,24 @@
   }
 
   .header {
-    @apply w-full flex h-16 border-t border-b overflow-hidden;
+    @apply w-full flex h-20 bg-gray-200 border-t border-b overflow-hidden text-lg;
   }
 
   .header-cell,
   .data-cell {
-    @apply px-3 py-2 flex items-center;
+    @apply px-10 py-2 flex items-center;
   }
 
   .header-cell {
-    @apply font-bold bg-gray-100;
+    @apply font-bold;
   }
 
   .data-cell {
-    @apply bg-gray-100;
+    @apply h-20;
   }
 
   .table-body {
-    @apply w-full max-h-80 flex flex-col overflow-x-hidden overflow-y-auto;
+    @apply w-full h-[30rem] flex flex-col overflow-x-hidden overflow-y-auto;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -248,7 +248,7 @@
   }
 
   .table-body-row {
-    @apply w-full h-16 border-b transform-gpu ease-in duration-75 cursor-pointer;
+    @apply w-full h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg;
   }
 
   .action-button {

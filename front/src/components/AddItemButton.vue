@@ -1,6 +1,9 @@
 <script setup>
   const emit = defineEmits(["add-item"])
-  const props = defineProps(["canAdd"])
+  const props = defineProps({
+    canAdd: { type: Boolean, required: true },
+    title: { type: String, required: true },
+  })
 
   function emitClicked() {
     emit("add-item")
@@ -10,11 +13,11 @@
 <template>
   <button
     type="button-icon"
-    class="group h-12 absolute bottom-20 right-10 disabled:cursor-not-allowed"
+    class="group h-12 my-auto disabled:cursor-not-allowed"
     data-cy="topic-create-button"
-    title="Create new topic."
-    @click="emitClicked"
+    :title="props.title"
     :disabled="!props.canAdd"
+    @click="emitClicked"
   >
     <svg
       class="button-icon-svg w-12 h-12 bg-white dark:bg-slate-600 rounded-full"

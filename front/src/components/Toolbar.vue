@@ -3,11 +3,13 @@
   import BaseSelect from "./BaseSelect.vue"
   import BaseToggle from "./BaseToggle.vue"
   import BaseSearchInput from "./BaseSearchInput.vue"
+  import AddItemButton from "./AddItemButton.vue"
 
   const emits = defineEmits([
     "search-input",
     "is-from-codementor",
     "selected-tags",
+    "create-new",
   ])
 
   defineExpose({ focusSearch })
@@ -45,6 +47,10 @@
   function filterViaTags(options) {
     emits("selected-tags", options)
   }
+
+  function emitOpenModal() {
+    emits("create-new")
+  }
 </script>
 
 <template>
@@ -79,6 +85,17 @@
           @selected-tags="filterViaTags"
         />
       </form>
+
+      <div class="create-new">
+        <label class="create-new-label">
+          <AddItemButton
+            :can-add="true"
+            title="Create a new client!"
+            @add-item="emitOpenModal"
+          />
+          <span>Create new </span>
+        </label>
+      </div>
     </div>
   </section>
 </template>
@@ -93,23 +110,33 @@
   }
 
   .filters {
-    @apply grid justify-center content-center;
+    @apply grid justify-center content-center items-center;
   }
 
   .filter {
     @apply flex justify-center;
   }
 
+  .create-new {
+    @apply flex h-full items-center justify-self-end cursor-pointer;
+  }
+
+  .create-new-label {
+    @apply flex items-center gap-3 px-3 py-2 cursor-pointer
+    rounded-md
+    hover:font-bold hover:bg-sky-100 active:bg-sky-200;
+  }
+
   @media (min-width: 900px) {
     .filters {
       @apply w-auto mx-auto gap-3;
-      grid-template-columns: repeat(2, minmax(100px, 1fr));
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
     }
   }
 
   @media (min-width: 1368px) {
     .filters {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>

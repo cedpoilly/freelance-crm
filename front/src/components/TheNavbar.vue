@@ -45,11 +45,11 @@
 
 <style lang="scss" scoped>
   .navbar {
-    @apply w-full flex justify-end;
+    @apply w-full h-20 bg-gray-100 flex justify-end;
   }
 
   .routes {
-    @apply px-5 py-4 self-end;
+    @apply my-auto px-5 py-4 self-end;
   }
 
   .nav-route {

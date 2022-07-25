@@ -68,6 +68,12 @@
   <NotificationsContainer :notifications="notifications" />
 </template>
 
-<style>
+<style lang="scss">
   @import "./route-transitions.css";
+
+  html,
+  body,
+  .app {
+    @apply h-full;
+  }
 </style>

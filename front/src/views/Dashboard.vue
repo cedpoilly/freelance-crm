@@ -5,7 +5,6 @@
 
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
-  import AddItemButton from "../components/AddItemButton.vue"
   import BaseAlertModal from "../components/BaseAlertModal.vue"
   import ClientModal from "../components/ClientModal.vue"
 
@@ -239,6 +238,7 @@
     <Toolbar
       ref="toolbar"
       class="client-toolbar"
+      @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)"
@@ -258,12 +258,6 @@
       ref="modal"
       :client="selectedClient"
       title="View/Edit the client"
-    />
-
-    <AddItemButton
-      class="mb-16"
-      :can-add="true"
-      @add-item="openModal({ mode: 'create' })"
     />
   </div>
 </template>
