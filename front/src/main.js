@@ -20,7 +20,7 @@ app.config.errorHandler = async (err, _, info) => {
 In the: "${info}"
   `
 
-  console.trace(message)
+  console.error(message)
 
   await alert({
     title: "⚠️ OOPS! ⚠️",
