@@ -1,38 +1,48 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+  import { getCurrentInstance, onMounted, ref } from "vue"
 
-import useHelpers from './app/helpers'
-import useGlobalState from './app/global-state'
+  import useHelpers from "./app/helpers"
+  import useGlobalState from "./app/global-state"
 
-import TheNavbar from './components/TheNavbar.vue'
-import InfoModal from './components/InfoModal.vue'
+  import BaseAlertModal from "./components/BaseAlertModal.vue"
 
-const { ctrlPlus, keyPushed } = useHelpers()
+  import TheNavbar from "./components/TheNavbar.vue"
+  import InfoModal from "./components/InfoModal.vue"
 
-const { routingDirection } = useGlobalState()
+  import { setInstanceRef } from "./app/alert"
 
-const navbar = ref(null)
+  const { ctrlPlus, keyPushed } = useHelpers()
 
-onMounted(() => {
-  document.onkeyup = async (event) => {
-    keyPushed(event, "Escape", closeModal)
-    ctrlPlus(event, "i", showHints)
+  const { routingDirection } = useGlobalState()
+
+  const navbar = ref(null)
+  const alertModal = ref(null)
+
+  onMounted(() => {
+    setInstanceRef(getCurrentInstance())
+
+    document.onkeyup = async event => {
+      keyPushed(event, "Escape", closeModal)
+      ctrlPlus(event, "i", showHints)
+    }
+
+    const val = 0 / 0
+    console.log(val.test.est)
+  })
+
+  function focusNavbar() {
+    navbar.value.focus()
   }
-})
 
-function focusNavbar() {
-  navbar.value.focus()
-}
+  const helpModal = ref(null)
 
-const helpModal = ref(null)
+  async function closeModal() {
+    await helpModal.value.cancelAndClose()
+  }
 
-async function closeModal() {
-  await helpModal.value.cancelAndClose()
-}
-
-function showHints() {
-  helpModal.value.open()
-}
+  function showHints() {
+    helpModal.value.open()
+  }
 </script>
 
 <template>
@@ -43,10 +53,11 @@ function showHints() {
       <component :is="Component" @focus-navbar="focusNavbar"></component>
     </Transition>
 
+    <BaseAlertModal ref="alertModal" />
     <InfoModal ref="helpModal" :is-alert="true" />
   </router-view>
 </template>
 
 <style>
-@import "./route-transitions.css";
+  @import "./route-transitions.css";
 </style>

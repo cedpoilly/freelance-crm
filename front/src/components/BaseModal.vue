@@ -148,7 +148,7 @@
   }
 
   .modal-content {
-    @apply relative h-full w-full py-9 flex flex-col justify-center items-center;
+    @apply relative h-full w-full py-9 flex flex-col justify-center items-center whitespace-pre-wrap;
   }
 
   .modal-actions {
