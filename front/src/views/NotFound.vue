@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router"
 
 const router = useRouter()
 
@@ -14,4 +14,3 @@ setTimeout(function timerCallback() {
   <h2>Route Not Found</h2>
   <h3>Redirecting to dashboard...</h3>
 </template>
-

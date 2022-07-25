@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref } from "vue"
+import { useRoute } from "vue-router"
 const route = useRoute()
 
 const firstRoute = ref(null)
@@ -19,12 +19,25 @@ function isActiveRoute(routeName) {
 <template>
   <nav class="navbar">
     <div class="routes">
-      <router-link ref="firstRoute" :class="{ active: isActiveRoute('dashboard') }" class="nav-route" to="/dashboard">
+      <router-link
+        ref="firstRoute"
+        :class="{ active: isActiveRoute('dashboard') }"
+        class="nav-route"
+        to="/dashboard"
+      >
         Dashboard
       </router-link>
-      <router-link :class="{ active: isActiveRoute('projects') }" class="nav-route" to="/projects">Projects
+      <router-link
+        :class="{ active: isActiveRoute('projects') }"
+        class="nav-route"
+        to="/projects"
+        >Projects
       </router-link>
-      <router-link :class="{ active: isActiveRoute('settings') }" class="nav-route" to="/settings">Settings
+      <router-link
+        :class="{ active: isActiveRoute('settings') }"
+        class="nav-route"
+        to="/settings"
+        >Settings
       </router-link>
     </div>
   </nav>

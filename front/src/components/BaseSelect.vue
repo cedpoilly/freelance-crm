@@ -1,7 +1,7 @@
 <script setup>
-import { ref, watch } from 'vue'
-import { computed } from '@vue/reactivity'
-import useHelpers from '../app/helpers'
+import { ref, watch } from "vue"
+import { computed } from "@vue/reactivity"
+import useHelpers from "../app/helpers"
 
 const { searchStringInList } = useHelpers()
 
@@ -30,18 +30,26 @@ const isNotEmpty = computed(() => {
   return selected.value || selectedList.value.length
 })
 
-watch(() => props.list, (newValue) => {
-  data.value = newValue
-}, { immediate: true })
+watch(
+  () => props.list,
+  newValue => {
+    data.value = newValue
+  },
+  { immediate: true }
+)
 
-watch(() => props.initialSelection, (newValue) => {
-  if (props.isMulti) {
-    selectedList.value = newValue || selectedList.value
-    return
-  }
+watch(
+  () => props.initialSelection,
+  newValue => {
+    if (props.isMulti) {
+      selectedList.value = newValue || selectedList.value
+      return
+    }
 
-  selected.value = newValue || selected.value
-}, { immediate: true })
+    selected.value = newValue || selected.value
+  },
+  { immediate: true }
+)
 
 function toggleActive() {
   isActive.value = !isActive.value
@@ -50,7 +58,9 @@ function toggleActive() {
   // * but the data is still filtered as per last search
   // * hence we have the reset the data when we close the content section.
   const isInactive = !isActive.value
-  if (isInactive) { data.value = props.list }
+  if (isInactive) {
+    data.value = props.list
+  }
 }
 
 function selectOption(option) {
@@ -75,18 +85,26 @@ function toggleViaKeyboard(event) {
   const keyCode = event?.code?.toLowerCase()
 
   const hasNokeyCode = !!keyCode
-  if (hasNokeyCode) { return }
+  if (hasNokeyCode) {
+    return
+  }
 
   const isNotEnterNorSpace = !["enter", "space"].includes(searchString)
-  if (isNotEnterNorSpace) { return }
+  if (isNotEnterNorSpace) {
+    return
+  }
   toggleActive()
 }
 
 function toggleOptionViaKeyboard(event, option) {
   event.preventDefault()
   event.stopPropagation()
-  const isNotEnterNorSpace = !["enter", "space"].includes(event.code.toLowerCase())
-  if (isNotEnterNorSpace) { return }
+  const isNotEnterNorSpace = !["enter", "space"].includes(
+    event.code.toLowerCase()
+  )
+  if (isNotEnterNorSpace) {
+    return
+  }
   selectOption(option)
 }
 
@@ -101,11 +119,13 @@ function searchItem(event) {
 
   const hasNoSearchString = !searchString
   if (hasNoSearchString) {
-    return data.value = props.list
+    return (data.value = props.list)
   }
 
-  const fitleredList = searchStringInList(props.list, searchString, { isObejectList: false })
-  return data.value = [...fitleredList]
+  const fitleredList = searchStringInList(props.list, searchString, {
+    isObejectList: false,
+  })
+  return (data.value = [...fitleredList])
 }
 
 function isInSelectedList(item) {
@@ -121,8 +141,10 @@ function close() {
 function toggleInSelectedList(option) {
   const isAlreadyInList = isInSelectedList(option)
   if (isAlreadyInList) {
-    const listWithoutOption = selectedList.value.filter(listItem => listItem !== option)
-    return selectedList.value = listWithoutOption
+    const listWithoutOption = selectedList.value.filter(
+      listItem => listItem !== option
+    )
+    return (selectedList.value = listWithoutOption)
   }
 
   selectedList.value = getUniqueStrings([...selectedList.value, option])
@@ -131,7 +153,7 @@ function toggleInSelectedList(option) {
 // * generic helpers
 
 function getUniqueStrings(listOfStrings) {
-  return [... new Set(listOfStrings)]
+  return [...new Set(listOfStrings)]
 }
 
 function formatListoString(list, joinString) {
@@ -145,11 +167,18 @@ function captitalise(string) {
 </script>
 
 <template>
-  <div class="select" tabindex="0" v-click-outside="() => close()" @keyup="toggleViaKeyboard">
-    <div :class="{ 'active': isActive }" class="select-trigger" @click="toggleActive">
-      <span class="px-1" v-if="showLabel">
-        Select {{ label }}
-      </span>
+  <div
+    class="select"
+    tabindex="0"
+    v-click-outside="() => close()"
+    @keyup="toggleViaKeyboard"
+  >
+    <div
+      :class="{ active: isActive }"
+      class="select-trigger"
+      @click="toggleActive"
+    >
+      <span class="px-1" v-if="showLabel"> Select {{ label }} </span>
 
       <span class="multi-selected" v-else-if="props.isMulti">
         {{ formatListoString(selectedList, ", ") }}
@@ -160,7 +189,12 @@ function captitalise(string) {
       </span>
 
       <div class="icons-wrapper px-1">
-        <span v-if="isNotEmpty" class="select-trigger__icon--clear" @click="clearSelection">❌</span>
+        <span
+          v-if="isNotEmpty"
+          class="select-trigger__icon--clear"
+          @click="clearSelection"
+          >❌</span
+        >
         <span class="select-trigger__icon">🔻</span>
       </div>
     </div>
@@ -168,13 +202,27 @@ function captitalise(string) {
     <div v-if="isActive" class="content">
       <div class="search">
         <label for="search">
-          <input type="text" id="search" name="search" placeholder="Search" class="search-box" @input="searchItem" />
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Search"
+            class="search-box"
+            @input="searchItem"
+          />
         </label>
       </div>
 
       <ul class="options">
-        <li class="option" tabindex="0" v-for="(option, index) in data" :key="index" @click="selectOption(option)"
-          @keydown="preventSpacebarScroll" @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)">
+        <li
+          class="option"
+          tabindex="0"
+          v-for="(option, index) in data"
+          :key="index"
+          @click="selectOption(option)"
+          @keydown="preventSpacebarScroll"
+          @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)"
+        >
           {{ captitalise(option) }}
           <span v-if="props.isMulti && isInSelectedList(option)">✔️</span>
         </li>
@@ -189,7 +237,7 @@ function captitalise(string) {
 }
 
 .select-trigger {
-  @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white;
 }
 
 .select-trigger__icon {
@@ -206,7 +254,7 @@ function captitalise(string) {
 }
 
 .select-trigger.active .select-trigger__icon {
-  transform: rotate(180deg)
+  transform: rotate(180deg);
 }
 
 .multi-selected {
@@ -224,7 +272,7 @@ function captitalise(string) {
 }
 
 .search-box {
-  @apply w-full border px-3 py-2 mb-2 rounded-md
+  @apply w-full border px-3 py-2 mb-2 rounded-md;
 }
 
 .options {
@@ -248,7 +296,6 @@ function captitalise(string) {
 }
 
 .option {
-  @apply h-10 px-3 py-2 my-2 rounded-md flex justify-between
+  @apply h-10 px-3 py-2 my-2 rounded-md flex justify-between;
 }
 </style>
-

@@ -1,15 +1,22 @@
 <script setup>
-import { getCurrentInstance } from 'vue'
-import BaseCloseButton from './BaseCloseButton.vue'
-import useBaseModal from './base-modal'
-import { config } from './base-modal.js'
+import { getCurrentInstance } from "vue"
+import BaseCloseButton from "./BaseCloseButton.vue"
+import useBaseModal from "./base-modal"
+import { config } from "./base-modal.js"
 
 const props = defineProps(config)
 
 const {
-  canShow, isCancelled,
-  open, close, cancelModal, cancelAndClose,
-  uid, isAlert, isConfirm, actions
+  canShow,
+  isCancelled,
+  open,
+  close,
+  cancelModal,
+  cancelAndClose,
+  uid,
+  isAlert,
+  isConfirm,
+  actions,
 } = useBaseModal(getCurrentInstance())
 
 function confirm() {
@@ -26,12 +33,25 @@ function cancel() {
   return isCancelled.value
 }
 
-defineExpose({ open, close, cancelAndClose, isCancelled, uid, isAlert, isConfirm })
+defineExpose({
+  open,
+  close,
+  cancelAndClose,
+  isCancelled,
+  uid,
+  isAlert,
+  isConfirm,
+})
 </script>
 
 <template>
   <Transition name="appear">
-    <div v-if="canShow" class="modal-container" tabindex="0" @keydown.esc="cancelAndClose">
+    <div
+      v-if="canShow"
+      class="modal-container"
+      tabindex="0"
+      @keydown.esc="cancelAndClose"
+    >
       <div class="modal">
         <div class="modal-title">
           <h4 class="modal-title-text">
@@ -53,26 +73,51 @@ defineExpose({ open, close, cancelAndClose, isCancelled, uid, isAlert, isConfirm
 
         <div class="modal-actions" :class="{ [props.width]: !!props.width }">
           <slot v-if="props.isAlert" name="actions">
-            <button :class="{ [props.width]: !!props.width }" class="button-text button-text--action"
-              @click="cancelAndClose">OK</button>
+            <button
+              :class="{ [props.width]: !!props.width }"
+              class="button-text button-text--action"
+              @click="cancelAndClose"
+            >
+              OK
+            </button>
           </slot>
 
           <slot v-else-if="isConfirm" name="actions">
-            <button class="button-text button-text--cancel" data-cy="modal-action-cancel"
-              @click="cancel">CANCEL</button>
+            <button
+              class="button-text button-text--cancel"
+              data-cy="modal-action-cancel"
+              @click="cancel"
+            >
+              CANCEL
+            </button>
 
-            <button class="button-text button-text--action" data-cy="modal-action-confirm" @click="confirm">OK</button>
+            <button
+              class="button-text button-text--action"
+              data-cy="modal-action-confirm"
+              @click="confirm"
+            >
+              OK
+            </button>
           </slot>
 
           <slot v-else-if="actions || props.isDefaultActions" name="actions">
-            <button class="button-text button-text--cancel mr-4" data-cy="modal-action-cancel" @click="cancel">{{
-                props?.actions?.cancel?.label || 'CANCEL'
-            }}</button>
+            <button
+              class="button-text button-text--cancel mr-4"
+              data-cy="modal-action-cancel"
+              @click="cancel"
+            >
+              {{ props?.actions?.cancel?.label || "CANCEL" }}
+            </button>
 
-            <button :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }" data-cy="modal-action-confirm"
-              class="button-text button-text--action" :disabled="props?.actions?.confirm?.isDisabled"
-              @click="confirm">{{ props?.actions?.confirm?.label || 'OK'
-              }}</button>
+            <button
+              :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }"
+              data-cy="modal-action-confirm"
+              class="button-text button-text--action"
+              :disabled="props?.actions?.confirm?.isDisabled"
+              @click="confirm"
+            >
+              {{ props?.actions?.confirm?.label || "OK" }}
+            </button>
           </slot>
         </div>
       </div>

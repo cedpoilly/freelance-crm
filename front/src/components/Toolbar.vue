@@ -1,18 +1,32 @@
 <script setup>
-import { ref } from 'vue'
-import BaseSelect from './BaseSelect.vue'
-import BaseToggle from './BaseToggle.vue'
-import BaseSearchInput from './BaseSearchInput.vue'
+import { ref } from "vue"
+import BaseSelect from "./BaseSelect.vue"
+import BaseToggle from "./BaseToggle.vue"
+import BaseSearchInput from "./BaseSearchInput.vue"
 
-const emits = defineEmits(["search-input", "is-from-codementor", "selected-tags"])
+const emits = defineEmits([
+  "search-input",
+  "is-from-codementor",
+  "selected-tags",
+])
 
-defineExpose({focusSearch})
+defineExpose({ focusSearch })
 
 const searchInput = ref(null)
 
-const tagList = ["JavaScript", "HTML", "CSS", "Vue.js", "Front-End", "Back-end", "Node.js", "Express.js", "MongoDB", "Mongoose"]
+const tagList = [
+  "JavaScript",
+  "HTML",
+  "CSS",
+  "Vue.js",
+  "Front-End",
+  "Back-end",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
+  "Mongoose",
+]
 const isCodeMentor = ref(false)
-
 
 function focusSearch() {
   searchInput.value.focus()
@@ -29,7 +43,7 @@ function toggleIsCodeMentorFilter() {
 }
 
 function filterViaTags(options) {
-  emits('selected-tags', options)
+  emits("selected-tags", options)
 }
 </script>
 
@@ -39,16 +53,31 @@ function filterViaTags(options) {
 
     <div class="filters">
       <form @submit.prevent class="filter">
-        <BaseSearchInput label="Search" ref="searchInput" field-name="search" placeholder="Search any field" @input="search($event)" />
+        <BaseSearchInput
+          label="Search"
+          ref="searchInput"
+          field-name="search"
+          placeholder="Search any field"
+          @input="search($event)"
+        />
       </form>
 
       <form @submit.prevent class="filter">
-        <BaseToggle label="Only from CodeMentor" field-name="isCodeMentor" :is-checked="isCodeMentor"
-          @toggled="toggleIsCodeMentorFilter" />
+        <BaseToggle
+          label="Only from CodeMentor"
+          field-name="isCodeMentor"
+          :is-checked="isCodeMentor"
+          @toggled="toggleIsCodeMentorFilter"
+        />
       </form>
 
       <form @submit.prevent class="filter">
-        <BaseSelect label="one or more tags." :list="tagList" :is-multi="true" @selected-tags="filterViaTags" />
+        <BaseSelect
+          label="one or more tags."
+          :list="tagList"
+          :is-multi="true"
+          @selected-tags="filterViaTags"
+        />
       </form>
     </div>
   </section>
@@ -56,11 +85,11 @@ function filterViaTags(options) {
 
 <style lang="scss" scoped>
 .toolbar {
-  @apply w-11/12 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md
+  @apply w-11/12 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md;
 }
 
 .toolbar-title {
-  @apply mb-4 text-xl text-center font-bold
+  @apply mb-4 text-xl text-center font-bold;
 }
 
 .filters {
@@ -68,7 +97,7 @@ function filterViaTags(options) {
 }
 
 .filter {
-  @apply flex justify-center
+  @apply flex justify-center;
 }
 
 @media (min-width: 900px) {

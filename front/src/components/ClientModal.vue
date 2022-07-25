@@ -1,17 +1,28 @@
 <script setup>
-import { computed, nextTick, ref, toRaw, watch } from 'vue'
+import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-import BaseModal from './BaseModal.vue'
-import BaseInput from './BaseInput.vue'
-import BaseToggle from './BaseToggle.vue'
-import BaseSelect from './BaseSelect.vue'
+import BaseModal from "./BaseModal.vue"
+import BaseInput from "./BaseInput.vue"
+import BaseToggle from "./BaseToggle.vue"
+import BaseSelect from "./BaseSelect.vue"
 
 const LEVEL = ["beginner", "intermediate", "advanced"]
-const TAGS = ["JavaScript", "HTML", "CSS", "Vue.js", "Front-End", "Back-end", "Node.js", "Express.js", "MongoDB", "Mongoose"]
+const TAGS = [
+  "JavaScript",
+  "HTML",
+  "CSS",
+  "Vue.js",
+  "Front-End",
+  "Back-end",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
+  "Mongoose",
+]
 const SERVICE_TYPE = ["individual", "team"]
 
 const props = defineProps({
-  client: { type: Object, required: true }
+  client: { type: Object, required: true },
 })
 
 const dialog = ref(null)
@@ -21,7 +32,7 @@ defineExpose({ open, close, cancelAndClose })
 const client = ref(props.client)
 watch(
   () => props.client,
-  (updated) => client.value = updated
+  updated => (client.value = updated)
 )
 
 function updateClient(fieldName, value) {
@@ -30,7 +41,7 @@ function updateClient(fieldName, value) {
 
 /** Inteactions */
 const isEditing = computed(() => !!props.client?.firstName)
-const currentAction = computed(() => isEditing.value ? 'Edit' : 'Create')
+const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
 
 async function open(callback) {
   await setIsOpen(true)
@@ -38,14 +49,18 @@ async function open(callback) {
   focusOnFirstInput()
 
   await dialog?.value?.open(callback)
-  const ret = dialog.value?.isCancelled ? '' : toRaw(client.value)
+  const ret = dialog.value?.isCancelled ? "" : toRaw(client.value)
 
   await setIsOpen(false)
   return ret
 }
 
-function close() { return dialog?.value?.close() }
-function cancelAndClose() { return dialog?.value?.cancelAndClose() }
+function close() {
+  return dialog?.value?.close()
+}
+function cancelAndClose() {
+  return dialog?.value?.cancelAndClose()
+}
 
 function focusOnFirstInput() {
   requestAnimationFrame(() => {
@@ -61,67 +76,123 @@ async function setIsOpen(shouldOpen) {
 </script>
 
 <template>
-  <BaseModal v-if="isOpen" width="!w-[46rem]" tabindex="0" actions-push-left="mr-6" :is-default-actions="true"
-    role="dialog" ref="dialog" key="EDIT_CLIENT_DIALOG">
+  <BaseModal
+    v-if="isOpen"
+    width="!w-[46rem]"
+    tabindex="0"
+    actions-push-left="mr-6"
+    :is-default-actions="true"
+    role="dialog"
+    ref="dialog"
+    key="EDIT_CLIENT_DIALOG"
+  >
     <template #title class="tile-container">
       {{ currentAction }} client
       <span v-if="isEditing">
         '
         <span class="italic">
           {{ props.client?.firstName }}
-          {{ props.client?.lastName }}
-        </span>'
+          {{ props.client?.lastName }} </span
+        >'
 
-        <router-link :to="`/projects/${props.client._id}`" class="see-projects-link">See projects</router-link>
+        <router-link
+          :to="`/projects/${props.client._id}`"
+          class="see-projects-link"
+          >See projects</router-link
+        >
       </span>
     </template>
 
     <template #content>
       <form class="client-form container">
         <div class="form-group">
-          <BaseInput :value="props.client.firstName" data-ref="first-input" class="first-name" field-name="firstname"
-            label="First Name" data-cy="edit-client-firstname"
-            @input="updateClient('firstName', $event.target.value)" />
+          <BaseInput
+            :value="props.client.firstName"
+            data-ref="first-input"
+            class="first-name"
+            field-name="firstname"
+            label="First Name"
+            data-cy="edit-client-firstname"
+            @input="updateClient('firstName', $event.target.value)"
+          />
         </div>
 
         <div class="form-group">
-          <BaseInput :value="props.client.lastName" class="last-name" field-name="lastname" label="Last Name"
-            data-cy="edit-client-lastname" @input="updateClient('lastName', $event.target.value)" />
+          <BaseInput
+            :value="props.client.lastName"
+            class="last-name"
+            field-name="lastname"
+            label="Last Name"
+            data-cy="edit-client-lastname"
+            @input="updateClient('lastName', $event.target.value)"
+          />
         </div>
 
         <div class="form-group">
-          <BaseInput :value="props.client.whatsAppNumber" class="whatsapp-number" field-name="whatsappnumber"
-            label="WhatsApp number" data-cy="edit-client-whatsapp"
-            @input="updateClient('whatsAppNumber', $event.target.value)" />
+          <BaseInput
+            :value="props.client.whatsAppNumber"
+            class="whatsapp-number"
+            field-name="whatsappnumber"
+            label="WhatsApp number"
+            data-cy="edit-client-whatsapp"
+            @input="updateClient('whatsAppNumber', $event.target.value)"
+          />
         </div>
 
         <div class="form-group">
           <span class="base-input-label"> Is from codementor.io </span>
-          <BaseToggle :is-checked="props.client.isCodementor" class="is-codementor" field-name="iscodementor"
-            label="Is from codementor.io" data-cy="edit-client-iscodementor" @toggled="updateClient('isCodementor', $event)" />
+          <BaseToggle
+            :is-checked="props.client.isCodementor"
+            class="is-codementor"
+            field-name="iscodementor"
+            label="Is from codementor.io"
+            data-cy="edit-client-iscodementor"
+            @toggled="updateClient('isCodementor', $event)"
+          />
         </div>
 
         <div class="form-group level">
           <span class="base-input-label"> Level/Experience </span>
-          <BaseSelect label="client's level" :list="LEVEL" :initial-selection="props.client.level"
-            @selected-tags="updateClient('level', $event)" />
+          <BaseSelect
+            label="client's level"
+            :list="LEVEL"
+            :initial-selection="props.client.level"
+            @selected-tags="updateClient('level', $event)"
+          />
         </div>
 
         <div class="form-group service-type">
           <span class="base-input-label"> Service type </span>
-          <BaseSelect label="Service Type" :list="SERVICE_TYPE" :initial-selection="props.client.serviceType"
-            @selected-tags="updateClient('serviceType', $event)" />
+          <BaseSelect
+            label="Service Type"
+            :list="SERVICE_TYPE"
+            :initial-selection="props.client.serviceType"
+            @selected-tags="updateClient('serviceType', $event)"
+          />
         </div>
 
         <div class="form-group rate">
-          <BaseInput :value="props.client.rate" field-name="rate" label="Rate" data-cy="edit-client-rate"
-            @input="updateClient('rate', $event.target.value)" />
+          <BaseInput
+            :value="props.client.rate"
+            field-name="rate"
+            label="Rate"
+            data-cy="edit-client-rate"
+            @input="updateClient('rate', $event.target.value)"
+          />
         </div>
 
         <div class="form-group tags">
           <span class="base-input-label"> Tags </span>
-          <BaseSelect :value="props.client.tags" :list="TAGS" :initial-selection="props.client.tags" :is-multi="true"
-            field-name="tags" label="Tags" data-cy="edit-client-tags" @selected-tags="updateClient('tags', $event)" />
+          <BaseSelect
+            :value="props.client.tags"
+            :list="TAGS"
+            :initial-selection="props.client.tags"
+            :is-multi="true"
+            field-name="tags"
+            label="Tags"
+            data-cy="edit-client-tags"
+            @selected-tags="updateClient('tags', $event)"
+          />
         </div>
       </form>
     </template>
@@ -147,10 +218,10 @@ async function setIsOpen(shouldOpen) {
 }
 
 .modal-title {
-  @apply flex justify-between
+  @apply flex justify-between;
 }
 
 .see-projects-link {
-  @apply link inline-block self-end
+  @apply link inline-block self-end;
 }
 </style>

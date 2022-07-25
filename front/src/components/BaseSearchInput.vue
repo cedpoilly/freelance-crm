@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue"
 
 const props = defineProps({
   label: { type: String, required: true },
@@ -24,13 +24,20 @@ function search(searchString) {
 <template>
   <label class="base-search" :for="props.fieldName">
     <span class="base-search-label">Search </span>
-    <input :id="props.label" :name="props.label" ref="input" type="text" class="base-search-input" @input="search($event)">
+    <input
+      :id="props.label"
+      :name="props.label"
+      ref="input"
+      type="text"
+      class="base-search-input"
+      @input="search($event)"
+    />
   </label>
 </template>
 
 <style lang="scss" scoped>
 .base-search {
-  @apply w-80 h-16 px-4 py-2 border rounded grid grid-cols-12 justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-2 border rounded grid grid-cols-12 justify-between items-center bg-white;
 }
 
 .base-search-label {

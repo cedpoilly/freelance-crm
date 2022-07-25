@@ -7,7 +7,6 @@ const props = defineProps({
 
 const emits = defineEmits(["input"])
 
-
 function search(searchString) {
   emits("input", searchString)
 }
@@ -16,13 +15,21 @@ function search(searchString) {
 <template>
   <span class="base-input-label"> {{ props.label }} </span>
   <label class="base-input" :for="props.fieldName">
-    <input :id="props.label" :placeholder="props.label" v-bind="$attrs" :name="props.label" type="text" class="base-input-box" @input="$emit('input', $event)">
+    <input
+      :id="props.label"
+      :placeholder="props.label"
+      v-bind="$attrs"
+      :name="props.label"
+      type="text"
+      class="base-input-box"
+      @input="$emit('input', $event)"
+    />
   </label>
 </template>
 
 <style lang="scss" scoped>
 .base-input {
-  @apply w-80 h-16 px-4 py-2 border rounded grid content-center justify-between items-center bg-white
+  @apply w-80 h-16 px-4 py-2 border rounded grid content-center justify-between items-center bg-white;
 }
 
 .base-input-label {
