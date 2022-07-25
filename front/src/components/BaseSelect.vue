@@ -84,15 +84,11 @@ function clearSelection() {
 function toggleViaKeyboard(event) {
   const keyCode = event?.code?.toLowerCase()
 
-  const hasNokeyCode = !!keyCode
-  if (hasNokeyCode) {
-    return
-  }
-
-  const isNotEnterNorSpace = !["enter", "space"].includes(searchString)
+  const isNotEnterNorSpace = !["enter", "space"].includes(keyCode)
   if (isNotEnterNorSpace) {
     return
   }
+
   toggleActive()
 }
 
