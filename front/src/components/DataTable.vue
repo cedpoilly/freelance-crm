@@ -73,12 +73,20 @@
               id: "level",
               name: "Level",
               width: "w-2/12",
+              formatter: (cell, row, column) => {
+                const [first, ...rest] = cell.split("")
+                return `${first.toUpperCase()}${rest.join("")}`
+              },
             }
           case "serviceType":
             return {
               id: "serviceType",
               name: "Service",
               width: "w-2/12",
+              formatter: (cell, row, column) => {
+                const [first, ...rest] = cell.split("")
+                return `${first.toUpperCase()}${rest.join("")}`
+              },
             }
           case "rate":
             return {
