@@ -12,19 +12,12 @@ const app = express()
 app.use(express.static('public'))
 
 // configure the app to use bodyParser()
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-app.use(bodyParser.json())
 
-app.use(cors({
-  origin: "http://127.0.0.1:5173"
-}))
-
-app.get('/', function rootGetHandler(req, res) {
-  console.log("Hello")
-  res.download("app.js")
-})
+app.use(cors({ origin: "http://127.0.0.1:5000" }))
 
 const clientRouter = require("./controllers/Client")
 app.use("/clients", clientRouter)
