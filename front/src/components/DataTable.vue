@@ -115,7 +115,7 @@
             return {
               id: "paymentMethod",
               name: "Payment Methods",
-              width: "w-2/12",
+              width: "w-3/12",
               formatter: (cell, row, column) => {
                 const [first, ...rest] = cell.split("")
                 return `${first.toUpperCase()}${rest.join("")}`
@@ -133,7 +133,7 @@
             return {
               id: "client",
               name: "Client",
-              width: "w-3/12",
+              width: "w-6/12",
               formatter: (client, row, column) => {
                 return (
                   `${client?.firstName} ${client?.lastName}` || "<no client 🤷>"
@@ -142,9 +142,10 @@
             }
 
           default:
-            return raw
+            return
         }
       })
+      .filter(Boolean)
 
     const actionHeader = {
       id: "actions",
@@ -256,7 +257,7 @@
   }
 
   .table-body-row {
-    @apply w-full h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg;
+    @apply w-full items-center h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg;
   }
 
   .action-button {
