@@ -1,15 +1,15 @@
 <script setup>
-const props = defineProps({
-  label: { type: String, required: true },
-  fieldName: { type: String, required: true },
-  isChecked: { type: Boolean, required: true },
-})
+  const props = defineProps({
+    label: { type: String, required: true },
+    fieldName: { type: String, required: true },
+    isChecked: { type: Boolean, required: true },
+  })
 
-const emits = defineEmits(["toggled"])
+  const emits = defineEmits(["toggled"])
 
-function emitToggle() {
-  emits("toggled", !props.isChecked)
-}
+  function emitToggle() {
+    emits("toggled", !props.isChecked)
+  }
 </script>
 
 <template>
@@ -26,15 +26,15 @@ function emitToggle() {
 </template>
 
 <style lang="scss" scoped>
-.base-toggle {
-  @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white;
-}
+  .base-toggle {
+    @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white;
+  }
 
-.base-toggle-label {
-  @apply flex items-center;
-}
+  .base-toggle-label {
+    @apply flex items-center;
+  }
 
-.base-toggle-cb {
-  @apply block w-5 h-5 px-3;
-}
+  .base-toggle-cb {
+    @apply block w-5 h-5 px-3;
+  }
 </style>

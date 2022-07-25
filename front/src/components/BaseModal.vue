@@ -1,47 +1,47 @@
 <script setup>
-import { getCurrentInstance } from "vue"
-import BaseCloseButton from "./BaseCloseButton.vue"
-import useBaseModal from "./base-modal"
-import { config } from "./base-modal.js"
+  import { getCurrentInstance } from "vue"
+  import BaseCloseButton from "./BaseCloseButton.vue"
+  import useBaseModal from "./base-modal"
+  import { config } from "./base-modal.js"
 
-const props = defineProps(config)
+  const props = defineProps(config)
 
-const {
-  canShow,
-  isCancelled,
-  open,
-  close,
-  cancelModal,
-  cancelAndClose,
-  uid,
-  isAlert,
-  isConfirm,
-  actions,
-} = useBaseModal(getCurrentInstance())
+  const {
+    canShow,
+    isCancelled,
+    open,
+    close,
+    cancelModal,
+    cancelAndClose,
+    uid,
+    isAlert,
+    isConfirm,
+    actions,
+  } = useBaseModal(getCurrentInstance())
 
-function confirm() {
-  isCancelled.value = false
-  props.actions?.confirm?.function()
-  close()
-  return !isCancelled.value
-}
+  function confirm() {
+    isCancelled.value = false
+    props.actions?.confirm?.function()
+    close()
+    return !isCancelled.value
+  }
 
-function cancel() {
-  props.actions?.cancel.function()
-  close()
-  cancelModal()
-  return isCancelled.value
-}
+  function cancel() {
+    props.actions?.cancel.function()
+    close()
+    cancelModal()
+    return isCancelled.value
+  }
 
-defineExpose({
-  open,
-  close,
-  cancelAndClose,
-  isCancelled,
-  uid,
-  isAlert,
-  isConfirm,
-})
+  defineExpose({
+    open,
+    close,
+    cancelAndClose,
+    isCancelled,
+    uid,
+    isAlert,
+    isConfirm,
+  })
 </script>
 
 <template>
@@ -127,46 +127,46 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-.modal-container {
-  @apply text-black dark:text-white mx-auto fixed inset-0 flex items-center z-50;
-}
+  .modal-container {
+    @apply text-black dark:text-white mx-auto fixed inset-0 flex items-center z-50;
+  }
 
-.modal {
-  @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between absolute left-4 right-4 z-10 sm:w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-10 py-8 rounded-md text-lg;
-}
+  .modal {
+    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between absolute left-4 right-4 z-10 sm:w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-10 py-8 rounded-md text-lg;
+  }
 
-.modal-title {
-  @apply w-full flex justify-between items-center;
-}
+  .modal-title {
+    @apply w-full flex justify-between items-center;
+  }
 
-.modal-title-text {
-  @apply font-bold text-2xl self-center;
-}
+  .modal-title-text {
+    @apply font-bold text-2xl self-center;
+  }
 
-.modal-overlay {
-  @apply bg-slate-600 relative w-full h-full opacity-90;
-}
+  .modal-overlay {
+    @apply bg-slate-600 relative w-full h-full opacity-90;
+  }
 
-.modal-content {
-  @apply relative h-full w-full py-9 flex flex-col justify-center items-center;
-}
+  .modal-content {
+    @apply relative h-full w-full py-9 flex flex-col justify-center items-center;
+  }
 
-.modal-actions {
-  @apply flex justify-end w-full;
-}
+  .modal-actions {
+    @apply flex justify-end w-full;
+  }
 
-.modal-actions .button-text {
-  @apply w-24 dark:mr-4;
-}
+  .modal-actions .button-text {
+    @apply w-24 dark:mr-4;
+  }
 
-.appear-enter-active,
-.appear-leave-active {
-  transition: all 0.2s ease;
-}
+  .appear-enter-active,
+  .appear-leave-active {
+    transition: all 0.2s ease;
+  }
 
-.appear-enter-from,
-.appear-leave-to {
-  opacity: 0;
-  transform: scale(0.9, 0.9);
-}
+  .appear-enter-from,
+  .appear-leave-to {
+    opacity: 0;
+    transform: scale(0.9, 0.9);
+  }
 </style>

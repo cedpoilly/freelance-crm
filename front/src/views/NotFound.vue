@@ -1,13 +1,13 @@
 <script setup>
-import { useRouter } from "vue-router"
+  import { useRouter } from "vue-router"
 
-const router = useRouter()
+  const router = useRouter()
 
-const DELAY_IN_MILISECONDS = 3000
+  const DELAY_IN_MILISECONDS = 3000
 
-setTimeout(function timerCallback() {
-  router.push({ name: "dashboard" })
-}, DELAY_IN_MILISECONDS)
+  setTimeout(function timerCallback() {
+    router.push({ name: "dashboard" })
+  }, DELAY_IN_MILISECONDS)
 </script>
 
 <template>

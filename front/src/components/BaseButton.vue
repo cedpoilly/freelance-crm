@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-.base-button {
-  @apply px-3 py-2 rounded-md;
-}
+  .base-button {
+    @apply px-3 py-2 rounded-md;
+  }
 </style>

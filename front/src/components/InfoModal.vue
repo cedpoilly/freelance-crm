@@ -1,35 +1,35 @@
 <script setup>
-import { computed, nextTick, ref, toRaw, watch } from "vue"
+  import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-import BaseModal from "./BaseModal.vue"
+  import BaseModal from "./BaseModal.vue"
 
-const dialog = ref(null)
+  const dialog = ref(null)
 
-defineExpose({ open, close, cancelAndClose })
+  defineExpose({ open, close, cancelAndClose })
 
-/** Inteactions */
-async function open(callback) {
-  await setIsOpen(true)
+  /** Inteactions */
+  async function open(callback) {
+    await setIsOpen(true)
 
-  await dialog?.value?.open(callback)
-  const ret = dialog.value?.isCancelled ? "" : toRaw(client.value)
+    await dialog?.value?.open(callback)
+    const ret = dialog.value?.isCancelled ? "" : toRaw(client.value)
 
-  await setIsOpen(false)
-  return ret
-}
+    await setIsOpen(false)
+    return ret
+  }
 
-function close() {
-  return dialog?.value?.close()
-}
-function cancelAndClose() {
-  return dialog?.value?.cancelAndClose()
-}
+  function close() {
+    return dialog?.value?.close()
+  }
+  function cancelAndClose() {
+    return dialog?.value?.cancelAndClose()
+  }
 
-const isOpen = ref(false)
-async function setIsOpen(shouldOpen) {
-  isOpen.value = shouldOpen
-  await nextTick()
-}
+  const isOpen = ref(false)
+  async function setIsOpen(shouldOpen) {
+    isOpen.value = shouldOpen
+    await nextTick()
+  }
 </script>
 
 <template>
@@ -89,19 +89,19 @@ async function setIsOpen(shouldOpen) {
 </template>
 
 <style lang="scss" scoped>
-.info-container {
-  @apply w-full grid grid-cols-2 gap-4;
-}
+  .info-container {
+    @apply w-full grid grid-cols-2 gap-4;
+  }
 
-.section-title {
-  @apply mb-5 text-xl font-bold;
-}
+  .section-title {
+    @apply mb-5 text-xl font-bold;
+  }
 
-.section-instructions {
-  @apply text-lg py-2;
-}
+  .section-instructions {
+    @apply text-lg py-2;
+  }
 
-.code {
-  @apply bg-gray-100 px-1 py-1 border border-gray-300 rounded;
-}
+  .code {
+    @apply bg-gray-100 px-1 py-1 border border-gray-300 rounded;
+  }
 </style>

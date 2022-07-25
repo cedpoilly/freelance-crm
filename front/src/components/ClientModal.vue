@@ -1,78 +1,78 @@
 <script setup>
-import { computed, nextTick, ref, toRaw, watch } from "vue"
+  import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-import BaseModal from "./BaseModal.vue"
-import BaseInput from "./BaseInput.vue"
-import BaseToggle from "./BaseToggle.vue"
-import BaseSelect from "./BaseSelect.vue"
+  import BaseModal from "./BaseModal.vue"
+  import BaseInput from "./BaseInput.vue"
+  import BaseToggle from "./BaseToggle.vue"
+  import BaseSelect from "./BaseSelect.vue"
 
-const LEVEL = ["beginner", "intermediate", "advanced"]
-const TAGS = [
-  "JavaScript",
-  "HTML",
-  "CSS",
-  "Vue.js",
-  "Front-End",
-  "Back-end",
-  "Node.js",
-  "Express.js",
-  "MongoDB",
-  "Mongoose",
-]
-const SERVICE_TYPE = ["individual", "team"]
+  const LEVEL = ["beginner", "intermediate", "advanced"]
+  const TAGS = [
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "Vue.js",
+    "Front-End",
+    "Back-end",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+  ]
+  const SERVICE_TYPE = ["individual", "team"]
 
-const props = defineProps({
-  client: { type: Object, required: true },
-})
-
-const dialog = ref(null)
-
-defineExpose({ open, close, cancelAndClose })
-
-const client = ref(props.client)
-watch(
-  () => props.client,
-  updated => (client.value = updated)
-)
-
-function updateClient(fieldName, value) {
-  client.value[fieldName] = value
-}
-
-/** Inteactions */
-const isEditing = computed(() => !!props.client?.firstName)
-const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
-
-async function open(callback) {
-  await setIsOpen(true)
-
-  focusOnFirstInput()
-
-  await dialog?.value?.open(callback)
-  const ret = dialog.value?.isCancelled ? "" : toRaw(client.value)
-
-  await setIsOpen(false)
-  return ret
-}
-
-function close() {
-  return dialog?.value?.close()
-}
-function cancelAndClose() {
-  return dialog?.value?.cancelAndClose()
-}
-
-function focusOnFirstInput() {
-  requestAnimationFrame(() => {
-    document.querySelector('[data-ref="first-input"]').focus()
+  const props = defineProps({
+    client: { type: Object, required: true },
   })
-}
 
-const isOpen = ref(false)
-async function setIsOpen(shouldOpen) {
-  isOpen.value = shouldOpen
-  await nextTick()
-}
+  const dialog = ref(null)
+
+  defineExpose({ open, close, cancelAndClose })
+
+  const client = ref(props.client)
+  watch(
+    () => props.client,
+    updated => (client.value = updated)
+  )
+
+  function updateClient(fieldName, value) {
+    client.value[fieldName] = value
+  }
+
+  /** Inteactions */
+  const isEditing = computed(() => !!props.client?.firstName)
+  const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
+
+  async function open(callback) {
+    await setIsOpen(true)
+
+    focusOnFirstInput()
+
+    await dialog?.value?.open(callback)
+    const ret = dialog.value?.isCancelled ? "" : toRaw(client.value)
+
+    await setIsOpen(false)
+    return ret
+  }
+
+  function close() {
+    return dialog?.value?.close()
+  }
+  function cancelAndClose() {
+    return dialog?.value?.cancelAndClose()
+  }
+
+  function focusOnFirstInput() {
+    requestAnimationFrame(() => {
+      document.querySelector('[data-ref="first-input"]').focus()
+    })
+  }
+
+  const isOpen = ref(false)
+  async function setIsOpen(shouldOpen) {
+    isOpen.value = shouldOpen
+    await nextTick()
+  }
 </script>
 
 <template>
@@ -200,28 +200,28 @@ async function setIsOpen(shouldOpen) {
 </template>
 
 <style lang="scss" scoped>
-.client-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-flow: row;
-  gap: 1rem;
+  .client-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    gap: 1rem;
 
-  width: 40rem;
-}
+    width: 40rem;
+  }
 
-.form-group {
-  @apply flex flex-col justify-center;
-}
+  .form-group {
+    @apply flex flex-col justify-center;
+  }
 
-.client-name-input {
-  @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
-}
+  .client-name-input {
+    @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
+  }
 
-.modal-title {
-  @apply flex justify-between;
-}
+  .modal-title {
+    @apply flex justify-between;
+  }
 
-.see-projects-link {
-  @apply link inline-block self-end;
-}
+  .see-projects-link {
+    @apply link inline-block self-end;
+  }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ action: { type: Function, require: true } })
+  defineProps({ action: { type: Function, require: true } })
 </script>
 
 <template>

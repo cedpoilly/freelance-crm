@@ -1,19 +1,19 @@
 <script setup>
-import { ref } from "vue"
-import { useRoute } from "vue-router"
-const route = useRoute()
+  import { ref } from "vue"
+  import { useRoute } from "vue-router"
+  const route = useRoute()
 
-const firstRoute = ref(null)
+  const firstRoute = ref(null)
 
-function focus() {
-  firstRoute.value.$el.focus()
-}
+  function focus() {
+    firstRoute.value.$el.focus()
+  }
 
-defineExpose({ focus })
+  defineExpose({ focus })
 
-function isActiveRoute(routeName) {
-  return route.name === routeName
-}
+  function isActiveRoute(routeName) {
+    return route.name === routeName
+  }
 </script>
 
 <template>
@@ -44,19 +44,19 @@ function isActiveRoute(routeName) {
 </template>
 
 <style lang="scss" scoped>
-.navbar {
-  @apply w-full flex justify-end;
-}
+  .navbar {
+    @apply w-full flex justify-end;
+  }
 
-.routes {
-  @apply px-5 py-4 self-end;
-}
+  .routes {
+    @apply px-5 py-4 self-end;
+  }
 
-.nav-route {
-  @apply px-3 py-2 my-2;
-}
+  .nav-route {
+    @apply px-3 py-2 my-2;
+  }
 
-.active {
-  @apply font-bold;
-}
+  .active {
+    @apply font-bold;
+  }
 </style>

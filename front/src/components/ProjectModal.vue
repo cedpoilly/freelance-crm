@@ -1,67 +1,67 @@
 <script setup>
-import { computed, nextTick, ref, toRaw, watch } from "vue"
+  import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-import BaseModal from "./BaseModal.vue"
-import BaseInput from "./BaseInput.vue"
-import BaseToggle from "./BaseToggle.vue"
-import BaseSelect from "./BaseSelect.vue"
+  import BaseModal from "./BaseModal.vue"
+  import BaseInput from "./BaseInput.vue"
+  import BaseToggle from "./BaseToggle.vue"
+  import BaseSelect from "./BaseSelect.vue"
 
-const PAYMENT_METHODS = ["codementor", "bank", "paypal"]
+  const PAYMENT_METHODS = ["codementor", "bank", "paypal"]
 
-const props = defineProps({
-  project: { type: Object, required: true },
-})
-
-const dialog = ref(null)
-
-defineExpose({ open, close, cancelAndClose })
-
-const project = ref(props.project)
-watch(
-  () => props.project,
-  updated => {
-    project.value = updated
-  }
-)
-
-function updateProject(fieldName, value) {
-  project.value[fieldName] = value
-}
-
-/** Inteactions */
-const isEditing = computed(() => !!props.project?.title)
-const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
-
-async function open(callback) {
-  await setIsOpen(true)
-
-  focusOnFirstInput()
-
-  await dialog?.value?.open(callback)
-  const ret = dialog.value?.isCancelled ? "" : toRaw(project.value)
-
-  await setIsOpen(false)
-  return ret
-}
-
-function close() {
-  return dialog?.value?.close()
-}
-function cancelAndClose() {
-  return dialog?.value?.cancelAndClose()
-}
-
-function focusOnFirstInput() {
-  requestAnimationFrame(() => {
-    document.querySelector('[data-ref="first-input"]').focus()
+  const props = defineProps({
+    project: { type: Object, required: true },
   })
-}
 
-const isOpen = ref(false)
-async function setIsOpen(shouldOpen) {
-  isOpen.value = shouldOpen
-  await nextTick()
-}
+  const dialog = ref(null)
+
+  defineExpose({ open, close, cancelAndClose })
+
+  const project = ref(props.project)
+  watch(
+    () => props.project,
+    updated => {
+      project.value = updated
+    }
+  )
+
+  function updateProject(fieldName, value) {
+    project.value[fieldName] = value
+  }
+
+  /** Inteactions */
+  const isEditing = computed(() => !!props.project?.title)
+  const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
+
+  async function open(callback) {
+    await setIsOpen(true)
+
+    focusOnFirstInput()
+
+    await dialog?.value?.open(callback)
+    const ret = dialog.value?.isCancelled ? "" : toRaw(project.value)
+
+    await setIsOpen(false)
+    return ret
+  }
+
+  function close() {
+    return dialog?.value?.close()
+  }
+  function cancelAndClose() {
+    return dialog?.value?.cancelAndClose()
+  }
+
+  function focusOnFirstInput() {
+    requestAnimationFrame(() => {
+      document.querySelector('[data-ref="first-input"]').focus()
+    })
+  }
+
+  const isOpen = ref(false)
+  async function setIsOpen(shouldOpen) {
+    isOpen.value = shouldOpen
+    await nextTick()
+  }
 </script>
 
 <template>
@@ -209,31 +209,31 @@ async function setIsOpen(shouldOpen) {
 </template>
 
 <style lang="scss" scoped>
-.project-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-flow: row;
-  gap: 1rem;
+  .project-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row;
+    gap: 1rem;
 
-  width: 40rem;
-}
+    width: 40rem;
+  }
 
-.form-group {
-  @apply flex flex-col justify-center items-start;
-}
+  .form-group {
+    @apply flex flex-col justify-center items-start;
+  }
 
-.form-group.budget {
-  justify-content: start;
-}
+  .form-group.budget {
+    justify-content: start;
+  }
 
-.form-group-status {
-  grid-column: 1/3;
-  @apply grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+  .form-group-status {
+    grid-column: 1/3;
+    @apply grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 
-.project-name-input {
-  @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
-}
+  .project-name-input {
+    @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
+  }
 </style>
