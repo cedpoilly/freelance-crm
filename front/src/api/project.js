@@ -10,12 +10,12 @@ export async function getProjectsByClientId(clientId) {
   return fetch(`${baseURL}/projects/${clientId}`)
 }
 
-export async function createProject(client) {
+export async function createProject(project) {
   const url = `${baseURL}/projects/`
 
   const response = await fetch(
     url,
-    getConfig(client, "POST")
+    getConfig(project, "POST")
   )
 
   return await response.json()
@@ -24,7 +24,7 @@ export async function createProject(client) {
 export async function updateProject(project) {
   const url = `${baseURL}/projects/${project._id}`
 
-  const strippedClient = stripItemId(client)
+  const strippedClient = stripItemId(project)
 
   const response = await fetch(
     url,
