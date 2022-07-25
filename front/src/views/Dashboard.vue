@@ -19,7 +19,7 @@
 
   const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
 
-  const emits = defineEmits(["focus-navbar"])
+  const emits = defineEmits(["focus-navbar", "notification"])
 
   const alertModal = ref(null)
 
@@ -120,6 +120,10 @@
     dataTable.value.focus()
   }
 
+  function notify({ title, message }) {
+    emits("notification", { title, message })
+  }
+
   function openCreateModal() {
     openModal({ mode: "create" })
   }
@@ -136,6 +140,11 @@
       alert("Client was not modified!")
       return
     }
+
+    notify({
+      title: "Successfully Saved!",
+      message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> was updated!`,
+    })
 
     data.value[index] = client
 
@@ -179,7 +188,7 @@
       return
     }
 
-    await updateItemAndFetchData(index, client)
+    await updateItemAndFetchData(clientIndex, client)
   }
 
   // * same as `viewClient` client for now; subject to change soon.
@@ -208,6 +217,10 @@
 
     try {
       const response = await createClient(client)
+      notify({
+        title: "Successfully created!",
+        message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> was created!`,
+      })
     } catch (error) {
       await alert({
         title: "⚠️ OOPS! ⚠️",

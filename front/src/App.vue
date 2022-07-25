@@ -5,6 +5,7 @@
   import useGlobalState from "./app/global-state"
 
   import BaseAlertModal from "./components/BaseAlertModal.vue"
+  import NotificationsContainer from "./components/NotificationsContainer.vue"
 
   import TheNavbar from "./components/TheNavbar.vue"
   import InfoModal from "./components/InfoModal.vue"
@@ -17,6 +18,8 @@
 
   const navbar = ref(null)
   const alertModal = ref(null)
+
+  const notifications = ref([])
 
   onMounted(() => {
     setInstanceRef(getCurrentInstance())
@@ -40,6 +43,10 @@
   function showHints() {
     helpModal.value.open()
   }
+
+  function showNotification(notification) {
+    notifications.value = [...notifications.value, notification]
+  }
 </script>
 
 <template>
@@ -47,12 +54,18 @@
 
   <router-view v-slot="{ Component }">
     <Transition :name="routingDirection" mode="out-in">
-      <component :is="Component" @focus-navbar="focusNavbar"></component>
+      <component
+        :is="Component"
+        @notification="showNotification"
+        @focus-navbar="focusNavbar"
+      ></component>
     </Transition>
 
     <BaseAlertModal ref="alertModal" />
     <InfoModal ref="helpModal" :is-alert="true" />
   </router-view>
+
+  <NotificationsContainer :notifications="notifications" />
 </template>
 
 <style>
