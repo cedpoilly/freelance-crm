@@ -31,8 +31,13 @@ router.route("/:id")
 
   .put(async function clientPutHandler(req, res) {
     const { id } = req.params
-    const updatedClient = await Client.updateOne({ _id: id }, { ...req.body })
-    res.json(updatedClient)
+
+    try {
+      const updatedClient = await Client.updateOne({ _id: id }, { ...req.body })
+      res.json(updatedClient)
+    } catch (error) {
+      res.status(400).json({ error: error })
+    }
   })
 
   .delete(async function clientDeleteHandler(req, res, next) {
