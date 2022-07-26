@@ -96,7 +96,7 @@
         >'
 
         <router-link
-          :to="`/projects/${props.client._id}`"
+          :to="`/app/projects/${props.client._id}`"
           class="see-projects-link"
           >See projects</router-link
         >

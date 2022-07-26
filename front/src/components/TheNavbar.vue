@@ -23,20 +23,20 @@
         ref="firstRoute"
         :class="{ active: isActiveRoute('dashboard') }"
         class="nav-route"
-        to="/dashboard"
+        to="/app/dashboard"
       >
         Dashboard
       </router-link>
       <router-link
         :class="{ active: isActiveRoute('projects') }"
         class="nav-route"
-        to="/projects"
+        to="/app/projects"
         >Projects
       </router-link>
       <router-link
         :class="{ active: isActiveRoute('settings') }"
         class="nav-route"
-        to="/settings"
+        to="/app/settings"
         >Settings
       </router-link>
     </div>

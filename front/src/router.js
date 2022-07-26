@@ -8,9 +8,9 @@ import Settings from "./views/Settings.vue"
 import NotFound from "./views/NotFound.vue"
 
 const routes = [
-  { path: "/dashboard", alias: "/", name: "dashboard", component: Dashboard },
-  { path: "/projects/:clientId?", name: "projects", component: Projects },
-  { path: "/settings", name: "settings", component: Settings },
+  { path: "/app/dashboard", alias: "/", name: "dashboard", component: Dashboard },
+  { path: "/app/projects/:clientId?", name: "projects", component: Projects },
+  { path: "/app/settings", name: "settings", component: Settings },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 
 ]
