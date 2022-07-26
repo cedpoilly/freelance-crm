@@ -32,16 +32,19 @@ app.get('*', function (res, res) {
 })
 
 process.on('unhandledRejection', error => {
+  console.log('unhandledRejection', error.message)
+
   throw error
 })
 
 process.on('uncaughtException', error => {
-  console.log(error.message)
-  // const message = error.message
-  // const isCannotRead = message.toLowerCase().includes("cannot read")
-  // if (isCannotRead) {
-  //   process.exit(1)
-  // }
+  console.log('uncaughtException', error.message)
+
+  const message = error.message
+  const isCannotRead = message.toLowerCase().includes("cannot read")
+  if (isCannotRead) {
+    process.exit(1)
+  }
 })
 
 app.listen(process.env.PORT || 3000, function () {
