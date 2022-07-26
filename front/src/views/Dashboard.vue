@@ -26,7 +26,6 @@
   onBeforeMount(() => fetchTableData())
 
   // * template refs
-  const alertModal = ref(null)
   const modal = ref(null)
   const toolbar = ref(null)
   const dataTable = ref(null)
