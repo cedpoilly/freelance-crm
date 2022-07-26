@@ -9,9 +9,9 @@ List all the clients available from the database. \
 Navbar:
 
 - [✔️] Search -> Local search for clients (can evolve to a back-end search)
-- [ ] Create client   -> Opens the Create client modal
+- [✔️] Create client   -> Opens the Create client modal
 - [✔️] Edit client   -> Opens the Create client modal
-- [ ] Create project  -> Opens the Create project modal
+- [✔️] Create project  -> Opens the Create project modal
 - [✔️] Edit project  -> Opens the Create project modal
 - [ ] Settings
 
