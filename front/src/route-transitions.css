@@ -6,17 +6,21 @@
 .forwards-enter-from {
   opacity: 0;
   transform: translateX(100px);
+  position: absolute;
 }
 .forwards-enter-active {
   transition: all 0.3s ease-out;
+  position: absolute;
 }
 
 .backwards-leave-to {
   opacity: 0;
   transform: translateX(100px);
+  position: absolute;
 }
 .backwards-leave-active {
   transition: all 0.3s ease-out;
+  position: absolute;
 }
 
 .upwards-enter-from {
