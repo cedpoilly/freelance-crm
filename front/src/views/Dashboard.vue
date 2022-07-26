@@ -225,6 +225,7 @@
 
     try {
       const response = await createClient(client)
+      console.log(response)
       notify({
         title: "Successfully created!",
         message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> was created!`,
