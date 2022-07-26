@@ -5,6 +5,7 @@ import useHelpers from "../app/helpers"
 import Project from "../models/Project"
 
 import { getProjects, getProjectsByClientId, createProject, updateProject } from "../api/project"
+import { getClients } from "../api/client" // todo: get list with Id & name only
 
 const { searchStringInList, getCopy } = useHelpers()
 
@@ -16,6 +17,8 @@ const selectedProject = ref({})
 const currentClient = ref(null)
 
 const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
+
+const clients = ref([])
 
 // * template refs
 const modal = ref(null)
@@ -37,6 +40,7 @@ export default function userProjectsView({ notify, route } = {}) {
     selectedProject,
     currentClient,
     hasCurrentClient,
+    clients,
 
     // * data methods with data & template impacts
     fetchTableData: fetchTableDataWrapper,
@@ -89,13 +93,16 @@ async function fetchTableData(route = null) {
   const clientId = route?.params.clientId
 
   const call = clientId ? getProjectsByClientId(clientId) : getProjects()
+  const calls = [call, getClients]
 
-  const response = await call
-
-  const dataFromServer = await response.json()
+  const [projectResponse] = await Promise.all(calls)
+  const dataFromServer = await projectResponse.json()
 
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
+
+  const clientsResponses = await getClients()
+  clients.value = await clientsResponses.json()
 }
 
 function filter(field, value) {

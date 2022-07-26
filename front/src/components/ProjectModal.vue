@@ -10,6 +10,7 @@
 
   const props = defineProps({
     project: { type: Object, required: true },
+    clients: { type: Array, required: true },
   })
 
   const dialog = ref(null)
@@ -91,9 +92,22 @@
             data-ref="first-input"
             class="title"
             field-name="title"
-            label="Project Title"
+            label="Project title *"
             data-cy="edit-project-title"
             @input="updateProject('title', $event.target.value)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="client" class="base-input-label">Client</label>
+          <BaseSelect
+            :initial-selection="props.project.client"
+            :list="props.clients"
+            class="client"
+            field-name="client"
+            label="Client *"
+            data-cy="edit-project-client"
+            @selected-tags="updateProject('client', $event)"
           />
         </div>
 
@@ -102,7 +116,7 @@
             :value="props.project.requirements"
             class="requirements"
             field-name="requirements"
-            label="Requirements"
+            label="Requirements *"
             data-cy="edit-project-requirements"
             @input="updateProject('requirements', $event.target.value)"
           />
@@ -113,14 +127,14 @@
             :value="props.project.milestones"
             class="milestones"
             field-name="milestones"
-            label="Milestones"
+            label="Milestones *"
             data-cy="edit-project-milestones"
             @input="updateProject('milestones', $event.target.value)"
           />
         </div>
 
         <div class="form-group" v-if="props.project.isCodementor">
-          <span class="base-input-label"> Is from codementor.io </span>
+          <span class="base-input-label">Is from codementor.io </span>
           <BaseToggle
             :is-checked="props.project.isCodementor"
             class="is-completed"
@@ -132,12 +146,14 @@
         </div>
 
         <div class="form-group">
+          <label for="payment-methods" class="base-input-label">Payment method</label>
+
           <BaseSelect
             :initial-selection="props.project.paymentMethod"
             :list="PAYMENT_METHODS"
             class="payment-method"
             field-name="payment-method"
-            label="Payment Method"
+            label="Payment method *"
             data-cy="edit-project-payment-method"
             @selected-tags="updateProject('paymentMethod', $event)"
           />
@@ -147,7 +163,7 @@
           <BaseInput
             :value="props.project.budget"
             field-name="budget"
-            label="Budget"
+            label="Budget *"
             data-cy="edit-project-budget"
             @input="updateProject('budget', $event.target.value)"
           />

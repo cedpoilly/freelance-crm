@@ -10,7 +10,7 @@
   const props = defineProps({
     label: { type: String, required: true },
     list: { type: Array, required: true },
-    initialSelection: { type: [Array, String], required: false },
+    initialSelection: { type: [Array, String, Object], required: false },
     isMulti: { type: Boolean, default: false },
   })
 
@@ -156,6 +156,10 @@
     return list.join(joinString)
   }
 
+  function selectPropertyOrItem(element) {
+    return element.title || element.firstName ? `${element.firstName} ${element.lastName}` : '' || element
+  }
+
   function captitalise(string) {
     const [first, ...rest] = string.split("")
     return `${first.toUpperCase()}${rest.join("")}`
@@ -181,7 +185,7 @@
       </span>
 
       <span class="px-1" v-else>
-        {{ captitalise(selected) }}
+        {{ captitalise(selectPropertyOrItem(selected)) }}
       </span>
 
       <div class="icons-wrapper px-1">
@@ -219,7 +223,7 @@
           @keydown="preventSpacebarScroll"
           @keyup.stop.prevent="toggleOptionViaKeyboard($event, option)"
         >
-          {{ captitalise(option) }}
+          {{ captitalise(selectPropertyOrItem(option)) }}
           <span v-if="props.isMulti && isInSelectedList(option)">✔️</span>
         </li>
       </ul>

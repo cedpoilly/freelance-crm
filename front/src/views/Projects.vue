@@ -10,7 +10,7 @@
   import ProjectModal from "../components/ProjectModal.vue"
 
   // * Data refs and related methods
-  const { data, selectedProject, hasCurrentClient, filter, filterData } = useProjectsView()
+  const { data, selectedProject, hasCurrentClient, clients, filter, filterData } = useProjectsView()
 </script>
 
 <script setup>
@@ -71,6 +71,7 @@
     <ProjectModal
       ref="modal"
       :project="selectedProject"
+      :clients="clients"
       title="View/Edit the project"
     />
   </div>
