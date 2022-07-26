@@ -47,7 +47,6 @@ router.route("/:id")
   .get(async function projectGetByIdHandler(req, res) {
     const { id } = req.params
     const project = await Project.findById({ _id: id })
-    console.log(project)
     res.send(project)
   })
 
