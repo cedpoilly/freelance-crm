@@ -7,7 +7,7 @@ export async function getProjects() {
 }
 
 export async function getProjectsByClientId(clientId) {
-  return fetch(`${baseURL}/projects/${clientId}`)
+  return fetch(`${baseURL}/projects?clientId=${clientId}`)
 }
 
 export async function createProject(project) {
