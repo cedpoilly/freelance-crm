@@ -146,7 +146,9 @@
         </div>
 
         <div class="form-group">
-          <label for="payment-methods" class="base-input-label">Payment method</label>
+          <label for="payment-methods" class="base-input-label"
+            >Payment method
+          </label>
 
           <BaseSelect
             :initial-selection="props.project.paymentMethod"
