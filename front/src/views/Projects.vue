@@ -7,13 +7,11 @@
 
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
-  import BaseAlertModal from "../components/BaseAlertModal.vue"
   import ProjectModal from "../components/ProjectModal.vue"
 
   import useHelpers from "../app/helpers"
   import useAlert from "../app/alert"
 
-  import { getClientById } from "../api/client"
   import {
     getProjects,
     getProjectsByClientId,
@@ -65,11 +63,6 @@
 
     data.value = [...dataFromServer]
     initialData = [...dataFromServer]
-  }
-
-  async function fetchClient(clientId) {
-    const response = await getClientById(clientId)
-    return await response.json()
   }
 
   function filter(field, value) {
@@ -234,7 +227,7 @@
     }
 
     try {
-      const response = await createProject(project)
+      await createProject(project)
       notify({
         title: "Successfully created!",
         message: `<span class="italic font-bold">${project.title}</span> was created!`,
