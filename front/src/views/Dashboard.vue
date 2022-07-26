@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, ref } from "vue"
+  import { onBeforeMount, onMounted, ref } from "vue"
 
   import Client from "../models/Client"
 
@@ -20,9 +20,17 @@
 
   const emits = defineEmits(["focus-navbar", "notification"])
 
-  const alertModal = ref(null)
+  let initialData = []
+  const data = ref([])
+  const selectedClient = ref({})
 
-  fetchTableData()
+  onBeforeMount(() => fetchTableData())
+
+  // * template refs
+  const alertModal = ref(null)
+  const modal = ref(null)
+  const toolbar = ref(null)
+  const dataTable = ref(null)
 
   onMounted(() => {
     document.onkeydown = async event => {
@@ -34,13 +42,6 @@
       ctrlPlus(event, ">", openCreateModal)
     }
   })
-
-  let initialData = []
-  const data = ref([])
-  const modal = ref(null)
-  const toolbar = ref(null)
-  const dataTable = ref(null)
-  const selectedClient = ref({})
 
   async function fetchTableData() {
     const response = await getClients()
@@ -134,9 +135,16 @@
     }
 
     const response = await updateClient(client)
-    const { acknowledged } = response
+    const { acknowledged, error } = response
+    if (error) {
+      throw error
+    }
+
     if (!acknowledged) {
-      alert("Client was not modified!")
+      notify({
+        title: "Unchanged.",
+        message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> is the same.`,
+      })
       return
     }
 
