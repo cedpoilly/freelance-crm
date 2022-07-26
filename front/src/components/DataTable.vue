@@ -199,7 +199,7 @@
       >
     </div>
 
-    <div class="table-body">
+    <TransitionGroup tag="div" class="table-body">
       <div
       tabindex="0"
         class="table-body-row flex hover:scale-101"
@@ -227,26 +227,36 @@
           >
         </span>
       </div>
+    </TransitionGroup>
+
+    <div class="footer">
+      <span class="footer-cell">Count: {{data.length}}</span>
     </div>
-    <div class="footer"></div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .data-table {
     @apply w-11/12 mx-auto overflow-hidden;
   }
 
-  .header {
+  .header,
+  .footer {
     @apply w-full flex h-20 bg-gray-200 border-t border-b overflow-hidden text-lg;
   }
 
+  .footer {
+    @apply h-14;
+  }
+
   .header-cell,
-  .data-cell {
+  .data-cell,
+  .footer-cell {
     @apply px-10 py-2 flex items-center;
   }
 
-  .header-cell {
+  .header-cell,
+  .footer-cell {
     @apply font-bold;
   }
 
@@ -255,7 +265,7 @@
   }
 
   .table-body {
-    @apply w-full h-[30rem] flex flex-col overflow-x-hidden overflow-y-auto;
+    @apply w-full max-h-[30rem] flex flex-col overflow-x-hidden overflow-y-auto;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -279,5 +289,15 @@
 
   .action-button {
     @apply bg-white;
+  }
+
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease;
+  }
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
   }
 </style>
