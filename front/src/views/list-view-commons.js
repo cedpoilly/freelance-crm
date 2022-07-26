@@ -1,26 +1,26 @@
 import useHelpers from "../app/helpers"
 
-import useDasboard from "./dashboard"
-
 const { ctrlPlus } = useHelpers()
-
-const { openCreateModal } = useDasboard()
 
 let modal = null
 let dataTable = null
 let toolbar = null
 let emits = null
+let openCreateModal = null
 
 export default function useListViewCommons({
   modal: modalRef,
   dataTable: dataTableRef,
   toolbar: toolbarRef,
-  emits: emitsRef
+  emits: emitsRef,
+  openCreateModal: openCreateModalRef
 }) {
   modal = modalRef
   dataTable = dataTableRef
   toolbar = toolbarRef
   emits = emitsRef
+  emits = emitsRef
+  openCreateModal = openCreateModalRef
 
   return {
     onKeyDownListeners,

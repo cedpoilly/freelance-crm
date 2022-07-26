@@ -1,16 +1,15 @@
 <script>
   import { onBeforeMount, onMounted } from "vue"
 
+  import useDasboard from "./dashboard"
+  import useListViewCommons from "./list-view-commons"
+
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
   import ClientModal from "../components/ClientModal.vue"
 
-  import useDasboard from "./dashboard"
-  import useListViewCommons from "./list-view-commons"
-
   // * Data refs and related methods
   const { data, selectedClient, fetchTableData, filter, filterData } = useDasboard()
-
 </script>
 
 <script setup>
@@ -22,10 +21,11 @@
   // * template refs
   const { modal, toolbar, dataTable } = useDasboard()
 
-  const { openModal } = useDasboard({ notify })
+  // * template actions
+  const { openModal, openCreateModal } = useDasboard({ notify })
 
   onMounted(() => {
-    const args = { modal, toolbar, dataTable, emits }
+    const args = { modal, toolbar, dataTable, emits, openCreateModal }
     const { onKeyDownListeners } = useListViewCommons(args)
     onKeyDownListeners(document)
   })
@@ -53,7 +53,7 @@
       @open-modal="openModal"
     />
     <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
-      No data to show at the moment.
+      There are no clients available yet. 🤷
     </h2>
 
     <ClientModal

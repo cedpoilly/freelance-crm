@@ -1,17 +1,21 @@
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 import useHelpers from "../app/helpers"
 
-import Client from "../models/Client"
+import Project from "../models/Project"
 
-import { getClients, createClient, updateClient } from "../api/client"
+import { getProjects, getProjectsByClientId, createProject, updateProject } from "../api/project"
 
 const { searchStringInList, getCopy } = useHelpers()
 
 let initialData = []
 
 const data = ref([])
-const selectedClient = ref({})
+const selectedProject = ref({})
+
+const currentClient = ref(null)
+
+const hasCurrentClient = computed(() => !!currentClient.value?.firstName)
 
 // * template refs
 const modal = ref(null)
@@ -19,7 +23,7 @@ const toolbar = ref(null)
 const dataTable = ref(null)
 
 
-export default function useDashboard({ notify } = {}) {
+export default function userProjectsView({ notify, route } = {}) {
 
   return {
     // * template refs
@@ -30,18 +34,24 @@ export default function useDashboard({ notify } = {}) {
     // * data refs
     data,
     initialData,
-    selectedClient,
+    selectedProject,
+    currentClient,
+    hasCurrentClient,
 
     // * data methods with data & template impacts
-    fetchTableData,
+    fetchTableData: fetchTableDataWrapper,
     filter,
     filterData,
     openModal: openModalWrapper,
     openCreateModal: openCreateModalWrapper,
-    createNewClientViaModal,
-    viewClient: viewClientWrapper,
-    editClientViaModal: editClientViaModalWrapper,
+    createItemViaModal,
+    viewItem: viewItemWrapper,
+    editItemViaModal: editItemViaModalWrapper,
     updateItemAndFetchData: updateItemAndFetchDataWrapper,
+  }
+
+  function fetchTableDataWrapper(...args) {
+    return fetchTableData(route, ...args)
   }
 
   function openModalWrapper(...args) {
@@ -56,12 +66,12 @@ export default function useDashboard({ notify } = {}) {
     return updateItemAndFetchData(notify, ...args)
   }
 
-  function viewClientWrapper(...args) {
-    return viewClient(notify, ...args)
+  function viewItemWrapper(...args) {
+    return viewItem(notify, ...args)
   }
 
-  function editClientViaModalWrapper(...args) {
-    return editClientViaModal(notify, ...args)
+  function editItemViaModalWrapper(...args) {
+    return editItemViaModal(notify, ...args)
   }
 }
 
@@ -73,9 +83,15 @@ function focusDataTable() {
   dataTable.value.focus()
 }
 
-async function fetchTableData() {
-  const response = await getClients()
+async function fetchTableData(route = null) {
+  const clientId = route?.params.clientId
+
+  const call = clientId ? getProjectsByClientId(clientId) : getProjects()
+
+  const response = await call
+
   const dataFromServer = await response.json()
+
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
 }
@@ -128,91 +144,90 @@ async function openModal(notify, response) {
   const { mode, index } = response
   switch (mode) {
     case "view": {
-      viewClient(notify, index)
+      viewItem(notify, index)
       break
     }
 
     case "edit": {
-      editClientViaModal(notify, index)
+      editItemViaModal(notify, index)
       break
     }
 
     case "create": {
-      createNewClientViaModal(notify)
+      createItemViaModal(notify)
       break
     }
 
     default: {
-      debugger
       console.log("Open modal mode is not recognised. 🤷‍♂️")
       break
     }
   }
 }
 
-async function createNewClientViaModal(notify, previousClient = null) {
+async function createItemViaModal(notify, previousItem = null) {
   // * When back-end fails to create the client,
   // * we re-open the modal with the same data
-  selectedClient.value = previousClient || new Client()
-  const client = await modal.value.open()
+  selectedProject.value = previousItem || new Project()
+  const project = await modal.value.open()
   focusDataTable()
 
-  const hasNoClient = !client
-  if (hasNoClient) {
+  const hasNoProject = !project
+  if (hasNoProject) {
     return
   }
 
   try {
-    await createClient(client)
+    await createProject(project)
     notify({
       title: "Successfully created!",
-      message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> was created!`,
+      message: `<span class="italic font-bold">${project.title}</span> was created!`,
     })
   } catch (error) {
     await alert({
       title: "⚠️ OOPS! ⚠️",
-      text: `Failed to create the client. Please try again.`,
+      text: `Failed to create the project. Please try again.`,
     })
 
-    return createNewClientViaModal(notify, client)
+    return createItemViaModal(notify, project)
   }
 
   await fetchTableData()
 }
 
-async function viewClient(notify, clientIndex) {
-  selectedClient.value = getCopy(data.value[clientIndex])
-  const client = await modal.value.open()
+async function viewItem(notify, itemIndex) {
+  selectedProject.value = getCopy(data.value[itemIndex])
+  const project = await modal.value.open()
   focusDataTable()
 
-  const hasNoClient = !client
-  if (hasNoClient) {
+  const hasNoItem = !project
+  if (hasNoItem) {
     return
   }
-  await updateItemAndFetchData(notify, clientIndex, client)
+  await updateItemAndFetchData(notify, itemIndex, project)
 }
 
-async function editClientViaModal(notify, clientIndex) {
-  selectedClient.value = getCopy(data.value[clientIndex])
-  const client = await modal.value.open()
+async function editItemViaModal(notify, itemIndex) {
+  selectedProject.value = getCopy(data.value[itemIndex])
+  const project = await modal.value.open()
   focusDataTable()
 
-  const hasNoClient = !client
+  const hasNoClient = !project
   if (hasNoClient) {
     return
   }
 
-  await updateItemAndFetchData(notify, clientIndex, client)
+  await updateItemAndFetchData(notify, itemIndex, project)
 }
 
-async function updateItemAndFetchData(notify, index, client) {
-  const hasNoClient = !client
-  if (hasNoClient) {
-    console.warn("Tried to update but had no client")
+async function updateItemAndFetchData(notify, index, project) {
+  const hasNoProject = !project
+  if (hasNoProject) {
+    console.warn("Tried to update but had no client 🤷")
     return
   }
 
-  const response = await updateClient(client)
+  const response = await updateProject(project)
   const { acknowledged, error } = response
   if (error) {
     throw error
@@ -221,17 +236,17 @@ async function updateItemAndFetchData(notify, index, client) {
   if (!acknowledged) {
     notify({
       title: "Unchanged.",
-      message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> is the same.`,
+      message: `<span class="italic font-bold">${project.title}</span> is the same.`,
     })
     return
   }
 
   notify({
     title: "Successfully Saved!",
-    message: `<span class="italic font-bold">${client.firstName} ${client.lastName}</span> was updated!`,
+    message: `<span class="italic font-bold">${project.title}</span> was updated!`,
   })
 
-  data.value[index] = client
+  data.value[index] = project
 
   // * No need to ensure flow of events as it is the last action
   // * Hence we do not use the await here
