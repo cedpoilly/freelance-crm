@@ -5,7 +5,6 @@
 
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
-  import BaseAlertModal from "../components/BaseAlertModal.vue"
   import ClientModal from "../components/ClientModal.vue"
 
   import useAlert from "../app/alert"
