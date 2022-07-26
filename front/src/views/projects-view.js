@@ -179,7 +179,6 @@ async function createItemViaModal(notify, previousItem = null) {
   // * we re-open the modal with the same data
   selectedProject.value = previousItem || new Project()
   const project = await modal.value.open()
-  focusDataTable()
 
   const hasNoProject = !project
   if (hasNoProject) {
@@ -202,24 +201,24 @@ async function createItemViaModal(notify, previousItem = null) {
   }
 
   await fetchTableData()
+  focusDataTable()
 }
 
 async function viewItem(notify, itemIndex) {
   selectedProject.value = getCopy(data.value[itemIndex])
   const project = await modal.value.open()
-  focusDataTable({ itemIndex: itemIndex })
 
   const hasNoItem = !project
   if (hasNoItem) {
     return
   }
   await updateItemAndFetchData(notify, itemIndex, project)
+  focusDataTable({ itemIndex: itemIndex })
 }
 
 async function editItemViaModal(notify, itemIndex) {
   selectedProject.value = getCopy(data.value[itemIndex])
   const project = await modal.value.open()
-  focusDataTable({ itemIndex: itemIndex })
 
   const hasNoClient = !project
   if (hasNoClient) {
@@ -227,6 +226,7 @@ async function editItemViaModal(notify, itemIndex) {
   }
 
   await updateItemAndFetchData(notify, itemIndex, project)
+  focusDataTable({ itemIndex: itemIndex })
 }
 
 async function updateItemAndFetchData(notify, index, project) {

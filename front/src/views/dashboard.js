@@ -157,7 +157,6 @@ async function createNewClientViaModal(notify, previousClient = null) {
   // * we re-open the modal with the same data
   selectedClient.value = previousClient || new Client()
   const client = await modal.value.open()
-  focusDataTable()
 
   const hasNoClient = !client
   if (hasNoClient) {
@@ -180,24 +179,24 @@ async function createNewClientViaModal(notify, previousClient = null) {
   }
 
   await fetchTableData()
+  focusDataTable()
 }
 
 async function viewClient(notify, clientIndex) {
   selectedClient.value = getCopy(data.value[clientIndex])
   const client = await modal.value.open()
-  focusDataTable({ itemIndex: clientIndex })
 
   const hasNoClient = !client
   if (hasNoClient) {
     return
   }
   await updateItemAndFetchData(notify, clientIndex, client)
+  focusDataTable({ itemIndex: clientIndex })
 }
 
 async function editClientViaModal(notify, clientIndex) {
   selectedClient.value = getCopy(data.value[clientIndex])
   const client = await modal.value.open()
-  focusDataTable({ itemIndex: clientIndex })
 
   const hasNoClient = !client
   if (hasNoClient) {
@@ -205,6 +204,7 @@ async function editClientViaModal(notify, clientIndex) {
   }
 
   await updateItemAndFetchData(notify, clientIndex, client)
+  focusDataTable({ itemIndex: clientIndex })
 }
 
 async function updateItemAndFetchData(notify, index, client) {
