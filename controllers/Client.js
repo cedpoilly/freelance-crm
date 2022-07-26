@@ -8,21 +8,19 @@ router.post("/", async function clientPostHandler(req, res, next) {
   try {
     const createdClient = await clientDocument.save()
     res.json(createdClient)
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error.message)
     next(error.message)
   }
 })
 
 router.get("/", async function getAllClientsHandler(req, res) {
-  const clients = await Client.find()
-    .populate("projects")
-    .select("-__v")
+  const clients = await Client.find().populate("projects").select("-__v")
   res.json(clients)
 })
 
-router.route("/:id")
+router
+  .route("/:id")
   .get(async function clientGetByIdHandler(req, res) {
     const { id } = req.params
     const foundClient = await Client.findById(id)

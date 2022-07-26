@@ -3,10 +3,23 @@ const { default: mongoose, Mongoose, Schema } = require("mongoose")
 const projectSchema = mongoose.Schema({
   title: { type: String, require: true, minLength: 5 },
 
-  techs: [{
-    type: String,
-    enum: ["JavaScript", "HTML", "CSS", "Vue.js", "Front-End", "Back-end", "Node.js", "Express.js", "MongoDB", "Mongoose"]
-  }],
+  techs: [
+    {
+      type: String,
+      enum: [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Vue.js",
+        "Front-End",
+        "Back-end",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Mongoose",
+      ],
+    },
+  ],
 
   requirements: { type: String, require: true },
 
@@ -17,7 +30,7 @@ const projectSchema = mongoose.Schema({
   paymentMethod: {
     type: String,
     require: true,
-    enum: ["codementor", "bank", "paypal"]
+    enum: ["codementor", "bank", "paypal"],
   },
 
   budget: {
@@ -26,8 +39,8 @@ const projectSchema = mongoose.Schema({
     required: true,
     validate: {
       validator: Number.isInteger,
-      message: "budget_must_be_integer"
-    }
+      message: "budget_must_be_integer",
+    },
   },
 
   hasDownPayment: { type: Boolean, require: true },
@@ -43,8 +56,8 @@ const projectSchema = mongoose.Schema({
   client: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Client"
-  }
+    ref: "Client",
+  },
 })
 
 module.exports = mongoose.model("Project", projectSchema)

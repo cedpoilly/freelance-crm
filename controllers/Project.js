@@ -4,7 +4,6 @@ const router = express.Router()
 const Project = require("../models/Project")
 const Client = require("../models/Client")
 
-
 router.post("/", async function projectPostHandler(req, res) {
   const projectDocument = new Project({ ...req.body })
 
@@ -17,13 +16,12 @@ router.post("/", async function projectPostHandler(req, res) {
         new: true,
         // * avoids deprecation warning
         // * https://mongoosejs.com/docs/5.x/docs/deprecations.html#findandmodify
-        useFindAndModify: false
+        useFindAndModify: false,
       }
     )
     res.send(createdProject)
-  }
-  // todo: move to global error handler?
-  catch (error) {
+  } catch (error) {
+    // todo: move to global error handler?
     console.error(error.message)
     res.send(error.message)
   }
@@ -32,18 +30,15 @@ router.post("/", async function projectPostHandler(req, res) {
 router.get("/", async function getAllProjectsHandler(req, res) {
   const clientId = req.query.clientId
 
-  const query = clientId
-    ? Project.find({ client: clientId })
-    : Project.find()
+  const query = clientId ? Project.find({ client: clientId }) : Project.find()
 
-  const projects = await query
-    .populate("client", "-projects")
-    .select("-__v")
+  const projects = await query.populate("client", "-projects").select("-__v")
 
   res.send(projects)
 })
 
-router.route("/:id")
+router
+  .route("/:id")
   .get(async function projectGetByIdHandler(req, res) {
     const { id } = req.params
     const project = await Project.findById({ _id: id })
