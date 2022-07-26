@@ -13,11 +13,27 @@
 
   const dataTable = ref(null)
 
+  // * Focus on the table itself
+  // * Available in `list-view-commons.js`
   function focus() {
     dataTable.value.focus()
   }
 
-  defineExpose({ focus })
+  function focusOnCreate() {
+    const rows = [...dataTable.value.querySelectorAll(".table-body-row")]
+    const updatedRow = rows[rows.length - 1]
+    updatedRow.focus()
+    updatedRow.scrollIntoView()
+  }
+
+  function focusOnUpdated(itemIndex) {
+    const rows = [...dataTable.value.querySelectorAll(".table-body-row")]
+    const updatedRow = rows[itemIndex]
+    updatedRow.focus()
+    updatedRow.scrollIntoView()
+  }
+
+  defineExpose({ focus, focusOnCreate, focusOnUpdated })
 
   const { dataHeaders, headers } = getHeadersFromList(props.data)
   const data = ref([])
@@ -185,6 +201,7 @@
 
     <div class="table-body">
       <div
+      tabindex="0"
         class="table-body-row flex hover:scale-101"
         title="Click to view all details."
         v-for="(row, index) in data"
@@ -257,7 +274,7 @@
   }
 
   .table-body-row {
-    @apply w-full items-center h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg;
+    @apply w-full items-center h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg focus:bg-sky-100;
   }
 
   .action-button {

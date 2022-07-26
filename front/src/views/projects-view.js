@@ -79,8 +79,10 @@ function openCreateModal(notify) {
   openModal(notify, { mode: "create" })
 }
 
-function focusDataTable() {
-  dataTable.value.focus()
+function focusDataTable({ itemIndex } = {}) {
+  itemIndex >= 0
+    ? dataTable.value.focusOnUpdated(itemIndex)
+    : dataTable.value.focusOnCreate()
 }
 
 async function fetchTableData(route = null) {
@@ -198,7 +200,7 @@ async function createItemViaModal(notify, previousItem = null) {
 async function viewItem(notify, itemIndex) {
   selectedProject.value = getCopy(data.value[itemIndex])
   const project = await modal.value.open()
-  focusDataTable()
+  focusDataTable({ itemIndex: itemIndex })
 
   const hasNoItem = !project
   if (hasNoItem) {
@@ -210,7 +212,7 @@ async function viewItem(notify, itemIndex) {
 async function editItemViaModal(notify, itemIndex) {
   selectedProject.value = getCopy(data.value[itemIndex])
   const project = await modal.value.open()
-  focusDataTable()
+  focusDataTable({ itemIndex: itemIndex })
 
   const hasNoClient = !project
   if (hasNoClient) {
