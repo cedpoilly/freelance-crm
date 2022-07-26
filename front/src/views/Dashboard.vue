@@ -181,6 +181,7 @@
   async function viewClient(clientIndex) {
     selectedClient.value = getCopy(data.value[clientIndex])
     const client = await modal.value.open()
+    focusDataTable()
 
     const hasNoClient = !client
     if (hasNoClient) {
@@ -194,6 +195,7 @@
   async function editClientViaModal(clientIndex) {
     selectedClient.value = getCopy(data.value[clientIndex])
     const client = await modal.value.open()
+    focusDataTable()
 
     const hasNoClient = !client
     if (hasNoClient) {
@@ -208,6 +210,7 @@
     // * we re-open the modal with the same data
     selectedClient.value = previousClient || new Client()
     const client = await modal.value.open()
+    focusDataTable()
 
     const hasNoClient = !client
     if (hasNoClient) {

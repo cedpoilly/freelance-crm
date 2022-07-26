@@ -206,6 +206,7 @@
   async function editItemViaModal(itemIndex) {
     selectedProject.value = getCopy(data.value[itemIndex])
     const project = await modal.value.open()
+    focusDataTable()
 
     const hasNoProject = !project
     if (hasNoProject) {
@@ -225,6 +226,7 @@
     // * we re-open the modal with the same data
     selectedProject.value = previousItem || new Project()
     const project = await modal.value.open()
+    focusDataTable()
 
     const hasNoProject = !project
     if (hasNoProject) {
