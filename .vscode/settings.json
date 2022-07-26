@@ -2,5 +2,9 @@
   "volar.vueserver.useSecondServer": true,
   "volar-language-features.trace.server": "messages",
   "volar-language-features-2.trace.server": "messages",
-  "volar-document-features.trace.server": "messages"
+  "volar-document-features.trace.server": "messages",
+  "editor.defaultFormatter": "Vue.volar",
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
