@@ -61,6 +61,7 @@
       <form @submit.prevent class="filter">
         <BaseSearchInput
           label="Search"
+          name="search"
           ref="searchInput"
           field-name="search"
           placeholder="Search any field"
@@ -80,6 +81,8 @@
       <form @submit.prevent class="filter">
         <BaseSelect
           label="one or more tags."
+          blank-option-label="Select one or more tags."
+          name="tags"
           :list="tagList"
           :is-multi="true"
           @selected-tags="filterViaTags"
@@ -93,7 +96,7 @@
             title="Create a new client!"
             @add-item="emitOpenModal"
           />
-          <span>Create new </span>
+          <span class="label px-3">Create new </span>
         </label>
       </div>
     </div>
@@ -114,17 +117,17 @@
   }
 
   .filter {
-    @apply flex justify-center;
+    @apply flex justify-center w-80;
   }
 
   .create-new {
-    @apply flex h-full items-center justify-self-end cursor-pointer;
+    @apply flex h-16 w-80 items-center justify-self-end self-end cursor-pointer;
   }
 
   .create-new-label {
     @apply flex items-center gap-3 px-3 py-2 cursor-pointer
     rounded-md
-    hover:font-bold hover:bg-sky-100 active:bg-sky-200;
+    hover:text-green-900 hover:bg-sky-100 active:bg-sky-200;
   }
 
   @media (min-width: 900px) {

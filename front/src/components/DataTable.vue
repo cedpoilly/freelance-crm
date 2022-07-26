@@ -201,7 +201,7 @@
 
     <TransitionGroup tag="div" class="table-body">
       <div
-      tabindex="0"
+        tabindex="0"
         class="table-body-row flex hover:scale-101"
         title="Click to view all details."
         v-for="(row, index) in data"
@@ -230,14 +230,14 @@
     </TransitionGroup>
 
     <div class="footer">
-      <span class="footer-cell">Count: {{data.length}}</span>
+      <span class="footer-cell">Count: {{ data.length }}</span>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12 mx-auto overflow-hidden;
+    @apply w-11/12 mx-auto overflow-y-hidden;
   }
 
   .header,

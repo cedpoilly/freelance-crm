@@ -9,8 +9,8 @@
 </script>
 
 <template>
-  <span class="base-input-label"> {{ props.label }} </span>
   <label class="base-input" :for="props.fieldName">
+    <span role="label" class="base-input-label"> {{ props.label }} </span>
     <input
       :id="props.label"
       :placeholder="props.label"
@@ -25,17 +25,14 @@
 
 <style lang="scss" scoped>
   .base-input {
-    @apply w-80 h-16 px-4 py-2 border rounded grid content-center justify-between items-center bg-white;
+    @apply w-full grid content-center justify-items-stretch items-center;
   }
 
   .base-input-label {
-    @apply mr-1 w-80;
-    grid-row: 1/1;
-    z-index: 1;
+    @apply w-full mb-2;
   }
 
   .base-input-box {
-    @apply pl-5 py-1 w-72 rounded-md;
-    grid-row: 2/2;
+    @apply h-14 w-full px-4 py-1 rounded border;
   }
 </style>

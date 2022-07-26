@@ -37,18 +37,15 @@
 
 <style lang="scss" scoped>
   .base-search {
-    @apply w-80 h-16 px-4 py-2 border rounded grid grid-cols-12 justify-between items-center bg-white;
+    @apply w-full flex flex-col justify-between items-start bg-white;
   }
 
   .base-search-label {
-    @apply mr-1 my-auto;
-    grid-row: 1/1;
-    grid-column: 1/4;
-    z-index: 1;
+    @apply mr-1 my-auto mb-2;
   }
 
   .base-search-input {
-    @apply pl-5 py-2 rounded-md;
+    @apply w-full border rounded h-14 px-4 py-2;
     grid-row: 1/1;
     grid-column: 4/13;
   }

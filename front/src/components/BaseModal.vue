@@ -45,9 +45,14 @@
 </script>
 
 <template>
-  <div class="modal-container" tabindex="0" @keydown.esc="cancelAndClose">
-    <Transition name="appear">
-      <div class="modal" v-if="canShow">
+  <Transition name="appear">
+    <div
+      v-if="canShow"
+      class="modal-container"
+      tabindex="0"
+      @keydown.esc="cancelAndClose"
+    >
+      <div class="modal">
         <div class="modal-title">
           <h4 class="modal-title-text">
             <slot name="title"></slot>
@@ -116,12 +121,9 @@
           </slot>
         </div>
       </div>
-    </Transition>
-
-    <Transition name="appear-slow">
-      <div v-if="canShow" class="modal-overlay"></div>
-    </Transition>
-  </div>
+      <div class="modal-overlay"></div>
+    </div>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
@@ -130,53 +132,41 @@
   }
 
   .modal {
-    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between fixed left-4 right-4 z-10 sm:w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-10 py-8 rounded-md text-lg;
-  }
+    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between absolute left-4 right-4 z-10 mx-auto px-10 py-8 rounded-md text-lg;
+    @apply sm:w-11/12 md:w-11/12 lg:w-8/12 xl:w-8/12;
 
-  .modal-title {
-    @apply w-full flex justify-between items-center;
-  }
+    .modal-title {
+      @apply w-full mb-5 flex justify-between items-center;
 
-  .modal-title-text {
-    @apply font-bold text-2xl self-center;
+      .modal-title-text {
+        @apply w-full flex justify-start font-bold text-2xl;
+      }
+    }
+    .modal-content {
+      @apply relative h-full w-full py-0 xl:py-10 flex flex-col justify-center items-center whitespace-pre-wrap;
+    }
+
+    .modal-actions {
+      @apply flex justify-end w-full mt-10;
+    }
+
+    .modal-actions .button-text {
+      @apply w-24 dark:mr-4;
+    }
   }
 
   .modal-overlay {
-    @apply bg-slate-600 relative w-full h-full opacity-90;
-  }
-
-  .modal-content {
-    @apply relative h-full w-full py-9 flex flex-col justify-center items-center whitespace-pre-wrap;
-  }
-
-  .modal-actions {
-    @apply flex justify-end w-full;
-  }
-
-  .modal-actions .button-text {
-    @apply w-24 dark:mr-4;
-  }
-
-  .appear-slow-enter-active,
-  .appear-slow-leave-active {
-    transition: all 0.9s ease;
-  }
-
-  .appear-slow-enter-from,
-  .appear-slow-leave-to {
-    opacity: 0;
+    @apply fixed  bg-slate-600 relative w-full h-full opacity-90;
   }
 
   .appear-enter-active,
   .appear-leave-active {
     transition: all 0.3s ease;
-    animation-delay: 1s;
   }
 
   .appear-enter-from,
   .appear-leave-to {
-    opacity: 0.5;
+    opacity: 0;
     transform: scale(0.9, 0.9);
-    animation-delay: 1s;
   }
 </style>

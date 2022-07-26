@@ -54,7 +54,7 @@
 
   function focusOnFirstInput() {
     requestAnimationFrame(() => {
-      document.querySelector('[data-ref="first-input"]').focus()
+      document.querySelector('[data-ref="first-input"] input').focus()
     })
   }
 
@@ -68,7 +68,6 @@
 <template>
   <BaseModal
     v-if="isOpen"
-    width="!w-[46rem]"
     tabindex="0"
     actions-push-left="mr-6"
     :is-default-actions="true"
@@ -77,7 +76,7 @@
     key="EDIT_PROJECT_DIALOG"
   >
     <template #title>
-      {{ currentAction }} project
+      {{ currentAction }} project&nbsp;
       <span v-if="isEditing">
         '<span class="italic">{{ props.project?.title }}</span
         >'
@@ -85,141 +84,155 @@
     </template>
 
     <template #content>
-      <form class="project-form container">
-        <div class="form-group">
-          <BaseInput
-            :value="props.project.title"
-            data-ref="first-input"
-            class="title"
-            field-name="title"
-            label="Project title *"
-            data-cy="edit-project-title"
-            @input="updateProject('title', $event.target.value)"
-          />
-        </div>
+      <form class="main-form">
+        <span class="form-section-header"> Info </span>
 
-        <div class="form-group">
-          <label for="client" class="base-input-label">Client</label>
-          <BaseSelect
-            :initial-selection="props.project.client"
-            :list="props.clients"
-            class="client"
-            field-name="client"
-            label="Client *"
-            data-cy="edit-project-client"
-            @selected-tags="updateProject('client', $event)"
-          />
-        </div>
+        <div class="project-form">
+          <div class="form-group">
+            <BaseInput
+              :value="props.project.title"
+              data-ref="first-input"
+              class="title"
+              field-name="title"
+              label="Project title *"
+              data-cy="edit-project-title"
+              @input="updateProject('title', $event.target.value)"
+            />
+          </div>
 
-        <div class="form-group">
-          <BaseInput
-            :value="props.project.requirements"
-            class="requirements"
-            field-name="requirements"
-            label="Requirements *"
-            data-cy="edit-project-requirements"
-            @input="updateProject('requirements', $event.target.value)"
-          />
-        </div>
+          <div class="form-group">
+            <BaseSelect
+              :initial-selection="props.project.client"
+              :list="props.clients"
+              class="client"
+              field-name="client"
+              label="Client *"
+              name="client"
+              blank-option-label="Client name"
+              data-cy="edit-project-client"
+              @selected-tags="updateProject('client', $event)"
+            />
+          </div>
 
-        <div class="form-group">
-          <BaseInput
-            :value="props.project.milestones"
-            class="milestones"
-            field-name="milestones"
-            label="Milestones *"
-            data-cy="edit-project-milestones"
-            @input="updateProject('milestones', $event.target.value)"
-          />
-        </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.project.requirements"
+              class="requirements"
+              field-name="requirements"
+              label="Requirements *"
+              data-cy="edit-project-requirements"
+              @input="updateProject('requirements', $event.target.value)"
+            />
+          </div>
 
-        <div class="form-group" v-if="props.project.isCodementor">
-          <span class="base-input-label">Is from codementor.io </span>
-          <BaseToggle
-            :is-checked="props.project.isCodementor"
-            class="is-completed"
-            field-name="is-completed"
-            label="Is Completed"
-            data-cy="edit-project-is-completed"
-            @toggled="updateProject('isCompleted', $event)"
-          />
-        </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.project.milestones"
+              class="milestones"
+              field-name="milestones"
+              label="Milestones *"
+              data-cy="edit-project-milestones"
+              @input="updateProject('milestones', $event.target.value)"
+            />
+          </div>
 
-        <div class="form-group">
-          <label for="payment-methods" class="base-input-label"
-            >Payment method
-          </label>
+          <div class="form-group" v-if="props.project.isCodementor">
+            <span class="base-input-label">Is from codementor.io </span>
+            <BaseToggle
+              :is-checked="props.project.isCodementor"
+              class="is-completed"
+              field-name="is-completed"
+              label="Is Completed"
+              data-cy="edit-project-is-completed"
+              @toggled="updateProject('isCompleted', $event)"
+            />
+          </div>
 
-          <BaseSelect
-            :initial-selection="props.project.paymentMethod"
-            :list="PAYMENT_METHODS"
-            class="payment-method"
-            field-name="payment-method"
-            label="Payment method *"
-            data-cy="edit-project-payment-method"
-            @selected-tags="updateProject('paymentMethod', $event)"
-          />
-        </div>
+          <div class="form-group">
+            <BaseSelect
+              :initial-selection="props.project.paymentMethod"
+              :list="PAYMENT_METHODS"
+              class="payment-method"
+              field-name="payment-method"
+              label="Payment method *"
+              name="paymentmethod"
+              blank-option-label="Payment method"
+              data-cy="edit-project-payment-method"
+              @selected-tags="updateProject('paymentMethod', $event)"
+            />
+          </div>
 
-        <div class="form-group budget">
-          <BaseInput
-            :value="props.project.budget"
-            field-name="budget"
-            label="Budget *"
-            data-cy="edit-project-budget"
-            @input="updateProject('budget', $event.target.value)"
-          />
+          <div class="form-group">
+            <BaseInput
+              :value="props.project.budget"
+              field-name="budget"
+              label="Budget *"
+              data-cy="edit-project-budget"
+              @input="updateProject('budget', $event.target.value)"
+            />
+          </div>
         </div>
 
         <span class="form-group spacer"></span>
 
-        <div class="form-group form-group-status">
-          <span class="base-input-label"> Status </span>
-          <span class="base-input-label"></span>
-          <BaseToggle
-            :is-checked="props.project.hasDownPayment"
-            class="has-down-payment"
-            field-name="has-down-payment"
-            label="Has Down Payment"
-            data-cy="edit-project-has-down-payment"
-            @toggled="updateProject('hasDownPayment', $event)"
-          />
+        <span class="form-section-header mt-10"> Status </span>
 
-          <BaseToggle
-            :is-checked="props.project.wasPaymentDone"
-            class="was-payment-done"
-            field-name="was-payment-done"
-            label="Was Payment Done"
-            data-cy="edit-project-was-payment-done"
-            @toggled="updateProject('wasPaymentDone', $event)"
-          />
+        <div class="project-form mt-10 pt-10">
+          <div class="form-group">
+            <span class="base-input-label"></span>
+            <BaseToggle
+              :is-checked="props.project.hasDownPayment"
+              class="has-down-payment"
+              field-name="has-down-payment"
+              label="Has Down Payment"
+              data-cy="edit-project-has-down-payment"
+              @toggled="updateProject('hasDownPayment', $event)"
+            />
+          </div>
 
-          <BaseToggle
-            :is-checked="props.project.isCompleted"
-            class="is-completed"
-            field-name="is-completed"
-            label="Is Completed"
-            data-cy="edit-project-is-completed"
-            @toggled="updateProject('isCompleted', $event)"
-          />
+          <div class="form-group">
+            <BaseToggle
+              :is-checked="props.project.wasPaymentDone"
+              class="was-payment-done"
+              field-name="was-payment-done"
+              label="Was Payment Done"
+              data-cy="edit-project-was-payment-done"
+              @toggled="updateProject('wasPaymentDone', $event)"
+            />
+          </div>
 
-          <BaseToggle
-            :is-checked="props.project.isInvoiceSent"
-            class="is-invoice-sent"
-            field-name="is-invoice-sent"
-            label="Is Invoice Sent"
-            data-cy="edit-project-is-invoice-sent"
-            @toggled="updateProject('isInvoiceSent', $event)"
-          />
+          <div class="form-group">
+            <BaseToggle
+              :is-checked="props.project.isCompleted"
+              class="is-completed"
+              field-name="is-completed"
+              label="Is Completed"
+              data-cy="edit-project-is-completed"
+              @toggled="updateProject('isCompleted', $event)"
+            />
+          </div>
 
-          <BaseToggle
-            :is-checked="props.project.wasPaidInFull"
-            class="was-paid-in-full"
-            field-name="was-paid-in-full"
-            label="Is Invoice Sent"
-            data-cy="edit-project-was-paid-in-full"
-            @toggled="updateProject('wasPaidInFull', $event)"
-          />
+          <div class="form-group">
+            <BaseToggle
+              :is-checked="props.project.isInvoiceSent"
+              class="is-invoice-sent"
+              field-name="is-invoice-sent"
+              label="Is Invoice Sent"
+              data-cy="edit-project-is-invoice-sent"
+              @toggled="updateProject('isInvoiceSent', $event)"
+            />
+          </div>
+
+          <div class="form-group">
+            <BaseToggle
+              :is-checked="props.project.wasPaidInFull"
+              class="was-paid-in-full"
+              field-name="was-paid-in-full"
+              label="Is Invoice Sent"
+              data-cy="edit-project-was-paid-in-full"
+              @toggled="updateProject('wasPaidInFull', $event)"
+            />
+          </div>
         </div>
       </form>
     </template>
@@ -227,31 +240,51 @@
 </template>
 
 <style lang="scss" scoped>
+  .main-form {
+    @apply overflow-y-auto w-full flex flex-col gap-4;
+    height: 55vh;
+    padding-right: 0.3rem;
+
+    &::-webkit-scrollbar {
+      @apply w-10;
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+      border-radius: 2rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 2rem;
+    }
+  }
+
+  .form-section-header {
+    @apply relative block w-full mb-5 text-center font-bold self-center;
+    &::before {
+      content: "";
+      @apply absolute left-0 top-3 w-5/12 border-b border-gray-200;
+    }
+
+    &::after {
+      content: "";
+      @apply absolute right-0 top-3 w-5/12 border-b border-gray-200;
+    }
+  }
   .project-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-flow: row;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-auto-rows: 7rem;
+    column-gap: 4rem;
+    row-gap: 1.5rem;
 
-    width: 40rem;
+    @apply sm:w-11/12;
+    @apply w-full px-0 py-0 my-auto content-center;
   }
 
   .form-group {
-    @apply flex flex-col justify-center items-start;
-  }
-
-  .form-group.budget {
-    justify-content: start;
-  }
-
-  .form-group-status {
-    grid-column: 1/3;
-    @apply grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .project-name-input {
-    @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
+    @apply flex flex-col justify-center items-center;
   }
 </style>

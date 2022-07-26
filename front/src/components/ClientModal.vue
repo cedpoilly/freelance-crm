@@ -64,7 +64,10 @@
 
   function focusOnFirstInput() {
     requestAnimationFrame(() => {
-      document.querySelector('[data-ref="first-input"]').focus()
+      requestAnimationFrame(() => {
+        const input = document.querySelector('[data-ref="first-input"] input')
+        input.focus()
+      })
     })
   }
 
@@ -78,7 +81,6 @@
 <template>
   <BaseModal
     v-if="isOpen"
-    width="!w-[46rem]"
     tabindex="0"
     actions-push-left="mr-6"
     :is-default-actions="true"
@@ -87,24 +89,26 @@
     key="EDIT_CLIENT_DIALOG"
   >
     <template #title class="tile-container">
-      {{ currentAction }} client
-      <span v-if="isEditing">
-        '
-        <span class="italic">
-          {{ props.client?.firstName }}
-          {{ props.client?.lastName }} </span
-        >'
-
+      <p class="flex w-9/12">
+        {{ currentAction }} client &nbsp;
+        <span v-if="isEditing">
+          '<span class="italic">
+            {{ props.client?.firstName }}
+            {{ props.client?.lastName }} </span
+          >'
+        </span>
+      </p>
+      <p class="flex w-3/12 justify-end mr-4">
         <router-link
           :to="`/app/projects/${props.client._id}`"
           class="see-projects-link"
           >See projects</router-link
         >
-      </span>
+      </p>
     </template>
 
     <template #content>
-      <form class="client-form container">
+      <form class="client-form">
         <div class="form-group">
           <BaseInput
             :value="props.client.firstName"
@@ -151,7 +155,6 @@
         </div>
 
         <div class="form-group">
-          <span class="base-input-label"> Is from codementor.io </span>
           <BaseToggle
             :is-checked="props.client.isCodementor"
             class="is-codementor"
@@ -163,21 +166,23 @@
         </div>
 
         <div class="form-group level">
-          <span class="base-input-label"> Level/Experience </span>
           <BaseSelect
-            label="client's level"
             :list="LEVEL"
             :initial-selection="props.client.level"
+            name="level"
+            label="Client's level"
+            blank-option-label="Select client's level"
             @selected-tags="updateClient('level', $event)"
           />
         </div>
 
         <div class="form-group service-type">
-          <span class="base-input-label"> Service type </span>
           <BaseSelect
-            label="Service Type"
             :list="SERVICE_TYPE"
             :initial-selection="props.client.serviceType"
+            name="servicetype"
+            label="Service type"
+            blank-option-label="Service type."
             @selected-tags="updateClient('serviceType', $event)"
           />
         </div>
@@ -193,14 +198,15 @@
         </div>
 
         <div class="form-group tags">
-          <span class="base-input-label"> Tags </span>
           <BaseSelect
             :value="props.client.tags"
             :list="TAGS"
             :initial-selection="props.client.tags"
             :is-multi="true"
-            field-name="tags"
+            name="tags"
             label="Tags"
+            blank-option-label="Select one or more tags."
+            field-name="tags"
             data-cy="edit-client-tags"
             @selected-tags="updateClient('tags', $event)"
           />
@@ -213,15 +219,33 @@
 <style lang="scss" scoped>
   .client-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-flow: row;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-auto-rows: 5.7rem;
+    column-gap: 4rem;
+    row-gap: 1.5rem;
+    @apply sm:w-11/12;
 
-    width: 40rem;
+    max-height: 69vh;
+    @apply w-full px-0 py-0 overflow-y-auto my-auto content-center;
+
+    &::-webkit-scrollbar {
+      @apply w-10;
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+      border-radius: 2rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 2rem;
+    }
   }
 
   .form-group {
-    @apply flex flex-col justify-center;
+    @apply flex flex-col justify-center items-center;
   }
 
   .client-name-input {
@@ -233,6 +257,6 @@
   }
 
   .see-projects-link {
-    @apply link inline-block self-end;
+    @apply link inline-block self-end justify-self-end;
   }
 </style>

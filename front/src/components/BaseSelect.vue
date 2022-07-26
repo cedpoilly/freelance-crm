@@ -8,7 +8,9 @@
   const emits = defineEmits(["selected-tags"])
 
   const props = defineProps({
+    name: { type: String, required: true },
     label: { type: String, required: true },
+    blankOptionLabel: { type: String, required: true },
     list: { type: Array, required: true },
     initialSelection: { type: [Array, String, Object], required: false },
     isMulti: { type: Boolean, default: false },
@@ -157,7 +159,9 @@
   }
 
   function selectPropertyOrItem(element) {
-    return element.title || element.firstName ? `${element.firstName} ${element.lastName}` : '' || element
+    return element.title || element.firstName
+      ? `${element.firstName} ${element.lastName}`
+      : "" || element
   }
 
   function captitalise(string) {
@@ -168,17 +172,20 @@
 
 <template>
   <div
+    :name="props.name"
     class="select"
-    tabindex="0"
+    tabindex="1"
     v-click-outside="() => close()"
     @keyup="toggleViaKeyboard"
   >
+    <label class="base-select-label" :for="props.name">{{ props.label }}</label>
     <div
       :class="{ active: isActive }"
       class="select-trigger"
+      tabindex="0"
       @click="toggleActive"
     >
-      <span class="px-1" v-if="showLabel"> Select {{ label }} </span>
+      <span class="px-1" v-if="showLabel"> {{ props.blankOptionLabel }} </span>
 
       <span class="multi-selected" v-else-if="props.isMulti">
         {{ formatListoString(selectedList, ", ") }}
@@ -233,11 +240,11 @@
 
 <style lang="scss">
   .select {
-    @apply w-80 h-16 items-stretch;
+    @apply w-full items-stretch;
   }
 
   .select-trigger {
-    @apply w-80 h-16 px-4 py-2 border rounded flex justify-between items-center bg-white;
+    @apply w-full h-14 px-4 py-2 border rounded flex justify-between items-center bg-white;
   }
 
   .select-trigger__icon {
@@ -257,6 +264,10 @@
     transform: rotate(180deg);
   }
 
+  .base-select-label {
+    @apply block w-full mb-2;
+  }
+
   .multi-selected {
     white-space: nowrap;
     word-break: break-word;
@@ -266,7 +277,7 @@
   }
 
   .content {
-    @apply w-80 px-3 py-3 mt-3 bg-white border;
+    @apply w-full px-3 py-3 mt-3 bg-white border;
     position: absolute;
     z-index: 10;
   }
