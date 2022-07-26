@@ -6,7 +6,7 @@ import Client from "../models/Client"
 
 import { getClients, createClient, updateClient } from "../api/client"
 
-const { searchStringInList, getCopy, ctrlPlus } = useHelpers()
+const { searchStringInList, getCopy } = useHelpers()
 
 
 let initialData = []
@@ -28,10 +28,6 @@ export default function useDashboard({ notify } = {}) {
     toolbar,
     dataTable,
 
-    // *template refs access methods
-    focusDataTable,
-    focusSearch,
-
     // * data refs
     data,
     initialData,
@@ -48,8 +44,6 @@ export default function useDashboard({ notify } = {}) {
     editClientViaModal: editClientViaModalWrapper,
     updateItemAndFetchData: updateItemAndFetchDataWrapper,
   }
-
-
 
   function openModalWrapper(...args) {
     return openModal(notify, ...args)
@@ -80,17 +74,12 @@ function focusDataTable() {
   dataTable.value.focus()
 }
 
-function focusSearch() {
-  toolbar.value.focusSearch()
-}
-
 async function fetchTableData() {
   const response = await getClients()
   const dataFromServer = await response.json()
   data.value = [...dataFromServer]
   initialData = [...dataFromServer]
 }
-
 
 function filter(field, value) {
   switch (field) {
@@ -135,7 +124,6 @@ function filterData(searchString) {
   })
   data.value = [...filteredList]
 }
-
 
 async function openModal(notify, response) {
   const { mode, index } = response

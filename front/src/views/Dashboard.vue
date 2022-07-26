@@ -1,15 +1,14 @@
 <script>
-  import { onBeforeMount, onMounted, ref } from "vue"
+  import { onBeforeMount, onMounted } from "vue"
 
   import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
   import ClientModal from "../components/ClientModal.vue"
 
-  import useHelpers from "../app/helpers"
   import useDasboard from "./dashboard"
+  import useListViewCommons from "./list-view-commons"
 
-  const { ctrlPlus } = useHelpers()
-
+  // * Data refs and related methods
   const { data, selectedClient, fetchTableData, filter, filterData } = useDasboard()
 
 </script>
@@ -23,39 +22,13 @@
   // * template refs
   const { modal, toolbar, dataTable } = useDasboard()
 
-  // * template refs direct methods
-  const { focusDataTable, focusSearch } = useDasboard()
-
-  const { openModal, openCreateModal } = useDasboard({ notify })
+  const { openModal } = useDasboard({ notify })
 
   onMounted(() => {
-    document.onkeydown = async event => {
-      await saveOnCtrlS(event)
-      await saveOnCtrlEnter(event)
-      ctrlPlus(event, "F", focusSearch)
-      ctrlPlus(event, "L", focusNavbar)
-      ctrlPlus(event, "H", focusDataTable)
-      ctrlPlus(event, ">", openCreateModal)
-    }
+    const args = { modal, toolbar, dataTable, emits }
+    const { onKeyDownListeners } = useListViewCommons(args)
+    onKeyDownListeners(document)
   })
-
-  async function saveOnCtrlS(event) {
-    if (event.ctrlKey && event.key === "s") {
-      event.preventDefault()
-      await modal.value.close()
-    }
-  }
-
-  async function saveOnCtrlEnter(event) {
-    if (event.ctrlKey && event.key === "Enter") {
-      event.preventDefault()
-      await modal.value.close()
-    }
-  }
-
-  function focusNavbar() {
-    emits("focus-navbar")
-  }
   
   function notify({ title, message }) {
     emits("notification", { title, message })
