@@ -100,7 +100,7 @@
   }
 
   .button-icon {
-    @apply rounded-full bg-slate-200 dark:bg-slate-700 w-10 p-2
+    @apply rounded-full hover:bg-slate-200 dark:bg-slate-700 w-10 p-2
   }
 
   .button-icon--with-emoji {
