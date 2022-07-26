@@ -45,14 +45,9 @@
 </script>
 
 <template>
-  <Transition name="appear">
-    <div
-      v-if="canShow"
-      class="modal-container"
-      tabindex="0"
-      @keydown.esc="cancelAndClose"
-    >
-      <div class="modal">
+  <div class="modal-container" tabindex="0" @keydown.esc="cancelAndClose">
+    <Transition name="appear">
+      <div class="modal" v-if="canShow">
         <div class="modal-title">
           <h4 class="modal-title-text">
             <slot name="title"></slot>
@@ -121,9 +116,12 @@
           </slot>
         </div>
       </div>
-      <div class="modal-overlay"></div>
-    </div>
-  </Transition>
+    </Transition>
+
+    <Transition name="appear-slow">
+      <div v-if="canShow" class="modal-overlay"></div>
+    </Transition>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -132,7 +130,7 @@
   }
 
   .modal {
-    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between absolute left-4 right-4 z-10 sm:w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-10 py-8 rounded-md text-lg;
+    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between fixed left-4 right-4 z-10 sm:w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 mx-auto px-10 py-8 rounded-md text-lg;
   }
 
   .modal-title {
@@ -159,14 +157,26 @@
     @apply w-24 dark:mr-4;
   }
 
+  .appear-slow-enter-active,
+  .appear-slow-leave-active {
+    transition: all 0.9s ease;
+  }
+
+  .appear-slow-enter-from,
+  .appear-slow-leave-to {
+    opacity: 0;
+  }
+
   .appear-enter-active,
   .appear-leave-active {
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    animation-delay: 1s;
   }
 
   .appear-enter-from,
   .appear-leave-to {
-    opacity: 0;
+    opacity: 0.5;
     transform: scale(0.9, 0.9);
+    animation-delay: 1s;
   }
 </style>
