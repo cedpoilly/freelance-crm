@@ -46,8 +46,9 @@ router.get("/", async function getAllProjectsHandler(req, res) {
 router.route("/:id")
   .get(async function projectGetByIdHandler(req, res) {
     const { id } = req.params
-    const projects = await Project.findById({ _id: id })
-    res.send(projects)
+    const project = await Project.findById({ _id: id })
+    console.log(project)
+    res.send(project)
   })
 
   .put(async function projectPutHandler(req, res) {
