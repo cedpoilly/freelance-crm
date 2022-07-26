@@ -6,10 +6,6 @@
   })
 
   const emits = defineEmits(["input"])
-
-  function search(searchString) {
-    emits("input", searchString)
-  }
 </script>
 
 <template>
