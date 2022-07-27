@@ -18,9 +18,7 @@ const modal = ref(null)
 const toolbar = ref(null)
 const dataTable = ref(null)
 
-
 export default function useDashboard({ notify } = {}) {
-
   return {
     // * template refs
     modal,
@@ -67,6 +65,10 @@ export default function useDashboard({ notify } = {}) {
 
 function openCreateModal(notify) {
   openModal(notify, { mode: "create" })
+}
+
+function focusOnWholeTable() {
+  dataTable.value.focus()
 }
 
 function focusDataTable({ itemIndex } = {}) {
@@ -130,17 +132,18 @@ async function openModal(notify, response) {
   const { mode, index } = response
   switch (mode) {
     case "view": {
-      viewClient(notify, index)
+      await viewClient(notify, index)
+
       break
     }
 
     case "edit": {
-      editClientViaModal(notify, index)
+      await editClientViaModal(notify, index)
       break
     }
 
     case "create": {
-      createNewClientViaModal(notify)
+      await createNewClientViaModal(notify)
       break
     }
 
@@ -160,6 +163,7 @@ async function createNewClientViaModal(notify, previousClient = null) {
 
   const hasNoClient = !client
   if (hasNoClient) {
+    focusOnWholeTable()
     return
   }
 
@@ -188,8 +192,10 @@ async function viewClient(notify, clientIndex) {
 
   const hasNoClient = !client
   if (hasNoClient) {
+    focusOnWholeTable()
     return
   }
+
   await updateItemAndFetchData(notify, clientIndex, client)
   focusDataTable({ itemIndex: clientIndex })
 }
@@ -200,6 +206,7 @@ async function editClientViaModal(notify, clientIndex) {
 
   const hasNoClient = !client
   if (hasNoClient) {
+    focusOnWholeTable()
     return
   }
 
