@@ -12,6 +12,10 @@
     "create-new",
   ])
 
+  const props = defineProps({
+    tagsLabel: { type: String, required: true },
+  })
+
   defineExpose({ focusSearch })
 
   const searchInput = ref(null)
@@ -78,7 +82,7 @@
 
       <form @submit.prevent class="filter">
         <BaseSelect
-          label="Client's tags."
+          :label="props.tagsLabel"
           blank-option-label="Select one or more tags."
           name="tags"
           :list="tagList"

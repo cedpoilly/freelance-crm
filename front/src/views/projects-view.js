@@ -4,7 +4,12 @@ import useHelpers from "../app/helpers"
 
 import Project from "../models/Project"
 
-import { getProjects, getProjectsByClientId, createProject, updateProject } from "../api/project"
+import {
+  getProjects,
+  getProjectsByClientId,
+  createProject,
+  updateProject,
+} from "../api/project"
 import { getClients } from "../api/client" // todo: get list with Id & name only
 
 const { searchStringInList, getCopy } = useHelpers()
@@ -25,9 +30,7 @@ const modal = ref(null)
 const toolbar = ref(null)
 const dataTable = ref(null)
 
-
 export default function userProjectsView({ notify, route } = {}) {
-
   return {
     // * template refs
     modal,
@@ -122,7 +125,7 @@ function filter(field, value) {
       }
 
       const filteredData = initialData.filter(item =>
-        value.every(tag => !!item.tags.includes(tag))
+        value.every(tag => !!item.techs.includes(tag))
       )
 
       data.value = filteredData || initialData

@@ -41,6 +41,7 @@
     <Toolbar
       ref="toolbar"
       class="client-toolbar mt-5"
+      tags-label="Client's tags"
       @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)"

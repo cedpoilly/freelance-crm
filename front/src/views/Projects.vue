@@ -51,6 +51,7 @@
     <Toolbar
       ref="toolbar"
       class="project-toolbar"
+      tags-label="Project's technologies"
       @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)"
