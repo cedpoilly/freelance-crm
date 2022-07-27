@@ -7,20 +7,25 @@ export const config = {
   width: { type: [String, Object], default: null },
   actionsPushLeft: { type: [String, Object], default: null },
   actions: {
-    type: Object, require: false,
+    type: Object,
+    require: false,
     default() {
       return {
-        cancel: { label: "CANCEL", function: () => { } },
-        confirm: { function: () => { }, label: "OK", isDisabled: false }
+        cancel: { label: "CANCEL", function: () => {} },
+        confirm: { function: () => {}, label: "OK", isDisabled: false },
       }
     },
 
     validator({ confirm, cancel }) {
-      if (!confirm) { return false }
-      if (!cancel) { return false }
+      if (!confirm) {
+        return false
+      }
+      if (!cancel) {
+        return false
+      }
       return true
-    }
-  }
+    },
+  },
 }
 
 const canShow = ref(false)
@@ -31,19 +36,32 @@ export default function useBaseModal(instance) {
   const { isAlert, isConfirm, actions } = instanceProps
 
   return {
-    canShow, isCancelled,
-    open, close, cancelModal, cancelAndClose,
-    uid, isAlert, isConfirm, actions
+    canShow,
+    isCancelled,
+    open,
+    close,
+    cancelModal,
+    cancelAndClose,
+    uid,
+    isAlert,
+    isConfirm,
+    actions,
   }
 }
 
-function cancelModal() { isCancelled.value = true }
+function cancelModal() {
+  isCancelled.value = true
+}
 
-function cancelAndClose() { cancelModal(), close() }
+function cancelAndClose() {
+  cancelModal(), close()
+}
 
-function close() { canShow.value = false }
+function close() {
+  canShow.value = false
+}
 
-function open(callback = async () => { }) {
+function open(callback = async () => {}) {
   canShow.value = true
 
   return new Promise(resolve => {
@@ -53,8 +71,8 @@ function open(callback = async () => { }) {
       stopHandle()
       const response = await callback()
 
-      const responseOrCancelledStatus = response !== undefined
-        ? response : !isCancelled.value
+      const responseOrCancelledStatus =
+        response !== undefined ? response : !isCancelled.value
 
       resolve(responseOrCancelledStatus)
     }
