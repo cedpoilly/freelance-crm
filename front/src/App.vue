@@ -11,6 +11,7 @@
   import InfoModal from "./components/InfoModal.vue"
 
   import { setInstanceRef } from "./app/alert"
+  import TheFooter from "./components/TheFooter.vue"
 
   const { ctrlPlus, keyPushed } = useHelpers()
 
@@ -65,6 +66,8 @@
     <InfoModal ref="helpModal" :is-alert="true" />
   </router-view>
 
+  <TheFooter class="h-14" />
+
   <NotificationsContainer :notifications="notifications" />
 </template>
 
@@ -74,6 +77,6 @@
   html,
   body,
   .app {
-    @apply h-full;
+    @apply relative h-full flex flex-col h-screen bg-gray-100;
   }
 </style>

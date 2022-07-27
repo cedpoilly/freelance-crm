@@ -37,11 +37,11 @@
 
 <style lang="scss" scoped>
   .base-search {
-    @apply w-full flex flex-col justify-between items-start bg-white;
+    @apply w-full flex flex-col justify-between items-start;
   }
 
   .base-search-label {
-    @apply mr-1 my-auto mb-2;
+    @apply my-auto mb-0 ml-4;
   }
 
   .base-search-input {

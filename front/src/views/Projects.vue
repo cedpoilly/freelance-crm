@@ -78,10 +78,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .project-toolbar {
-    @apply mb-10;
-  }
-
   .no-data-message {
     @apply text-xl my-10 mx-auto w-full text-center;
   }

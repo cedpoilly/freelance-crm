@@ -237,12 +237,12 @@
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12 mx-auto overflow-y-hidden;
+    @apply w-11/12 mx-auto my-3 overflow-y-hidden drop-shadow-xl;
   }
 
   .header,
   .footer {
-    @apply w-full flex h-20 bg-gray-200 border-t border-b overflow-hidden text-lg;
+    @apply w-full flex h-20 border-t border-b overflow-hidden text-lg bg-gray-200;
   }
 
   .footer {
@@ -264,8 +264,17 @@
     @apply h-20;
   }
 
+  .table-body,
+  .no-data-message {
+    @apply w-full h-[30rem];
+  }
+
+  .no-data-message {
+    @apply text-xl mx-auto w-full text-center;
+  }
+
   .table-body {
-    @apply w-full max-h-[30rem] flex flex-col overflow-x-hidden overflow-y-auto;
+    @apply flex flex-col overflow-x-hidden overflow-y-auto;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -284,20 +293,10 @@
   }
 
   .table-body-row {
-    @apply w-full items-center h-24 border-b bg-gray-100 transform-gpu ease-in duration-75 cursor-pointer text-lg focus:bg-sky-100;
+    @apply w-full items-center h-24 border-b bg-white transform-gpu ease-in duration-75 cursor-pointer text-lg focus:bg-sky-100;
   }
 
   .action-button {
     @apply bg-white;
-  }
-
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.5s ease;
-  }
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
   }
 </style>

@@ -55,8 +55,6 @@
 
 <template>
   <section class="toolbar">
-    <h3 class="toolbar-title">Filter the table's data.</h3>
-
     <div class="filters">
       <form @submit.prevent class="filter">
         <BaseSearchInput
@@ -80,7 +78,7 @@
 
       <form @submit.prevent class="filter">
         <BaseSelect
-          label="one or more tags."
+          label="Client's tags."
           blank-option-label="Select one or more tags."
           name="tags"
           :list="tagList"
@@ -105,35 +103,31 @@
 
 <style lang="scss" scoped>
   .toolbar {
-    @apply w-11/12 mx-auto px-6 py-7 mt-5 flex flex-col rounded-md;
-  }
-
-  .toolbar-title {
-    @apply mb-4 text-xl text-center font-bold;
+    @apply w-11/12 mx-auto my-0 p-0 mb-3 flex flex-col;
   }
 
   .filters {
-    @apply grid justify-center content-center items-center;
+    @apply w-full grid justify-start content-center items-center;
   }
 
   .filter {
-    @apply flex justify-center w-80;
+    @apply flex justify-center w-full;
   }
 
   .create-new {
-    @apply flex h-16 w-80 items-center justify-self-end self-end cursor-pointer;
+    @apply flex h-16 w-auto items-center justify-self-end self-end cursor-pointer;
   }
 
   .create-new-label {
-    @apply flex items-center gap-3 px-3 py-2 cursor-pointer
+    @apply flex items-center gap-0 px-3 py-2 cursor-pointer
     rounded-md
     hover:text-green-900 hover:bg-sky-100 active:bg-sky-200;
   }
 
   @media (min-width: 900px) {
     .filters {
-      @apply w-auto mx-auto gap-3;
-      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      @apply w-full mx-auto gap-3;
+      grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
     }
   }
 

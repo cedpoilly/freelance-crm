@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 .view-container {
-  @apply w-full mx-auto h-[calc(100vh-6.3rem)]
+  @apply absolute w-full mx-auto h-[calc(100%-8rem)] top-20;
+  @apply flex flex-col justify-center;
+  @apply py-7;
 }
 
 @layer base {
