@@ -86,6 +86,10 @@ function openCreateModal(notify) {
   openModal(notify, { mode: "create" })
 }
 
+function focusOnWholeTable() {
+  dataTable.value.focus()
+}
+
 function focusDataTable({ itemIndex } = {}) {
   itemIndex >= 0
     ? dataTable.value.focusOnUpdated(itemIndex)
@@ -185,6 +189,7 @@ async function createItemViaModal(notify, previousItem = null) {
 
   const hasNoProject = !project
   if (hasNoProject) {
+    focusOnWholeTable()
     return
   }
 
@@ -213,6 +218,7 @@ async function viewItem(notify, itemIndex) {
 
   const hasNoItem = !project
   if (hasNoItem) {
+    focusOnWholeTable()
     return
   }
   await updateItemAndFetchData(notify, itemIndex, project)
@@ -225,6 +231,7 @@ async function editItemViaModal(notify, itemIndex) {
 
   const hasNoClient = !project
   if (hasNoClient) {
+    focusOnWholeTable()
     return
   }
 
