@@ -151,7 +151,7 @@
     }
 
     .modal-actions .button-text {
-      @apply w-24 dark:mr-4;
+      @apply w-24;
     }
   }
 

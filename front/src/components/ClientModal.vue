@@ -82,7 +82,6 @@
   <BaseModal
     v-if="isOpen"
     tabindex="0"
-    actions-push-left="mr-6"
     :is-default-actions="true"
     role="dialog"
     ref="dialog"
@@ -257,6 +256,6 @@
   }
 
   .see-projects-link {
-    @apply link inline-block self-end justify-self-end;
+    @apply inline-block self-end justify-self-end;
   }
 </style>
