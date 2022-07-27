@@ -63,6 +63,7 @@ function close() {
 
 function open(callback = async () => {}) {
   canShow.value = true
+  isCancelled.value = false
 
   return new Promise(resolve => {
     const stopHandle = watch(() => canShow.value, watchCB)
