@@ -30,7 +30,6 @@
   }
 
   function focusOnCreate() {
-    debugger
     const rows = [...dataTable.value.querySelectorAll(".table-body-row")]
     const updatedRow = rows[rows.length - 1]
     updatedRow.focus()
