@@ -225,7 +225,7 @@
       tabindex="0"
       @click="toggleActive"
     >
-      <span class="px-1" v-if="showLabel">
+      <span class="truncate" v-if="showLabel">
         {{ props.blankOptionLabel }}
       </span>
       <span class="multi-selected" v-else-if="props.isMulti">
