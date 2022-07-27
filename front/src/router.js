@@ -22,6 +22,7 @@ const routes = [
 const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach((to, from, next) => {
+  fixScrollbarOnAminateRoute()
   setRoutingDirection(from, to)
   next()
 })
@@ -60,4 +61,13 @@ function setRoutingDirection({ name: origin }, { name: destination }) {
   function destinationIs(dest) {
     return destination === dest
   }
+}
+
+function fixScrollbarOnAminateRoute() {
+  // * inspired by this post https://stackoverflow.com/a/65191830
+  document.getElementById("app").style.overflow = "hidden"
+
+  setTimeout(function () {
+    document.getElementById("app").style.overflowY = "auto"
+  }, 300)
 }
