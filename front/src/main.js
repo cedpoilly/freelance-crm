@@ -1,36 +1,34 @@
-import { createApp } from 'vue'
+import { createApp } from "vue"
 
-import App from './App.vue'
+import App from "./App.vue"
 
-import './index.scss'
+import "./index.scss"
 import "./route-transitions.css"
 
 import router from "./router"
 
 import clickOutsideConfig from "./directives/click-outside.js"
-import useAlert from './app/alert'
+import useAlert from "./app/alert"
 
 const { alert } = useAlert()
 
 const app = createApp(App)
 
-app.config.errorHandler = async (err, _, info) => {
+app.config.errorHandler = async (error, _, info) => {
   const message = `This happened:
-"${err}." 
+"${error}."
 In the: "${info}"
   `
 
-  console.error(message)
+  console.error(error)
 
   await alert({
     title: "⚠️ OOPS! ⚠️",
-    text: message
+    text: message,
   })
 }
 
 app.use(router)
 app.directive(...clickOutsideConfig)
 
-
-
-app.mount('#app')
+app.mount("#app")
