@@ -41,7 +41,7 @@
   }
 
   .base-search-label {
-    @apply my-auto mb-0 ml-4;
+    @apply my-auto mb-2;
   }
 
   .base-search-input {
