@@ -4,6 +4,14 @@
 
   import BaseButton from "./BaseButton.vue"
 
+  const ACTION_HEADERS = [
+    {
+      id: "actions",
+      name: "Actions",
+      width: "w-1/24 !hidden",
+    },
+  ]
+
   const props = defineProps({
     data: { type: Array, required: true },
   })
@@ -40,14 +48,6 @@
   const dataHeaders = ref([])
   const data = ref([])
 
-  const ACTION_HEADERS = [
-    {
-      id: "actions",
-      name: "Actions",
-      width: "w-1/12",
-    },
-  ]
-
   watch(
     () => props.data,
     list => {
@@ -78,7 +78,7 @@
       "_id",
       "projects",
       "whatsAppNumber",
-      "isCodementor",
+      // "isCodementor",
       "tags",
     ])
 
@@ -94,46 +94,62 @@
             return {
               id: "firstName",
               name: "First Name",
-              width: "w-2/12",
+              width: "sm:w-10/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
             }
+
           case "lastName":
             return {
               id: "lastName",
               name: "Last Name",
-              width: "w-2/12",
+              width: "sm:w-9/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
             }
+
           case "email":
             return {
               id: "email",
               name: "Email",
-              width: "w-3/12",
+              width: "lg:w-8/24 sm-hidden md-hidden lg-hidden truncate",
             }
+
           case "level":
             return {
               id: "level",
               name: "Level",
-              width: "w-2/12",
-              formatter: (cell, row, column) => {
+              width: "lg:w-5/24 sm-hidden md-hidden truncate",
+              formatter: cell => {
                 const [first, ...rest] = cell.split("")
                 return `${first.toUpperCase()}${rest.join("")}`
               },
             }
+
           case "serviceType":
             return {
               id: "serviceType",
               name: "Service",
-              width: "w-2/12",
-              formatter: (cell, row, column) => {
+              width: "md:w-5/24 lg:w-4/24 sm-hidden truncate",
+              formatter: cell => {
                 const [first, ...rest] = cell.split("")
                 return `${first.toUpperCase()}${rest.join("")}`
               },
             }
+
           case "rate":
             return {
               id: "rate",
               name: "Rate (USD)",
-              width: "w-2/12",
+              width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
             }
+
+          case "isCodementor":
+            return {
+              id: "isCodementor",
+              name: "Code mentor",
+              width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
+              formatter: isCodementor => {
+                return isCodementor ? "Yes" : "No"
+              },
+            }
+
           case "tags":
             return {
               id: "tags",
@@ -148,14 +164,14 @@
             return {
               id: "title",
               name: "Title",
-              width: "w-4/12",
+              width: "sm:w-7/12",
             }
 
           case "paymentMethod":
             return {
               id: "paymentMethod",
               name: "Payment Methods",
-              width: "w-3/12",
+              width: "w-3/12 md-hidden",
               formatter: cell => {
                 const [first, ...rest] = cell.split("")
                 return `${first.toUpperCase()}${rest.join("")}`
@@ -169,11 +185,41 @@
               width: "w-2/12",
             }
 
+          case "isCompleted":
+            return {
+              id: "isCompleted",
+              name: "Done?",
+              width: "w-2/12",
+              formatter: isCodementor => {
+                return isCodementor ? "Yes" : "No"
+              },
+            }
+
+          case "wasPaymentDone":
+            return {
+              id: "wasPaymentDone",
+              name: "Paid?",
+              width: "sm-hidden md-hidden lg-hidden",
+              formatter: isCodementor => {
+                return isCodementor ? "Yes" : "No"
+              },
+            }
+
+          case "hasDownPayment":
+            return {
+              id: "hasDownPayment",
+              name: "50% up?",
+              width: "md:w-2/12 sm-hidden md-hidden lg-hidden xl-hidden",
+              formatter: isCodementor => {
+                return isCodementor ? "Yes" : "No"
+              },
+            }
+
           case "client":
             return {
               id: "client",
               name: "Client",
-              width: "w-6/12",
+              width: "lg:w-6/12 xl:w-5/12 md-hidden lg-hidden",
               formatter: client => {
                 return (
                   `${client?.firstName} ${client?.lastName}` || "<no client 🤷>"
@@ -240,8 +286,8 @@
         @click="openViewModal(index)"
       >
         <span
-          class="data-cell"
           :class="getWidthClass(headers, cellIndex)"
+          class="data-cell"
           v-for="(cell, cellIndex) in row"
           >{{
             headers[cellIndex].formatter
@@ -287,6 +333,30 @@
   .data-cell,
   .footer-cell {
     @apply px-10 py-2 flex items-center;
+  }
+
+  .sm-hidden {
+    @media screen and (max-width: 767px) {
+      @apply hidden;
+    }
+  }
+
+  .md-hidden {
+    @media screen and (max-width: 1023px) {
+      @apply hidden;
+    }
+  }
+
+  .lg-hidden {
+    @media screen and (max-width: 1279px) {
+      @apply hidden;
+    }
+  }
+
+  .xl-hidden {
+    @media screen and (max-width: 1535px) {
+      @apply hidden;
+    }
   }
 
   .header-cell,
