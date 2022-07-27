@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watch } from "vue"
+  import { nextTick, ref, watch } from "vue"
   import { computed } from "@vue/reactivity"
   import useHelpers from "../app/helpers"
 
@@ -17,10 +17,21 @@
   })
 
   const isActive = ref(false)
+  const shouldDropUp = ref(false)
 
   const data = ref([])
   const selected = ref(null)
   const selectedList = ref([])
+
+  // * template ref
+  const contentRef = ref(null)
+  const triggerRef = ref(null)
+
+  // * Slightly shorter than the actual height of the content
+  // * This is so that some margin is kept: if there is only little
+  // * space for the `content` section to be displayed below the `select-trigger`
+  // * we want the content to "drop up" for comfort.
+  const CONTENT_DROPUP_PIXEL_THRESHOLD = 300
 
   const showLabel = computed(() => {
     const isSingleBlank = !props.isMulti && !selected.value
@@ -53,7 +64,7 @@
     { immediate: true }
   )
 
-  function toggleActive() {
+  async function toggleActive() {
     isActive.value = !isActive.value
 
     // * When closing the content section, the search string is emptied
@@ -63,6 +74,34 @@
     if (isInactive) {
       data.value = props.list
     }
+
+    if (isActive.value) {
+      await handleDropDirection()
+      await scrollIntoContent()
+    }
+  }
+
+  async function handleDropDirection() {
+    await nextTick()
+
+    const thisDown = triggerRef.value.getBoundingClientRect().bottom
+    const windowDown = window.document.body.getBoundingClientRect().bottom
+
+    const isCrossing = thisDown > windowDown
+    const isTooClose = windowDown - thisDown < CONTENT_DROPUP_PIXEL_THRESHOLD
+
+    const hasNoSpace = isCrossing || isTooClose
+
+    shouldDropUp.value = hasNoSpace
+  }
+
+  async function scrollIntoContent() {
+    await nextTick()
+    contentRef.value.focus()
+    contentRef.value.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    })
   }
 
   function selectOption(option) {
@@ -182,19 +221,19 @@
     <div
       :class="{ active: isActive }"
       class="select-trigger"
+      ref="triggerRef"
       tabindex="0"
       @click="toggleActive"
     >
-      <span class="px-1" v-if="showLabel"> {{ props.blankOptionLabel }} </span>
-
+      <span class="px-1" v-if="showLabel">
+        {{ props.blankOptionLabel }}
+      </span>
       <span class="multi-selected" v-else-if="props.isMulti">
         {{ formatListoString(selectedList, ", ") }}
       </span>
-
       <span class="px-1" v-else>
         {{ captitalise(selectPropertyOrItem(selected)) }}
       </span>
-
       <div class="icons-wrapper px-1">
         <span
           v-if="isNotEmpty"
@@ -206,19 +245,23 @@
       </div>
     </div>
 
-    <div v-if="isActive" class="content">
-      <div class="search">
-        <label for="search">
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Search"
-            class="search-box"
-            @input="searchItem"
-          />
-        </label>
-      </div>
+    <div
+      v-show="isActive"
+      class="content"
+      ref="contentRef"
+      :class="{ 'content--drop-up': shouldDropUp }"
+      tabindex="0"
+    >
+      <label class="search-label" for="search">
+        <input
+          type="text"
+          id="search"
+          name="search"
+          placeholder="Search"
+          class="search-box"
+          @input="searchItem"
+        />
+      </label>
 
       <ul class="options">
         <li
@@ -238,9 +281,13 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .select {
     @apply w-full items-stretch;
+    // * When position is `relative`, the `content` of the dropdown
+    // * will STAY on the document flow. Hence the
+    // * `dropUp` feature will NOT be triggered.
+    @apply relative;
   }
 
   .select-trigger {
@@ -277,13 +324,27 @@
   }
 
   .content {
-    @apply w-full px-3 py-3 mt-3 bg-white border;
-    position: absolute;
-    z-index: 10;
+    @apply absolute w-full px-4 py-4 mt-3;
+    @apply max-h-[15rem] h-60;
+    @apply bg-white border z-10 drop-shadow-xl;
+
+    // * specific to the `dropUp` feature
+    @apply top-24 bottom-0;
+  }
+
+  .content--drop-up {
+    // * Estimate margin required between the bottom of the `content` section
+    // * and the top of the `base-select-label`
+    // * `+ 2rem` for additional margin.
+    bottom: calc(3.5rem * 2 + 2rem);
+  }
+
+  .search-label {
+    @apply w-full relative block h-12;
   }
 
   .search-box {
-    @apply w-full border px-3 py-2 mb-2 rounded-md;
+    @apply w-full border px-4 py-2 mb-2 rounded-md;
   }
 
   .options {
@@ -308,5 +369,6 @@
 
   .option {
     @apply h-10 px-3 py-2 my-2 rounded-md flex justify-between;
+    @apply hover:bg-gray-100;
   }
 </style>
