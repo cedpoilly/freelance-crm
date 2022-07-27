@@ -231,7 +231,8 @@
   }
 
   .table-body {
-    @apply flex flex-col max-h-[31rem] overflow-x-hidden overflow-y-auto;
+    @apply flex flex-col max-h-[31rem];
+    @apply overflow-x-hidden overflow-y-scroll;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -250,7 +251,9 @@
   }
 
   .table-body-row {
-    @apply w-full items-center h-24 border-b bg-white transform-gpu ease-in duration-75 cursor-pointer text-lg focus:bg-sky-100;
+    @apply w-full items-center;
+    @apply cursor-pointer focus:bg-sky-100;
+    @apply border-b bg-white;
   }
 
   .action-button {
