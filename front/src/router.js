@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router"
 
-import useGlobalState from './app/global-state'
+import useGlobalState from "./app/global-state"
 
 import Dashboard from "./views/Dashboard.vue"
 import Projects from "./views/Projects.vue"
@@ -8,11 +8,15 @@ import Settings from "./views/Settings.vue"
 import NotFound from "./views/NotFound.vue"
 
 const routes = [
-  { path: "/app/dashboard", alias: "/", name: "dashboard", component: Dashboard },
+  {
+    path: "/app/dashboard",
+    alias: "/",
+    name: "dashboard",
+    component: Dashboard,
+  },
   { path: "/app/projects/:clientId?", name: "projects", component: Projects },
   { path: "/app/settings", name: "settings", component: Settings },
-  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
-
+  { path: "/:pathMatch(.*)*", name: "not-found", component: NotFound },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })
@@ -50,6 +54,10 @@ function setRoutingDirection({ name: origin }, { name: destination }) {
   const { routingDirection } = useGlobalState()
   routingDirection.value = direction
 
-  function setDirection(dir) { direction = dir }
-  function destinationIs(dest) { return destination === dest }
+  function setDirection(dir) {
+    direction = dir
+  }
+  function destinationIs(dest) {
+    return destination === dest
+  }
 }
