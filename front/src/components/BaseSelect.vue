@@ -64,6 +64,22 @@
     { immediate: true }
   )
 
+  watch(
+    () => isActive.value,
+    isCurrentlyActive => {
+      const isInactive = !isCurrentlyActive
+      if (isInactive) {
+        focusTrigger()
+        return
+      }
+    },
+    { immediate: false }
+  )
+
+  function focusTrigger() {
+    triggerRef.value.focus()
+  }
+
   async function toggleActive() {
     isActive.value = !isActive.value
 
@@ -246,10 +262,11 @@
     </div>
 
     <div
-      v-show="isActive"
+      v-if="isActive"
       class="content"
       ref="contentRef"
       :class="{ 'content--drop-up': shouldDropUp }"
+      @keydown.escape.stop.capture="close"
       tabindex="0"
     >
       <label class="search-label" for="search">
