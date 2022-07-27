@@ -1,17 +1,18 @@
 <script setup>
-  import { onMounted, ref, watch } from "vue"
+  import { ref, watch } from "vue"
+  import { computed } from "@vue/reactivity"
+
   import BaseButton from "./BaseButton.vue"
 
   const props = defineProps({
-    data: {
-      type: Array,
-      required: true,
-    },
+    data: { type: Array, required: true },
   })
 
   const emits = defineEmits(["open-modal"])
 
   const dataTable = ref(null)
+
+  const hasData = computed(() => props?.data?.length)
 
   // * Focus on the table itself
   // * Available in `list-view-commons.js`
@@ -35,30 +36,53 @@
 
   defineExpose({ focus, focusOnCreate, focusOnUpdated })
 
-  const { dataHeaders, headers } = getHeadersFromList(props.data)
+  const headers = ref([])
+  const dataHeaders = ref([])
   const data = ref([])
 
-  onMounted(() => setData(props.data, dataHeaders))
+  const ACTION_HEADERS = [
+    {
+      id: "actions",
+      name: "Actions",
+      width: "w-1/12",
+    },
+  ]
 
   watch(
     () => props.data,
-    newValue => setData(newValue, dataHeaders)
+    list => {
+      const isEmpty = !list?.length
+      if (isEmpty) {
+        return
+      }
+
+      setHeadersAndData(list)
+    },
+    { immediate: true }
   )
 
-  function setData(list) {
-    data.value = getRowsFromList(list, dataHeaders)
+  function setHeadersAndData(list) {
+    dataHeaders.value = getHeadersFromList(list)
+    headers.value = [...dataHeaders.value, ...ACTION_HEADERS]
+    data.value = getRowsFromList(list, dataHeaders.value)
   }
 
   function getHeadersFromList(list) {
+    const isEmpty = !list.length
+    if (isEmpty) {
+      return
+    }
+
     const firstItem = list[0]
-    const { dataHeaders, headers } = getHeadersFromObject(firstItem, [
+    const _headers = getHeadersFromObject(firstItem, [
       "_id",
       "projects",
       "whatsAppNumber",
       "isCodementor",
       "tags",
     ])
-    return { dataHeaders, headers }
+
+    return _headers
   }
 
   function getHeadersFromObject(object, filterList) {
@@ -115,7 +139,7 @@
               id: "tags",
               name: "Tags",
               width: "2/12",
-              formatter: (cell, row, column) => {
+              formatter: cell => {
                 return cell.join(" | ")
               },
             }
@@ -132,7 +156,7 @@
               id: "paymentMethod",
               name: "Payment Methods",
               width: "w-3/12",
-              formatter: (cell, row, column) => {
+              formatter: cell => {
                 const [first, ...rest] = cell.split("")
                 return `${first.toUpperCase()}${rest.join("")}`
               },
@@ -150,7 +174,7 @@
               id: "client",
               name: "Client",
               width: "w-6/12",
-              formatter: (client, row, column) => {
+              formatter: client => {
                 return (
                   `${client?.firstName} ${client?.lastName}` || "<no client 🤷>"
                 )
@@ -163,15 +187,16 @@
       })
       .filter(Boolean)
 
-    const actionHeader = {
-      id: "actions",
-      name: "Actions",
-      width: "w1/12",
+    return dataHeaders
+  }
+
+  function getWidthClass(headers, cellIndex) {
+    const isEmpty = !headers.length
+    if (isEmpty) {
+      return
     }
 
-    const headers = [...dataHeaders, actionHeader]
-
-    return { dataHeaders, headers }
+    return headers[cellIndex]?.width
   }
 
   function getRowsFromList(list, headers) {
@@ -188,7 +213,13 @@
 </script>
 
 <template>
-  <div id="datatable" ref="dataTable" tabindex="0" class="data-table">
+  <div
+    v-if="hasData"
+    id="datatable"
+    ref="dataTable"
+    tabindex="0"
+    class="data-table"
+  >
     <div class="header">
       <span
         :class="header.width"
@@ -199,7 +230,7 @@
       >
     </div>
 
-    <TransitionGroup tag="div" class="table-body">
+    <div class="table-body">
       <div
         tabindex="0"
         class="table-body-row flex hover:scale-101"
@@ -210,7 +241,7 @@
       >
         <span
           class="data-cell"
-          :class="headers[cellIndex].width"
+          :class="getWidthClass(headers, cellIndex)"
           v-for="(cell, cellIndex) in row"
           >{{
             headers[cellIndex].formatter
@@ -218,8 +249,7 @@
               : cell
           }}
         </span>
-
-        <span class="data-cell" :class="headers[row.length].width">
+        <span class="data-cell" :class="getWidthClass(headers, row.length)">
           <BaseButton
             class="action-button hover:bg-yellow-100"
             @button-click="openEditModal(index)"
@@ -227,12 +257,16 @@
           >
         </span>
       </div>
-    </TransitionGroup>
+    </div>
 
     <div class="footer">
       <span class="footer-cell">Count: {{ data.length }}</span>
     </div>
   </div>
+
+  <h2 v-else class="no-data-message">
+    <slot></slot>
+  </h2>
 </template>
 
 <style lang="scss" scoped>
@@ -266,7 +300,7 @@
 
   .table-body,
   .no-data-message {
-    @apply w-full h-[30rem];
+    @apply w-full h-[41.25rem];
   }
 
   .no-data-message {

@@ -9,11 +9,12 @@
   import ClientModal from "../components/ClientModal.vue"
 
   // * Data refs and related methods
-  const { data, selectedClient, fetchTableData, filter, filterData } = useDasboard()
+  const { data, selectedClient } = useDasboard()
+  const { fetchTableData, filter, filterData } = useDasboard()
 </script>
 
 <script setup>
-// * must stay in `<script setup>`
+  // * must stay in `<script setup>`
   const emits = defineEmits(["focus-navbar", "notification"])
 
   onBeforeMount(() => fetchTableData())
@@ -29,7 +30,7 @@
     const { onKeyDownListeners } = useListViewCommons(args)
     onKeyDownListeners(document)
   })
-  
+
   function notify({ title, message }) {
     emits("notification", { title, message })
   }
@@ -39,22 +40,14 @@
   <div class="view-container">
     <Toolbar
       ref="toolbar"
-      class="client-toolbar"
+      class="client-toolbar mt-5"
       @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
       @is-from-codementor="filter('is-from-codementor', $event)"
       @selected-tags="filter('tags', $event)"
     />
 
-    <DataTable
-      v-if="data.length"
-      ref="dataTable"
-      :data="data"
-      @open-modal="openModal"
-    />
-    <h2 v-else class="text-xl px-auto mx-auto w-full text-center">
-      There are no clients available yet. 🤷
-    </h2>
+    <DataTable ref="dataTable" :data="data" @open-modal="openModal" />
 
     <ClientModal
       ref="modal"
@@ -63,9 +56,3 @@
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .client-toolbar {
-    @apply mb-10;
-  }
-</style>

@@ -10,14 +10,21 @@
   import ProjectModal from "../components/ProjectModal.vue"
 
   // * Data refs and related methods
-  const { data, selectedProject, hasCurrentClient, clients, filter, filterData } = useProjectsView()
+  const {
+    data,
+    selectedProject,
+    hasCurrentClient,
+    clients,
+    filter,
+    filterData,
+  } = useProjectsView()
 </script>
 
 <script setup>
   const route = useRoute()
   const { fetchTableData } = useProjectsView({ route })
 
-// * must stay in `<script setup>`
+  // * must stay in `<script setup>`
   const emits = defineEmits(["focus-navbar", "notification"])
 
   onBeforeMount(() => fetchTableData())
@@ -33,7 +40,7 @@
     const { onKeyDownListeners } = useListViewCommons(args)
     onKeyDownListeners(document)
   })
-  
+
   function notify({ title, message }) {
     emits("notification", { title, message })
   }
@@ -57,16 +64,15 @@
       </h2>
     </div>
 
-    <DataTable
-      v-if="data.length"
-      ref="dataTable"
-      :data="data"
-      @open-modal="openModal"
-    />
-    <h2 v-else-if="route.params.clientId" class="no-data-message">
-      There are no projects available for this client. 🤷
-    </h2>
-    <h2 v-else class="no-data-message">No data to show at the moment. 🤷</h2>
+    <DataTable ref="dataTable" :data="data" @open-modal="openModal">
+      <span v-if="route.params.clientId" class="no-data-message">
+        There are no projects for this client. 🤷
+      </span>
+
+      <span v-else class="no-data-message"
+        >No data to show at the moment. 🤷
+      </span>
+    </DataTable>
 
     <ProjectModal
       ref="modal"
