@@ -9,6 +9,8 @@
   import DataTable from "../components/DataTable.vue"
   import ProjectModal from "../components/ProjectModal.vue"
 
+  import columnsConfig from "../data/projects-data-table-config"
+
   // * Data refs and related methods
   const {
     data,
@@ -65,7 +67,12 @@
       </h2>
     </div>
 
-    <DataTable ref="dataTable" :data="data" @open-modal="openModal">
+    <DataTable
+      ref="dataTable"
+      :columns-config="columnsConfig"
+      :data="data"
+      @open-modal="openModal"
+    >
       <span v-if="route.params.clientId">
         There are no projects for this client. 🤷
       </span>

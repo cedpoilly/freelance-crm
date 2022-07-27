@@ -100,7 +100,7 @@
       <p class="flex w-3/12 justify-end mr-4">
         <router-link
           :to="`/app/projects/${props.client._id}`"
-          class="see-projects-link"
+          class="see-projects-link link"
           >See projects</router-link
         >
       </p>

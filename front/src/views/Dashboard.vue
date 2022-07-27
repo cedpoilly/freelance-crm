@@ -8,6 +8,8 @@
   import DataTable from "../components/DataTable.vue"
   import ClientModal from "../components/ClientModal.vue"
 
+  import columnsConfig from "../data/clients-data-table-config"
+
   // * Data refs and related methods
   const { data, selectedClient } = useDasboard()
   const { fetchTableData, filter, filterData } = useDasboard()
@@ -48,7 +50,12 @@
       @selected-tags="filter('tags', $event)"
     />
 
-    <DataTable ref="dataTable" :data="data" @open-modal="openModal">
+    <DataTable
+      ref="dataTable"
+      :data="data"
+      :columns-config="columnsConfig"
+      @open-modal="openModal"
+    >
       <span>No clients to show at the moment. 🤷 </span>
     </DataTable>
 

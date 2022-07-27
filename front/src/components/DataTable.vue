@@ -14,6 +14,7 @@
 
   const props = defineProps({
     data: { type: Array, required: true },
+    columnsConfig: { type: Object, required: true },
   })
 
   const emits = defineEmits(["open-modal"])
@@ -29,6 +30,7 @@
   }
 
   function focusOnCreate() {
+    debugger
     const rows = [...dataTable.value.querySelectorAll(".table-body-row")]
     const updatedRow = rows[rows.length - 1]
     updatedRow.focus()
@@ -74,163 +76,14 @@
     }
 
     const firstItem = list[0]
-    const _headers = getHeadersFromObject(firstItem, [
-      "_id",
-      "projects",
-      "whatsAppNumber",
-      // "isCodementor",
-      "tags",
-    ])
+    const _headers = getHeadersFromObject(firstItem)
 
     return _headers
   }
 
-  function getHeadersFromObject(object, filterList) {
+  function getHeadersFromObject(object) {
     const dataHeaders = Object.keys(object)
-      .filter(item => !filterList.includes(item))
-      .map(raw => {
-        switch (raw) {
-          case "firstName":
-            return {
-              id: "firstName",
-              name: "First Name",
-              width: "sm:w-10/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
-            }
-
-          case "lastName":
-            return {
-              id: "lastName",
-              name: "Last Name",
-              width: "sm:w-9/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
-            }
-
-          case "email":
-            return {
-              id: "email",
-              name: "Email",
-              width: "lg:w-8/24 sm-hidden md-hidden lg-hidden truncate",
-            }
-
-          case "level":
-            return {
-              id: "level",
-              name: "Level",
-              width: "lg:w-5/24 sm-hidden md-hidden truncate",
-              formatter: cell => {
-                const [first, ...rest] = cell.split("")
-                return `${first.toUpperCase()}${rest.join("")}`
-              },
-            }
-
-          case "serviceType":
-            return {
-              id: "serviceType",
-              name: "Service",
-              width: "md:w-5/24 lg:w-4/24 sm-hidden truncate",
-              formatter: cell => {
-                const [first, ...rest] = cell.split("")
-                return `${first.toUpperCase()}${rest.join("")}`
-              },
-            }
-
-          case "rate":
-            return {
-              id: "rate",
-              name: "Rate (USD)",
-              width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
-            }
-
-          case "isCodementor":
-            return {
-              id: "isCodementor",
-              name: "Code mentor",
-              width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
-              formatter: isCodementor => {
-                return isCodementor ? "Yes" : "No"
-              },
-            }
-
-          case "tags":
-            return {
-              id: "tags",
-              name: "Tags",
-              width: "2/12",
-              formatter: cell => {
-                return cell.join(" | ")
-              },
-            }
-
-          case "title":
-            return {
-              id: "title",
-              name: "Title",
-              width: "sm:w-7/12",
-            }
-
-          case "paymentMethod":
-            return {
-              id: "paymentMethod",
-              name: "Payment Methods",
-              width: "w-3/12 md-hidden",
-              formatter: cell => {
-                const [first, ...rest] = cell.split("")
-                return `${first.toUpperCase()}${rest.join("")}`
-              },
-            }
-
-          case "budget":
-            return {
-              id: "budget",
-              name: "Budget",
-              width: "w-2/12",
-            }
-
-          case "isCompleted":
-            return {
-              id: "isCompleted",
-              name: "Done?",
-              width: "w-2/12",
-              formatter: isCodementor => {
-                return isCodementor ? "Yes" : "No"
-              },
-            }
-
-          case "wasPaymentDone":
-            return {
-              id: "wasPaymentDone",
-              name: "Paid?",
-              width: "sm-hidden md-hidden lg-hidden",
-              formatter: isCodementor => {
-                return isCodementor ? "Yes" : "No"
-              },
-            }
-
-          case "hasDownPayment":
-            return {
-              id: "hasDownPayment",
-              name: "50% up?",
-              width: "md:w-2/12 sm-hidden md-hidden lg-hidden xl-hidden",
-              formatter: isCodementor => {
-                return isCodementor ? "Yes" : "No"
-              },
-            }
-
-          case "client":
-            return {
-              id: "client",
-              name: "Client",
-              width: "lg:w-6/12 xl:w-5/12 md-hidden lg-hidden",
-              formatter: client => {
-                return (
-                  `${client?.firstName} ${client?.lastName}` || "<no client 🤷>"
-                )
-              },
-            }
-
-          default:
-            return
-        }
-      })
+      .map(raw => props.columnsConfig[raw])
       .filter(Boolean)
 
     return dataHeaders
@@ -284,6 +137,7 @@
         v-for="(row, index) in data"
         :key="index"
         @click="openViewModal(index)"
+        @keydown.control.enter="openViewModal(index)"
       >
         <span
           :class="getWidthClass(headers, cellIndex)"
