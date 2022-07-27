@@ -65,13 +65,11 @@
     </div>
 
     <DataTable ref="dataTable" :data="data" @open-modal="openModal">
-      <span v-if="route.params.clientId" class="no-data-message">
+      <span v-if="route.params.clientId">
         There are no projects for this client. 🤷
       </span>
 
-      <span v-else class="no-data-message"
-        >No data to show at the moment. 🤷
-      </span>
+      <span v-else>No data to show at the moment. 🤷 </span>
     </DataTable>
 
     <ProjectModal
@@ -84,10 +82,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .no-data-message {
-    @apply text-xl my-10 mx-auto w-full text-center;
-  }
-
   .project-indication {
     @apply container mx-auto mt-6 py-5 text-center text-xl;
   }

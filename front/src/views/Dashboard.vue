@@ -47,7 +47,9 @@
       @selected-tags="filter('tags', $event)"
     />
 
-    <DataTable ref="dataTable" :data="data" @open-modal="openModal" />
+    <DataTable ref="dataTable" :data="data" @open-modal="openModal">
+      <span>No clients to show at the moment. 🤷 </span>
+    </DataTable>
 
     <ClientModal
       ref="modal"

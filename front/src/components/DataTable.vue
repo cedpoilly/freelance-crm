@@ -300,7 +300,7 @@
 
   .table-body,
   .no-data-message {
-    @apply w-full h-[41.25rem];
+    @apply w-full h-[41rem] my-3;
   }
 
   .no-data-message {
