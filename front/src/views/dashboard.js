@@ -6,6 +6,8 @@ import Client from "../models/Client"
 
 import { getClients, createClient, updateClient } from "../api/client"
 
+import localData from "../local-data/clients.json"
+
 const { searchStringInList, getCopy } = useHelpers()
 
 let initialData = []
@@ -83,10 +85,21 @@ function focusDataTable({ itemIndex } = {}) {
 }
 
 async function fetchTableData() {
-  const response = await getClients()
-  const dataFromServer = await response.json()
-  data.value = [...dataFromServer]
-  initialData = [...dataFromServer]
+  try {
+    const response = await getClients()
+    const dataFromServer = await response.json()
+    data.value = [...dataFromServer]
+    initialData = [...dataFromServer]
+  } catch (error) {
+    const isDev = import.meta.env.DEV
+    if (isDev) {
+      data.value = localData
+      initialData = localData
+      console.warn("Failed to fetch clients.")
+    } else {
+      alert("Failed to fetch clients.")
+    }
+  }
 }
 
 function filter(field, value) {
