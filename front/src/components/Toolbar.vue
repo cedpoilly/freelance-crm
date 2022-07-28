@@ -4,6 +4,7 @@
   import BaseToggle from "../ui-kit/BaseToggle.vue"
   import AddItemButton from "./AddItemButton.vue"
   import BaseInput from "../ui-kit/BaseInput.vue"
+  import BaseAccordion from "../ui-kit/BaseAccordion.vue"
 
   const emits = defineEmits([
     "search-input",
@@ -59,48 +60,50 @@
 
 <template>
   <section class="toolbar">
-    <div class="filters">
-      <form @submit.prevent class="filter">
-        <BaseInput
-          label="Search"
-          name="search"
-          ref="searchInput"
-          field-name="search"
-          @input="search($event)"
-        />
-      </form>
-
-      <form @submit.prevent class="filter">
-        <BaseToggle
-          label="Only from CodeMentor"
-          field-name="isCodeMentor"
-          :is-checked="isCodeMentor"
-          @toggled="toggleIsCodeMentorFilter"
-        />
-      </form>
-
-      <form @submit.prevent class="filter">
-        <BaseSelect
-          :label="props.tagsLabel"
-          blank-option-label="Select one or more tags."
-          name="tags"
-          :list="tagList"
-          :is-multi="true"
-          @selected-tags="filterViaTags"
-        />
-      </form>
-
-      <div class="create-new">
-        <label class="create-new-label">
-          <AddItemButton
-            :can-add="true"
-            title="Create a new client!"
-            @add-item="emitOpenModal"
+    <BaseAccordion title="Show/hide filters">
+      <div class="filters">
+        <form @submit.prevent class="filter">
+          <BaseInput
+            label="Search"
+            name="search"
+            ref="searchInput"
+            field-name="search"
+            @input="search($event)"
           />
-          <span class="label px-3">Create new </span>
-        </label>
+        </form>
+
+        <form @submit.prevent class="filter">
+          <BaseToggle
+            label="Only from CodeMentor"
+            field-name="isCodeMentor"
+            :is-checked="isCodeMentor"
+            @toggled="toggleIsCodeMentorFilter"
+          />
+        </form>
+
+        <form @submit.prevent class="filter">
+          <BaseSelect
+            :label="props.tagsLabel"
+            blank-option-label="Select one or more tags."
+            name="tags"
+            :list="tagList"
+            :is-multi="true"
+            @selected-tags="filterViaTags"
+          />
+        </form>
+
+        <div class="create-new">
+          <label class="create-new-label">
+            <AddItemButton
+              :can-add="true"
+              title="Create a new client!"
+              @add-item="emitOpenModal"
+            />
+            <span class="label px-3">Create new </span>
+          </label>
+        </div>
       </div>
-    </div>
+    </BaseAccordion>
   </section>
 </template>
 
@@ -111,6 +114,8 @@
 
   .filters {
     @apply w-full grid justify-start content-center items-center;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: 1rem;
   }
 
   .filter {
@@ -118,7 +123,7 @@
   }
 
   .create-new {
-    @apply flex h-16 w-auto items-center justify-self-end self-end cursor-pointer;
+    @apply flex h-16 w-auto items-center xl:justify-self-end self-end cursor-pointer;
   }
 
   .create-new-label {
