@@ -72,6 +72,11 @@ function focusOnWholeTable() {
 }
 
 function focusDataTable({ itemIndex } = {}) {
+  const hasNoRef = !dataTable.value
+  if (hasNoRef) {
+    return
+  }
+
   itemIndex >= 0
     ? dataTable.value.focusOnUpdated(itemIndex)
     : dataTable.value.focusOnCreate()
