@@ -171,7 +171,7 @@
   }
 
   .modal-overlay {
-    @apply fixed  bg-slate-600 relative w-full h-full opacity-90;
+    @apply fixed bg-slate-600 w-full h-full opacity-90;
   }
 
   .appear-enter-active,
