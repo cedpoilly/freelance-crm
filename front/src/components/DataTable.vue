@@ -175,7 +175,7 @@
 
   .header,
   .footer {
-    @apply w-full flex h-20 border-t border-b overflow-hidden text-lg bg-gray-200;
+    @apply w-full flex h-20 border-t border-b overflow-hidden bg-gray-200;
   }
 
   .footer {
