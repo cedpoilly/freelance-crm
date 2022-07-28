@@ -88,7 +88,7 @@
     key="EDIT_CLIENT_DIALOG"
   >
     <template #title class="tile-container">
-      <p class="flex w-9/12">
+      <p class="flex w-full sm:w-full md:w-9/12">
         {{ currentAction }} client &nbsp;
         <span v-if="isEditing">
           '<span class="italic">
@@ -97,7 +97,7 @@
           >'
         </span>
       </p>
-      <p class="flex w-3/12 justify-end mr-4">
+      <p class="flex w-full sm:w-full md:w-3/12 md:justify-end">
         <router-link
           :to="`/app/projects/${props.client._id}`"
           class="see-projects-link link"
@@ -164,7 +164,7 @@
           />
         </div>
 
-        <div class="form-group level">
+        <div class="form-group">
           <BaseSelect
             :list="LEVEL"
             :initial-selection="props.client.level"
@@ -175,7 +175,7 @@
           />
         </div>
 
-        <div class="form-group service-type">
+        <div class="form-group">
           <BaseSelect
             :list="SERVICE_TYPE"
             :initial-selection="props.client.serviceType"
@@ -186,7 +186,7 @@
           />
         </div>
 
-        <div class="form-group rate">
+        <div class="form-group">
           <BaseInput
             :value="props.client.rate"
             field-name="rate"
@@ -196,7 +196,7 @@
           />
         </div>
 
-        <div class="form-group tags">
+        <div class="form-group">
           <BaseSelect
             :value="props.client.tags"
             :list="TAGS"
@@ -217,15 +217,15 @@
 
 <style lang="scss" scoped>
   .client-form {
-    display: grid;
+    @apply sm:w-full h-full;
+    @apply my-4 md:my-6 lg:my-8 xl:my-10;
+
+    @apply grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     grid-auto-rows: 5.7rem;
     column-gap: 4rem;
     row-gap: 1.5rem;
-    @apply sm:w-11/12;
-
-    max-height: 69vh;
-    @apply w-full px-0 py-0 overflow-y-auto my-auto content-center;
+    padding-right: 0.3rem;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -245,14 +245,6 @@
 
   .form-group {
     @apply flex flex-col justify-center items-center;
-  }
-
-  .client-name-input {
-    @apply w-full px-4 py-3 h-8 ease-in-out duration-100 text-base dark:text-slate-900 placeholder-gray-500 dark:placeholder-slate-900 rounded-full rounded-2xl border border-gray-200 dark:border-none focus:outline-none focus:border-sky-400;
-  }
-
-  .modal-title {
-    @apply flex justify-between;
   }
 
   .see-projects-link {

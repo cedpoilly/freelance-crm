@@ -241,7 +241,6 @@
 <style lang="scss" scoped>
   .main-form {
     @apply overflow-y-auto w-full flex flex-col gap-4;
-    height: 55vh;
     padding-right: 0.3rem;
 
     &::-webkit-scrollbar {

@@ -129,21 +129,36 @@
 <style lang="scss" scoped>
   .modal-container {
     @apply text-black dark:text-white mx-auto fixed inset-0 flex items-center z-50;
+    @apply fixed top-0 left-0 z-20 w-screen h-screen;
   }
 
   .modal {
-    @apply bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-between absolute left-4 right-4 z-10 mx-auto px-10 py-8 rounded-md text-lg;
-    @apply sm:w-11/12 md:w-11/12 lg:w-8/12 xl:w-8/12;
+    @apply absolute z-10 mx-auto;
+    @apply flex flex-col items-center justify-between;
+    @apply bg-slate-100 dark:bg-slate-900;
+
+    @apply h-full px-7 py-7;
+    @apply sm:w-full sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
+    @apply md:w-11/12 md:h-5/6 md:my-4 md:left-4 md:right-4 md:px-10 md:py-8 md:text-lg md:rounded-md;
+    @apply lg:w-11/12;
+    @apply xl:w-11/12;
 
     .modal-title {
       @apply w-full mb-5 flex justify-between items-center;
 
       .modal-title-text {
-        @apply w-full flex justify-start font-bold text-2xl;
+        @apply w-full flex font-bold md:text-lg;
+        @apply flex-col justify-items-stretch;
+        @apply md:flex-row;
+        @apply mr-4;
       }
     }
+
     .modal-content {
-      @apply relative h-full w-full py-0 xl:py-10 flex flex-col justify-center items-center whitespace-pre-wrap;
+      @apply relative h-full w-full;
+      @apply flex flex-col justify-center items-center overflow-y-auto;
+      @apply py-4 md:py-6 lg:py-6 xl:py-4;
+      @apply whitespace-pre-wrap;
     }
 
     .modal-actions {
