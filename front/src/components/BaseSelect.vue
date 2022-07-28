@@ -229,7 +229,6 @@
   <div
     :name="props.name"
     class="select"
-    tabindex="1"
     v-click-outside="() => close()"
     @keyup="toggleViaKeyboard"
   >
