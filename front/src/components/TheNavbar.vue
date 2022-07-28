@@ -46,7 +46,7 @@
 <style lang="scss" scoped>
   .navbar {
     @apply absolute top-0;
-    @apply w-full h-20 bg-white flex justify-end;
+    @apply w-full sm:h-16 md:h-20 bg-white flex justify-end;
   }
 
   .routes {
