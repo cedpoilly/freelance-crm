@@ -78,6 +78,6 @@
   html,
   body,
   .app {
-    @apply relative h-full flex flex-col h-screen bg-gray-100;
+    @apply relative flex flex-col h-screen bg-gray-100;
   }
 </style>
