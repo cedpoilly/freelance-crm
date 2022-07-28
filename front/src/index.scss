@@ -3,9 +3,13 @@
 @tailwind utilities;
 
 .view-container {
-  @apply absolute w-full mx-auto h-[calc(100%-8rem)] top-20;
-  @apply flex flex-col justify-center;
-  @apply py-7;
+  @apply absolute w-full mx-auto;
+  @apply py-4 md:py-7;
+  @apply my-4;
+  @apply h-[calc(100vh-7.5rem)];
+  @apply md:h-[calc(100vh-9.5rem)];
+  @apply top-14 md:top-20 bottom-10;
+  @apply flex flex-col justify-center self-stretch;
 }
 
 @layer base {
