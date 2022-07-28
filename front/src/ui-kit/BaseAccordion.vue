@@ -36,13 +36,14 @@
     class="base-accordion"
     :class="{ active: isActive }"
     v-click-outside="() => close()"
-    @click="toggleActive"
-    @keyup="toggleViaKeyboard"
   >
     <label
       class="base-accordion-top"
       :class="{ active: isActive }"
       for="accordion"
+      tabindex="0"
+      @keyup.stop="toggleViaKeyboard"
+      @click.stop="toggleActive"
     >
       <span>{{ props.title }}</span>
       <span class="base-accordion-top__icon">🔻</span>
@@ -54,8 +55,6 @@
       class="base-accordion-content"
       :class="{ active: isActive }"
       ref="contentRef"
-      @keydown.escape.stop.capture="close"
-      tabindex="0"
     >
       <slot></slot>
     </div>
