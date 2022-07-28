@@ -131,7 +131,7 @@
     <div class="table-body">
       <div
         tabindex="0"
-        class="table-body-row flex hover:scale-101"
+        class="table-body-row hover:scale-101"
         title="Click to view all details."
         v-for="(row, index) in data"
         :key="index"
@@ -170,46 +170,27 @@
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12 h-full mx-auto my-3 overflow-y-hidden drop-shadow-xl rounded;
+    @apply w-11/12 h-full mx-auto my-3 overflow-y-hidden drop-shadow-xl rounded-md;
+    @apply flex flex-col justify-start;
   }
 
   .header,
   .footer {
-    @apply w-full flex h-20 border-t border-b overflow-hidden bg-gray-200;
+    @apply w-full flex  border-t border-b overflow-hidden bg-gray-200;
+  }
+
+  .header {
+    @apply h-20;
   }
 
   .footer {
-    @apply h-14;
+    @apply h-12;
   }
 
   .header-cell,
   .data-cell,
   .footer-cell {
-    @apply px-10 py-2 flex items-center;
-  }
-
-  .sm-hidden {
-    @media screen and (max-width: 767px) {
-      @apply hidden;
-    }
-  }
-
-  .md-hidden {
-    @media screen and (max-width: 1023px) {
-      @apply hidden;
-    }
-  }
-
-  .lg-hidden {
-    @media screen and (max-width: 1279px) {
-      @apply hidden;
-    }
-  }
-
-  .xl-hidden {
-    @media screen and (max-width: 1535px) {
-      @apply hidden;
-    }
+    @apply px-4 md:px-10 py-2 flex items-center;
   }
 
   .header-cell,
@@ -217,13 +198,9 @@
     @apply font-bold;
   }
 
-  .data-cell {
-    @apply h-20;
-  }
-
   .table-body,
   .no-data-message {
-    @apply w-full h-[41rem] my-3;
+    @apply w-full h-[41rem] my-0 h-full;
   }
 
   .no-data-message {
@@ -252,12 +229,42 @@
   }
 
   .table-body-row {
-    @apply w-full items-center;
-    @apply cursor-pointer focus:bg-sky-100;
+    @apply relative flex w-full items-center;
     @apply border-b bg-white;
+    @apply cursor-pointer focus:bg-sky-100;
+  }
+
+  .data-cell {
+    @apply h-14 md:h-16 lg:h-20;
   }
 
   .action-button {
     @apply bg-white;
+  }
+</style>
+
+<style lang="scss" scoped>
+  .sm-hidden {
+    @media screen and (max-width: 767px) {
+      @apply hidden;
+    }
+  }
+
+  .md-hidden {
+    @media screen and (max-width: 1023px) {
+      @apply hidden;
+    }
+  }
+
+  .lg-hidden {
+    @media screen and (max-width: 1279px) {
+      @apply hidden;
+    }
+  }
+
+  .xl-hidden {
+    @media screen and (max-width: 1535px) {
+      @apply hidden;
+    }
   }
 </style>

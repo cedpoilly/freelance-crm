@@ -2,13 +2,13 @@ export default {
   firstName: {
     id: "firstName",
     name: "First Name",
-    width: "sm:w-10/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
+    width: "w-9/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
   },
 
   lastName: {
     id: "lastName",
     name: "Last Name",
-    width: "sm:w-9/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
+    width: "w-9/24 md:w-7/24 lg:w-5/24 xl:w-4/24 truncate",
   },
 
   email: {
@@ -40,13 +40,17 @@ export default {
   rate: {
     id: "rate",
     name: "Rate (USD)",
-    width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
+    width:
+      "w-6/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis flex place-content-end",
+    formatter: rate => {
+      return `$ ${rate}`
+    },
   },
 
   isCodementor: {
     id: "isCodementor",
     name: "Code mentor",
-    width: "sm:w-4/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
+    width: "sm-hidden md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
     formatter: isCodementor => {
       return isCodementor ? "Yes" : "No"
     },

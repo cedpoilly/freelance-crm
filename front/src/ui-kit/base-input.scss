@@ -9,3 +9,29 @@
 .base-input-element {
   @apply h-12 md:h-14 w-full px-4 py-1 rounded border;
 }
+
+// UI Kit helpers
+
+.sm-hidden {
+  @media screen and (max-width: 767px) {
+    @apply hidden;
+  }
+}
+
+.md-hidden {
+  @media screen and (max-width: 1023px) {
+    @apply hidden;
+  }
+}
+
+.lg-hidden {
+  @media screen and (max-width: 1279px) {
+    @apply hidden;
+  }
+}
+
+.xl-hidden {
+  @media screen and (max-width: 1535px) {
+    @apply hidden;
+  }
+}
