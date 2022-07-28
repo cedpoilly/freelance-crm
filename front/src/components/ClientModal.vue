@@ -89,24 +89,22 @@
   >
     <template #title class="tile-container">
       <p class="flex w-full sm:w-full md:w-9/12">
-        {{ currentAction }} client &nbsp;
-        <span v-if="isEditing">
-          '<span class="italic">
-            {{ props.client?.firstName }}
-            {{ props.client?.lastName }} </span
-          >'
+        <span class="block w-24">{{ currentAction }} client &nbsp;</span>
+        <span v-if="isEditing" class="italic block truncate max-w-[10rem]">
+          {{ props.client?.firstName }}
+          {{ props.client?.lastName }}
         </span>
       </p>
-      <p class="flex w-full sm:w-full md:w-3/12 md:justify-end">
+    </template>
+
+    <template #content>
+      <p class="relative flex w-full top-4 self-start">
         <router-link
           :to="`/app/projects/${props.client._id}`"
           class="see-projects-link link"
           >See projects</router-link
         >
       </p>
-    </template>
-
-    <template #content>
       <form class="client-form">
         <div class="form-group">
           <BaseInput

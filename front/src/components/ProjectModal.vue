@@ -75,10 +75,11 @@
     key="EDIT_PROJECT_DIALOG"
   >
     <template #title>
-      {{ currentAction }} project&nbsp;
-      <span v-if="isEditing">
-        '<span class="italic">{{ props.project?.title }}</span
-        >'
+      <span class="flex h-full py-4 w-full sm:w-full md:w-9/12">
+        <span class="block w-24">{{ currentAction }} client &nbsp;</span>
+        <span v-if="isEditing" class="italic block truncate max-w-[10rem]">
+          {{ props.project?.title }}
+        </span>
       </span>
     </template>
 

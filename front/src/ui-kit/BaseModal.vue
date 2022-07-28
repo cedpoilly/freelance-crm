@@ -144,7 +144,7 @@
     @apply xl:w-11/12;
 
     .modal-title {
-      @apply w-full mb-5 flex justify-between items-center;
+      @apply relative w-full mb-5 flex justify-between items-center;
 
       .modal-title-text {
         @apply w-full flex font-bold md:text-lg;
@@ -166,7 +166,7 @@
     }
 
     .modal-actions .button-text {
-      @apply w-24;
+      @apply w-24 relative justify-self-start;
     }
   }
 
