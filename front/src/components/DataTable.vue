@@ -2,7 +2,7 @@
   import { ref, watch } from "vue"
   import { computed } from "@vue/reactivity"
 
-  import BaseButton from "./BaseButton.vue"
+  import BaseButton from "../ui-kit/BaseButton.vue"
 
   const ACTION_HEADERS = [
     {

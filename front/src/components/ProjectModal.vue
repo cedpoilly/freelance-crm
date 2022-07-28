@@ -1,10 +1,10 @@
 <script setup>
   import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-  import BaseModal from "./BaseModal.vue"
-  import BaseInput from "./BaseInput.vue"
-  import BaseToggle from "./BaseToggle.vue"
-  import BaseSelect from "./BaseSelect.vue"
+  import BaseModal from "../ui-kit/BaseModal.vue"
+  import BaseInput from "../ui-kit/BaseInput.vue"
+  import BaseToggle from "../ui-kit/BaseToggle.vue"
+  import BaseSelect from "../ui-kit/BaseSelect.vue"
 
   const PAYMENT_METHODS = ["codementor", "bank", "paypal"]
 

@@ -1,9 +1,9 @@
 <script setup>
   import { ref } from "vue"
-  import BaseSelect from "./BaseSelect.vue"
-  import BaseToggle from "./BaseToggle.vue"
+  import BaseSelect from "../ui-kit/BaseSelect.vue"
+  import BaseToggle from "../ui-kit/BaseToggle.vue"
   import AddItemButton from "./AddItemButton.vue"
-  import BaseInput from "./BaseInput.vue"
+  import BaseInput from "../ui-kit/BaseInput.vue"
 
   const emits = defineEmits([
     "search-input",

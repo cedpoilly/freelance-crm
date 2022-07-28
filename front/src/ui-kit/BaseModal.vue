@@ -2,7 +2,7 @@
   import { getCurrentInstance } from "vue"
   import BaseCloseButton from "./BaseCloseButton.vue"
   import useBaseModal from "./base-modal"
-  import { config } from "./base-modal.js"
+  import { config } from "./base-modal"
 
   const props = defineProps(config)
 

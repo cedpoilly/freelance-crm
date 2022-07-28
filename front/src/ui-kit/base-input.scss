@@ -1,0 +1,11 @@
+.base-input {
+  @apply w-full
+}
+
+.base-input-label {
+  @apply w-full block mb-1;
+}
+
+.base-input-element {
+  @apply h-12 md:h-14 w-full px-4 py-1 rounded border;
+}

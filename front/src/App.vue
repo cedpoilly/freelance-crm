@@ -4,8 +4,8 @@
   import useHelpers from "./app/helpers"
   import useGlobalState from "./app/global-state"
 
-  import BaseAlertModal from "./components/BaseAlertModal.vue"
-  import NotificationsContainer from "./components/NotificationsContainer.vue"
+  import BaseAlertModal from "./ui-kit/BaseAlertModal.vue"
+  import NotificationsContainer from "./ui-kit/NotificationsContainer.vue"
 
   import TheNavbar from "./components/TheNavbar.vue"
   import InfoModal from "./components/InfoModal.vue"
@@ -73,6 +73,7 @@
 
 <style lang="scss">
   @import "./route-transitions.css";
+  @import "./ui-kit/base-input.scss";
 
   html,
   body,

@@ -1,7 +1,7 @@
 <script setup>
   import { watch, ref, computed } from "vue"
 
-  import BaseNotification from "./BaseNotification.vue"
+  import BaseNotification from "../ui-kit/BaseNotification.vue"
 
   const removalDelay = 5000
 

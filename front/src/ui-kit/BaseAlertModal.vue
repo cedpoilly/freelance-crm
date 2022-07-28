@@ -3,7 +3,7 @@
 
   import useAlert from "../app/alert"
 
-  import BaseModal from "./BaseModal.vue"
+  import BaseModal from "../ui-kit/BaseModal.vue"
 
   defineExpose({ open, close, setValues })
 

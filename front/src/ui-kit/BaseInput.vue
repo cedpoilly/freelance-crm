@@ -17,7 +17,7 @@
       v-bind="$attrs"
       :name="props.label"
       type="text"
-      class="base-input-box"
+      class="base-input-element"
       @input="$emit('input', $event)"
     />
   </label>
@@ -26,13 +26,5 @@
 <style lang="scss" scoped>
   .base-input {
     @apply w-full grid content-center justify-items-stretch items-center;
-  }
-
-  .base-input-label {
-    @apply w-full mb-2;
-  }
-
-  .base-input-box {
-    @apply h-14 w-full px-4 py-1 rounded border;
   }
 </style>

@@ -228,11 +228,11 @@
 <template>
   <div
     :name="props.name"
-    class="select"
+    class="base-input select"
     v-click-outside="() => close()"
     @keyup="toggleViaKeyboard"
   >
-    <label class="base-select-label" :for="props.name">{{ props.label }}</label>
+    <label class="base-input-label" :for="props.name">{{ props.label }}</label>
     <div
       :class="{ active: isActive }"
       class="select-trigger"
@@ -307,7 +307,11 @@
   }
 
   .select-trigger {
-    @apply w-full h-14 px-4 py-2 border rounded flex justify-between items-center bg-white;
+    @apply w-full  px-4 py-2;
+    @apply flex justify-between items-center;
+    @apply h-12 md:h-14;
+    @apply border rounded;
+    @apply bg-white;
   }
 
   .select-trigger__icon {
@@ -325,10 +329,6 @@
 
   .select-trigger.active .select-trigger__icon {
     transform: rotate(180deg);
-  }
-
-  .base-select-label {
-    @apply block w-full mb-2;
   }
 
   .multi-selected {
@@ -350,7 +350,7 @@
 
   .content--drop-up {
     // * Estimate margin required between the bottom of the `content` section
-    // * and the top of the `base-select-label`
+    // * and the top of the `base-input-label`
     // * `+ 2rem` for additional margin.
     bottom: calc(3.5rem * 2 + 2rem);
   }
