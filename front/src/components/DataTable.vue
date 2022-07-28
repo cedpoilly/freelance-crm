@@ -170,7 +170,7 @@
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12 mx-auto my-3 overflow-y-hidden drop-shadow-xl rounded;
+    @apply w-11/12 h-full mx-auto my-3 overflow-y-hidden drop-shadow-xl rounded;
   }
 
   .header,
@@ -231,8 +231,9 @@
   }
 
   .table-body {
-    @apply flex flex-col max-h-[31rem];
+    @apply flex flex-col h-auto relative;
     @apply overflow-x-hidden overflow-y-scroll;
+    @apply max-h-[calc(100%-10rem)];
 
     &::-webkit-scrollbar {
       @apply w-10;
