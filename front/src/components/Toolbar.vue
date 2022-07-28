@@ -2,8 +2,8 @@
   import { ref } from "vue"
   import BaseSelect from "./BaseSelect.vue"
   import BaseToggle from "./BaseToggle.vue"
-  import BaseSearchInput from "./BaseSearchInput.vue"
   import AddItemButton from "./AddItemButton.vue"
+  import BaseInput from "./BaseInput.vue"
 
   const emits = defineEmits([
     "search-input",
@@ -61,12 +61,11 @@
   <section class="toolbar">
     <div class="filters">
       <form @submit.prevent class="filter">
-        <BaseSearchInput
+        <BaseInput
           label="Search"
           name="search"
           ref="searchInput"
           field-name="search"
-          placeholder="Search any field"
           @input="search($event)"
         />
       </form>
