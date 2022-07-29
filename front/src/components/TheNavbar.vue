@@ -63,7 +63,7 @@
     transition: all 0.3s linear;
 
     @apply w-full sm:h-16 md:h-20 flex justify-end;
-    @apply drop-shadow-md dark:border-b dark:border-slate-100;
+    @apply shadow dark:shadow-slate-800 mb-1;
   }
 
   .routes {
