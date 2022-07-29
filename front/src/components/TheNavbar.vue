@@ -45,7 +45,8 @@
 
 <style lang="scss" scoped>
   .navbar {
-    @apply absolute top-0;
+    transition: all 0.3s linear;
+
     @apply w-full sm:h-16 md:h-20 bg-white flex justify-end;
   }
 

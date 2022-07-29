@@ -1,6 +1,6 @@
 <script setup>
-  import { ref, watch } from "vue"
   import { computed } from "@vue/reactivity"
+  import { ref, watch } from "vue"
 
   import BaseButton from "../ui-kit/BaseButton.vue"
 
@@ -118,7 +118,7 @@
     tabindex="0"
     class="data-table"
   >
-    <div class="header">
+    <div class="data-table-header">
       <span
         :class="header.width"
         class="header-cell"
@@ -158,7 +158,7 @@
       </div>
     </div>
 
-    <div class="footer">
+    <div class="data-table-footer">
       <span class="footer-cell">Count: {{ data.length }}</span>
     </div>
   </div>
@@ -170,21 +170,23 @@
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12 h-full mx-auto my-3 overflow-y-hidden drop-shadow-xl rounded-md;
-    @apply flex flex-col justify-start;
+    @apply w-11/12  mx-auto;
+    @apply overflow-y-hidden;
+    @apply grid;
+
+    @apply drop-shadow-xl rounded-md;
   }
 
-  .header,
-  .footer {
+  .data-table .data-table-header,
+  .data-table .data-table-footer {
     @apply w-full flex  border-t border-b overflow-hidden bg-gray-200;
   }
 
-  .header {
-    @apply h-20;
+  .data-table .data-table-header {
+    @apply h-14 md:h-16 lg:h-20;
   }
-
-  .footer {
-    @apply h-12;
+  .data-table .data-table-footer {
+    @apply h-10 md:h-12 lg:h-14;
   }
 
   .header-cell,
@@ -199,7 +201,6 @@
     @apply font-bold;
   }
 
-  .table-body,
   .no-data-message {
     @apply w-full my-0 h-full;
   }
@@ -209,9 +210,8 @@
   }
 
   .table-body {
-    @apply flex flex-col h-auto relative;
+    @apply flex flex-col;
     @apply overflow-x-hidden overflow-y-scroll;
-    @apply max-h-[calc(100%-10rem)];
 
     &::-webkit-scrollbar {
       @apply w-10;

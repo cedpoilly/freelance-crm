@@ -21,23 +21,24 @@
 </script>
 
 <template>
-  <div class="flex-col w-full pt-40 pb-32 bg-slate-50 overflow-y-auto">
+  <div class="view-container bg-slate-50">
     <div
-      class="container mx-auto flex flex-col justify-center items-center bg-white px-10 py-20 rounded-sm"
+      class="bg-white px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
+      style="max-width: 40rem"
     >
       <h2 class="h2">Buttons</h2>
-      <div class="flex flex-col items-center justify-center w-full gap-4">
+      <div class="flex flex-col items-center justify-center w-full gap-6">
         <div class="container w-auto">
-          <h3 class="h3 text-center">Enabled</h3>
-          <div class="enabled flex items-center justify-center w-auto gap-4">
+          <h3 class="h3 text-center my-4">Enabled</h3>
+          <div class="enabled flex items-center justify-center w-auto gap-6">
             <BaseButton variant="primary">Primary</BaseButton>
             <BaseButton variant="secondary">Secondary</BaseButton>
             <BaseButton variant="cancel">Cancel</BaseButton>
           </div>
         </div>
         <div class="container w-auto">
-          <h3 class="h3 text-center">Disabled</h3>
-          <div class="enabled flex items-center justify-center w-auto gap-4">
+          <h3 class="h3 text-center my-4">Disabled</h3>
+          <div class="enabled flex items-center justify-center w-auto gap-6">
             <BaseButton disabled="disabled" variant="primary">
               Primary
             </BaseButton>
@@ -50,8 +51,10 @@
           </div>
         </div>
         <div class="container w-auto">
-          <h3 class="h3 text-center">Loading</h3>
-          <div class="enabled flex items-center justify-center w-auto gap-4">
+          <h3 class="h3 text-center my-4">Loading</h3>
+          <div
+            class="enabled flex flex-wrap items-center justify-center w-auto gap-6"
+          >
             <BaseButton :is-loading="true" variant="primary">
               Primary
             </BaseButton>
@@ -67,14 +70,15 @@
     </div>
 
     <div
-      class="container mx-auto flex flex-col justify-center items-center bg-white px-10 py-20 rounded-sm"
+      class="bg-white px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
+      style="max-width: 40rem"
     >
       <h2 class="h2">Inputs</h2>
-      <div class="flex flex-col items-center justify-center w-full gap-4">
+      <div class="flex flex-col items-center justify-center w-full gap-6">
         <div class="enabled container w-full">
-          <h3 class="h3 text-center">Enabled</h3>
+          <h3 class="h3 text-center my-4">Enabled</h3>
           <div
-            class="enabled flex flex-wrap items-center justify-center w-full gap-4"
+            class="enabled flex flex-wrap items-center justify-center w-full gap-6"
           >
             <BaseInput label="Base input" field-name="base-input" />
 
@@ -110,9 +114,9 @@
         </div>
 
         <div class="disabled container w-full">
-          <h3 class="h3 text-center">Disabled</h3>
+          <h3 class="h3 text-center my-4">Disabled</h3>
           <div
-            class="enabled flex flex-wrap items-center justify-center w-full gap-4"
+            class="enabled flex flex-wrap items-center justify-center w-full gap-6"
           >
             <BaseInput disabled label="Base input" field-name="base-input" />
 

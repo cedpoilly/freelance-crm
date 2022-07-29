@@ -4,9 +4,9 @@
   import useDasboard from "./dashboard"
   import useListViewCommons from "./list-view-commons"
 
-  import Toolbar from "../components/Toolbar.vue"
-  import DataTable from "../components/DataTable.vue"
   import ClientModal from "../components/ClientModal.vue"
+  import DataTable from "../components/DataTable.vue"
+  import Toolbar from "../components/Toolbar.vue"
 
   import columnsConfig from "../data/clients-data-table-config"
 
@@ -42,7 +42,7 @@
   <div class="view-container">
     <Toolbar
       ref="toolbar"
-      class="client-toolbar mt-5"
+      class="toolbar"
       tags-label="Client's tags"
       @create-new="openModal({ mode: 'create' })"
       @search-input="filterData"
@@ -54,6 +54,7 @@
       ref="dataTable"
       :data="data"
       :columns-config="columnsConfig"
+      class="data-table"
       @open-modal="openModal"
     >
       <span>No clients to show at the moment. 🤷 </span>
@@ -66,3 +67,17 @@
     />
   </div>
 </template>
+
+<style scoped>
+  .view-container {
+    @apply bg-amber-50 py-6 md:py-10;
+  }
+
+  .toolbar {
+    @apply mb-4 md:mb-10;
+  }
+
+  .data-table {
+    @apply bg-sky-100;
+  }
+</style>

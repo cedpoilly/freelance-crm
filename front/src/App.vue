@@ -1,14 +1,14 @@
 <script setup>
   import { getCurrentInstance, onMounted, ref } from "vue"
 
-  import useHelpers from "./app/helpers"
   import useGlobalState from "./app/global-state"
+  import useHelpers from "./app/helpers"
 
   import BaseAlertModal from "./ui-kit/BaseAlertModal.vue"
   import NotificationsContainer from "./ui-kit/NotificationsContainer.vue"
 
-  import TheNavbar from "./components/TheNavbar.vue"
   import InfoModal from "./components/InfoModal.vue"
+  import TheNavbar from "./components/TheNavbar.vue"
 
   import { setInstanceRef } from "./app/alert"
   import TheFooter from "./components/TheFooter.vue"
@@ -78,6 +78,6 @@
   html,
   body,
   .app {
-    @apply relative flex flex-col h-screen bg-gray-100;
+    @apply overflow-y-hidden grid  dark:bg-slate-900 dark:text-slate-100 bg-gray-100;
   }
 </style>

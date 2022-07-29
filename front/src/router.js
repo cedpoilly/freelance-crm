@@ -3,10 +3,11 @@ import { createRouter, createWebHistory } from "vue-router"
 import useGlobalState from "./app/global-state"
 
 import Dashboard from "./views/Dashboard.vue"
+import NotFound from "./views/NotFound.vue"
 import Projects from "./views/Projects.vue"
 import Settings from "./views/Settings.vue"
+import TestRoute from "./views/TestRoute.vue"
 import UiKit from "./views/UiKit.vue"
-import NotFound from "./views/NotFound.vue"
 
 const routes = [
   {
@@ -17,7 +18,8 @@ const routes = [
   },
   { path: "/app/projects/:clientId?", name: "projects", component: Projects },
   { path: "/app/settings", name: "settings", component: Settings },
-  { path: "/app/ui-kit", name: "ui-kit", component: UiKit },
+  { path: "/ui-kit", name: "ui-kit", component: UiKit },
+  { path: "/test-route", name: "test-route", component: TestRoute },
   { path: "/:pathMatch(.*)*", name: "not-found", component: NotFound },
 ]
 

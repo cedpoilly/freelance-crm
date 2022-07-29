@@ -2,12 +2,12 @@
   import { onBeforeMount, onMounted } from "vue"
   import { useRoute } from "vue-router"
 
-  import useProjectsView from "./projects-view"
   import useListViewCommons from "./list-view-commons"
+  import useProjectsView from "./projects-view"
 
-  import Toolbar from "../components/Toolbar.vue"
   import DataTable from "../components/DataTable.vue"
   import ProjectModal from "../components/ProjectModal.vue"
+  import Toolbar from "../components/Toolbar.vue"
 
   import columnsConfig from "../data/projects-data-table-config"
 
@@ -92,5 +92,17 @@
 <style lang="scss" scoped>
   .project-indication {
     @apply container mx-auto mt-6 py-5 text-center text-xl;
+  }
+
+  .view-container {
+    @apply bg-amber-50 py-6 md:py-10;
+  }
+
+  .toolbar {
+    @apply mb-4 md:mb-10;
+  }
+
+  .data-table {
+    @apply bg-sky-100;
   }
 </style>

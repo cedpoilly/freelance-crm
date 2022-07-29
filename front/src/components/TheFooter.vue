@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
   .footer {
-    @apply absolute grid content-center;
+    @apply grid content-center;
     @apply w-full h-10 px-4 py-1 bottom-0;
     @apply bg-teal-100 text-sky-600;
 
