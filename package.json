@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start:DB": "bash ./scripts/start-db.sh",
-    "devStart": "nodemon app.js",
+    "devStart": "nodemon --ignore front/ app.js",
     "postinstall": "bash ./scripts/build-front-end.sh",
     "start": "node app.js"
   },
