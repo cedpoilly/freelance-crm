@@ -70,6 +70,7 @@
     v-if="isOpen"
     tabindex="0"
     :is-default-actions="true"
+    class="project-modal"
     role="dialog"
     ref="dialog"
     key="EDIT_PROJECT_DIALOG"
@@ -238,6 +239,12 @@
     </template>
   </BaseModal>
 </template>
+
+<style lang="scss">
+  .modal-container.project-modal .modal {
+    max-width: 80rem;
+  }
+</style>
 
 <style lang="scss" scoped>
   .main-form {

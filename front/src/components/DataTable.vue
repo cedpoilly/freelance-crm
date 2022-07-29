@@ -177,13 +177,13 @@
     @apply drop-shadow-xl rounded-md;
     @apply dark:border dark:border-slate-700;
     @apply dark:text-slate-100;
-    @apply bg-slate-50 dark:bg-slate-900;
+    @apply bg-slate-50 dark:bg-slate-800;
   }
 
   .data-table .data-table-header,
   .data-table .data-table-footer {
     @apply w-full flex border-t border-b dark:border-slate-700 overflow-hidden;
-    @apply bg-white dark:bg-slate-800;
+    @apply bg-slate-100 dark:bg-gray-900;
   }
 
   .data-table .data-table-header {
@@ -239,6 +239,7 @@
     @apply relative flex w-full items-center;
     @apply border-b;
     @apply dark:border-slate-700;
+    @apply bg-slate-50 dark:bg-slate-800;
 
     @apply cursor-pointer focus:bg-sky-100;
   }
