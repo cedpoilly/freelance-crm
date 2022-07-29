@@ -88,9 +88,14 @@
     key="EDIT_CLIENT_DIALOG"
   >
     <template #title class="tile-container">
-      <p class="flex w-full sm:w-full md:w-9/12">
-        <span class="block w-24">{{ currentAction }} client &nbsp;</span>
-        <span v-if="isEditing" class="italic block truncate max-w-[10rem]">
+      <p class="flex w-full sm:w-full md:w-9/12 lg:w-full">
+        <span class="block w-24 md:w-auto"
+          >{{ currentAction }} client &nbsp;</span
+        >
+        <span
+          v-if="isEditing"
+          class="italic block truncate max-w-[10rem] md:max-w-max"
+        >
           {{ props.client?.firstName }}
           {{ props.client?.lastName }}
         </span>
