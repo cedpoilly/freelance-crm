@@ -12,7 +12,7 @@
   .footer {
     @apply grid content-center;
     @apply w-full h-10 px-4 py-1 bottom-0;
-    @apply bg-teal-100 text-sky-600;
+    @apply bg-teal-100 dark:bg-teal-900 text-sky-600 dark:text-sky-100;
 
     &-text {
       @apply w-full opacity-70 text-center;

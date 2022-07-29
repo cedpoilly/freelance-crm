@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .view-container {
-  @apply flex flex-col justify-between; 
+  @apply flex flex-col justify-start; 
   @apply overflow-x-hidden overflow-y-auto;
   @apply px-2 py-2 md:px-4 md:py-4;
   @apply h-full w-full;
@@ -11,13 +11,7 @@
 }
 
 @layer base {
-  // *, div, nav, main, section, header, footer, span, button, label {
-  //   @apply bg-white dark:bg-slate-800;
-  // }
 
-  p, h1, h2, h3, h4, h5, h6 {
-    @apply text-slate-900 dark:text-slate-100;
-  }
 
   .h1 {
     @apply text-2xl font-bold;
