@@ -70,8 +70,9 @@
     @apply w-full  px-4 py-2;
     @apply flex justify-between items-center;
     @apply h-12 md:h-14;
-    @apply border rounded;
-    @apply bg-white;
+    @apply rounded;
+    @apply bg-white dark:bg-slate-800;
+    @apply border dark:border dark:border-slate-700;
   }
 
   .base-accordion-top__icon {
@@ -93,8 +94,7 @@
 
   .base-accordion-content {
     @apply flex justify-center items-center;
-    @apply w-[97%] mx-auto;
-    @apply bg-neutral-50;
+    @apply bg-white dark:bg-slate-800;
 
     @apply overflow-hidden;
 

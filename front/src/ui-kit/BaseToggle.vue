@@ -36,18 +36,29 @@
 
 <style lang="scss" scoped>
   .base-toggle-cb-container {
-    @apply flex justify-between items-center bg-white;
+    @apply flex justify-between items-center;
   }
 
   .base-toggle-cb {
     @apply w-5 h-5;
   }
 
+  .base-toggle {
+    & .base-toggle-cb-container {
+      @apply bg-white dark:bg-slate-900;
+      @apply border-slate-400 dark:border-slate-400;
+    }
+
+    & .base-toggle-cb:checked::before {
+      @apply bg-slate-100 dark:bg-red-900;
+    }
+  }
+
   .base-toggle[disabled] {
     @apply opacity-70 cursor-not-allowed;
     & .base-toggle-cb-container {
       @apply cursor-not-allowed;
-      @apply bg-slate-100;
+      @apply bg-slate-100 dark:bg-slate-800 dark:border-slate-500;
     }
   }
 </style>

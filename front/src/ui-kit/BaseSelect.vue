@@ -35,7 +35,7 @@
   const CONTENT_DROPUP_PIXEL_THRESHOLD = 300
 
   const isDisabled = computed(() => {
-    const objects = [...mainRef.value.attributes]
+    const objects = mainRef.value ? [...mainRef.value.attributes] : []
     const attributes = Object.values(objects).map(item => item.name)
     return attributes.includes("disabled")
   })
@@ -249,9 +249,9 @@
     }}</label>
     <div
       :class="{ active: isActive }"
-      class="select-trigger select-none"
+      class="select-trigger base-input-element select-none"
       ref="triggerRef"
-      tabindex="0"
+      :tabindex="isDisabled ? null : 0"
       @click="toggleActive"
     >
       <span class="truncate" v-if="showLabel">
@@ -312,11 +312,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .select[disabled] .select-trigger {
-    @apply cursor-not-allowed;
-    @apply bg-slate-100;
-  }
-
   .select {
     @apply w-full items-stretch;
     // * When position is `relative`, the `content` of the dropdown
@@ -325,12 +320,20 @@
     @apply relative;
   }
 
-  .select-trigger {
-    @apply w-full  px-4 py-2;
+  .select .select-trigger {
+    @apply w-full;
     @apply flex justify-between items-center;
-    @apply h-12 md:h-14;
+    @apply h-10 md:h-12;
     @apply border rounded;
-    @apply bg-white;
+    @apply bg-white dark:bg-slate-900;
+    @apply border-slate-400 dark:border-slate-400;
+  }
+
+  .select[disabled] .select-trigger,
+  .select[disabled] .base-input-label {
+    @apply cursor-not-allowed;
+    @apply bg-slate-100 dark:bg-slate-800 dark:border-slate-500;
+    @apply text-slate-900 dark:text-slate-400;
   }
 
   .select-trigger__icon {
@@ -361,7 +364,8 @@
   .content {
     @apply absolute w-full px-4 py-4 mt-3;
     @apply max-h-[15rem] h-60;
-    @apply bg-white border z-10 drop-shadow-xl;
+    @apply border z-10 drop-shadow-xl;
+    @apply bg-white dark:bg-slate-900;
 
     // * specific to the `dropUp` feature
     @apply top-24 bottom-0;
@@ -380,6 +384,7 @@
 
   .search-box {
     @apply w-full border px-4 py-2 mb-2 rounded-md;
+    @apply bg-white dark:bg-slate-900;
   }
 
   .options {
@@ -404,6 +409,6 @@
 
   .option {
     @apply h-10 px-3 py-2 my-2 rounded-md flex justify-between;
-    @apply hover:bg-gray-100;
+    @apply hover:bg-gray-100 hover:dark:bg-gray-900;
   }
 </style>

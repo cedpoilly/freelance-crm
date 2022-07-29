@@ -175,11 +175,15 @@
     @apply grid;
 
     @apply drop-shadow-xl rounded-md;
+    @apply dark:border dark:border-slate-700;
+    @apply dark:text-slate-100;
+    @apply bg-slate-50 dark:bg-slate-900;
   }
 
   .data-table .data-table-header,
   .data-table .data-table-footer {
-    @apply w-full flex  border-t border-b overflow-hidden bg-gray-200;
+    @apply w-full flex border-t border-b dark:border-slate-700 overflow-hidden;
+    @apply bg-white dark:bg-slate-800;
   }
 
   .data-table .data-table-header {
@@ -219,28 +223,28 @@
     }
 
     &::-webkit-scrollbar-track {
-      background-color: #f1f1f1;
       border-radius: 2rem;
+      background-color: #f1f1f1;
+      @apply dark:bg-slate-700;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #ccc;
       border-radius: 2rem;
+      background-color: #ccc;
+      @apply dark:bg-slate-400;
     }
   }
 
   .table-body-row {
     @apply relative flex w-full items-center;
-    @apply border-b bg-white;
+    @apply border-b;
+    @apply dark:border-slate-700;
+
     @apply cursor-pointer focus:bg-sky-100;
   }
 
   .data-cell {
     @apply h-14 md:h-16 lg:h-20;
-  }
-
-  .action-button {
-    @apply bg-white;
   }
 </style>
 

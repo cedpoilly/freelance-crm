@@ -48,11 +48,12 @@
 
 <style lang="scss" scoped>
   .base-button {
-    @apply flex;
+    @apply flex justify-center;
     @apply px-4 py-2;
     @apply rounded;
     @apply text-white dark:text-slate-100;
     @apply bg-slate-700 dark:bg-slate-600;
+
     &:focus {
       @apply ring ring-black ring-offset-4;
     }
@@ -70,7 +71,8 @@
   }
 
   .base-button.base-button--action:disabled {
-    @apply bg-gray-700 text-gray-400 cursor-not-allowed;
+    @apply cursor-not-allowed;
+    @apply text-gray-400 bg-gray-700;
   }
 
   .base-button.base-button--cancel {

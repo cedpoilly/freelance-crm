@@ -10,7 +10,9 @@
 
 <template>
   <label class="base-input" :for="props.fieldName">
-    <span role="label" class="base-input-label"> {{ props.label }} </span>
+    <span v-bind="$attrs" role="label" class="base-input-label">
+      {{ props.label }}
+    </span>
     <input
       v-bind="$attrs"
       :id="props.label"
@@ -36,8 +38,16 @@
     @apply w-full grid content-center justify-items-stretch items-center;
   }
 
-  .base-input [disabled] {
+  .base-input-element {
+    @apply bg-white dark:bg-slate-900;
+    @apply border-slate-400 dark:border-slate-400;
+    @apply text-slate-900 dark:text-slate-100;
+  }
+
+  .base-input [disabled],
+  .base-input [disabled] .base-input-label {
     @apply cursor-not-allowed;
-    @apply bg-slate-100;
+    @apply bg-slate-100 dark:bg-slate-800 dark:border-slate-500;
+    @apply text-slate-900 dark:text-slate-400;
   }
 </style>

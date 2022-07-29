@@ -95,14 +95,10 @@
   }
 
   .view-container {
-    @apply bg-amber-50 py-6 md:py-10;
+    @apply py-6 md:py-10;
   }
 
   .toolbar {
     @apply mb-4 md:mb-10;
-  }
-
-  .data-table {
-    @apply bg-sky-100;
   }
 </style>

@@ -1,9 +1,8 @@
 <script setup>
   import { getCurrentInstance } from "vue"
-  import BaseCloseButton from "./BaseCloseButton.vue"
-  import useBaseModal from "./base-modal"
-  import { config } from "./base-modal"
+  import useBaseModal, { config } from "./base-modal"
   import BaseButton from "./BaseButton.vue"
+  import BaseCloseButton from "./BaseCloseButton.vue"
 
   const props = defineProps(config)
 
@@ -138,7 +137,7 @@
   .modal {
     @apply absolute z-10 mx-auto;
     @apply flex flex-col items-center justify-between;
-    @apply bg-slate-100 dark:bg-slate-900;
+    @apply bg-white dark:bg-slate-800;
 
     @apply h-full px-7 py-7;
     @apply w-full sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;

@@ -20,7 +20,7 @@
     @click="emitClicked"
   >
     <svg
-      class="button-icon-svg w-12 h-12 bg-white dark:bg-slate-600 rounded-full"
+      class="button-icon-svg w-12 h-12 dark:bg-none rounded-full"
       width="48"
       height="48"
       viewBox="0 0 48 48"

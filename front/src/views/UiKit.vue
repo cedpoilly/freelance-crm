@@ -21,9 +21,9 @@
 </script>
 
 <template>
-  <div class="view-container bg-slate-50">
+  <div class="view-container bg-slate-100 dark:bg-slate-900">
     <div
-      class="bg-white px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
+      class="ui-kit-container px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
       style="max-width: 40rem"
     >
       <h2 class="h2">Buttons</h2>
@@ -70,7 +70,7 @@
     </div>
 
     <div
-      class="bg-white px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
+      class="ui-kit-container px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
       style="max-width: 40rem"
     >
       <h2 class="h2">Inputs</h2>
@@ -156,3 +156,10 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+  .ui-kit-container {
+    max-width: 40rem;
+    @apply bg-slate-100 dark:bg-slate-800;
+  }
+</style>
