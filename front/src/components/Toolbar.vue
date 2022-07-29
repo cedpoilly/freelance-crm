@@ -1,10 +1,10 @@
 <script setup>
   import { ref } from "vue"
+  import BaseAccordion from "../ui-kit/BaseAccordion.vue"
+  import BaseInput from "../ui-kit/BaseInput.vue"
   import BaseSelect from "../ui-kit/BaseSelect.vue"
   import BaseToggle from "../ui-kit/BaseToggle.vue"
   import AddItemButton from "./AddItemButton.vue"
-  import BaseInput from "../ui-kit/BaseInput.vue"
-  import BaseAccordion from "../ui-kit/BaseAccordion.vue"
 
   const emits = defineEmits([
     "search-input",
@@ -85,8 +85,8 @@
           <BaseSelect
             :label="props.tagsLabel"
             blank-option-label="Select one or more tags."
-            name="tags"
-            :list="tagList"
+            field-name="tags"
+            :options="tagList"
             :is-multi="true"
             @selected-tags="filterViaTags"
           />

@@ -3,6 +3,7 @@
   import BaseCloseButton from "./BaseCloseButton.vue"
   import useBaseModal from "./base-modal"
   import { config } from "./base-modal"
+  import BaseButton from "./BaseButton.vue"
 
   const props = defineProps(config)
 
@@ -101,15 +102,17 @@
           </slot>
 
           <slot v-else-if="actions || props.isDefaultActions" name="actions">
-            <button
-              class="button-text button-text--cancel mr-4"
+            <BaseButton
+              class="mr-4"
+              variant="cancel"
               data-cy="modal-action-cancel"
               @click="cancel"
             >
               {{ props?.actions?.cancel?.label || "CANCEL" }}
-            </button>
+            </BaseButton>
 
-            <button
+            <BaseButton
+              variant="primary"
               :class="{ [props.actionsPushLeft]: !!props.actionsPushLeft }"
               data-cy="modal-action-confirm"
               class="button-text button-text--action"
@@ -117,7 +120,7 @@
               @click="confirm"
             >
               {{ props?.actions?.confirm?.label || "OK" }}
-            </button>
+            </BaseButton>
           </slot>
         </div>
       </div>

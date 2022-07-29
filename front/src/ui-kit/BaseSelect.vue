@@ -1,6 +1,6 @@
 <script setup>
-  import { nextTick, ref, watch } from "vue"
   import { computed } from "@vue/reactivity"
+  import { nextTick, ref, watch } from "vue"
   import useHelpers from "../app/helpers"
 
   const { searchStringInList } = useHelpers()
@@ -8,10 +8,10 @@
   const emits = defineEmits(["selected-tags"])
 
   const props = defineProps({
-    name: { type: String, required: true },
+    fieldName: { type: String, required: true },
     label: { type: String, required: true },
     blankOptionLabel: { type: String, required: true },
-    list: { type: Array, required: true },
+    options: { type: Array, required: true },
     initialSelection: { type: [Array, String, Object], required: false },
     isMulti: { type: Boolean, default: false },
   })
@@ -24,6 +24,7 @@
   const selectedList = ref([])
 
   // * template ref
+  const mainRef = ref(null)
   const contentRef = ref(null)
   const triggerRef = ref(null)
 
@@ -32,6 +33,12 @@
   // * space for the `content` section to be displayed below the `select-trigger`
   // * we want the content to "drop up" for comfort.
   const CONTENT_DROPUP_PIXEL_THRESHOLD = 300
+
+  const isDisabled = computed(() => {
+    const objects = [...mainRef.value.attributes]
+    const attributes = Object.values(objects).map(item => item.name)
+    return attributes.includes("disabled")
+  })
 
   const showLabel = computed(() => {
     const isSingleBlank = !props.isMulti && !selected.value
@@ -44,7 +51,7 @@
   })
 
   watch(
-    () => props.list,
+    () => props.options,
     newValue => {
       data.value = newValue
     },
@@ -81,6 +88,10 @@
   }
 
   async function toggleActive() {
+    if (isDisabled.value) {
+      return
+    }
+
     isActive.value = !isActive.value
 
     // * When closing the content section, the search string is emptied
@@ -88,7 +99,7 @@
     // * hence we have the reset the data when we close the content section.
     const isInactive = !isActive.value
     if (isInactive) {
-      data.value = props.list
+      data.value = props.options
     }
 
     if (isActive.value) {
@@ -172,10 +183,10 @@
 
     const hasNoSearchString = !searchString
     if (hasNoSearchString) {
-      return (data.value = props.list)
+      return (data.value = props.options)
     }
 
-    const fitleredList = searchStringInList(props.list, searchString, {
+    const fitleredList = searchStringInList(props.options, searchString, {
       isObejectList: false,
     })
     return (data.value = [...fitleredList])
@@ -227,15 +238,18 @@
 
 <template>
   <div
-    :name="props.name"
+    ref="mainRef"
+    :name="props.fieldName"
     class="base-input select"
     v-click-outside="() => close()"
     @keyup="toggleViaKeyboard"
   >
-    <label class="base-input-label" :for="props.name">{{ props.label }}</label>
+    <label class="base-input-label" :for="props.fieldName">{{
+      props.label
+    }}</label>
     <div
       :class="{ active: isActive }"
-      class="select-trigger"
+      class="select-trigger select-none"
       ref="triggerRef"
       tabindex="0"
       @click="toggleActive"
@@ -298,6 +312,11 @@
 </template>
 
 <style lang="scss" scoped>
+  .select[disabled] .select-trigger {
+    @apply cursor-not-allowed;
+    @apply bg-slate-100;
+  }
+
   .select {
     @apply w-full items-stretch;
     // * When position is `relative`, the `content` of the dropdown

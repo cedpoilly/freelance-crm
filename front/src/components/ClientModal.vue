@@ -1,10 +1,11 @@
 <script setup>
   import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-  import BaseModal from "../ui-kit/BaseModal.vue"
+  import BaseButton from "../ui-kit/BaseButton.vue"
   import BaseInput from "../ui-kit/BaseInput.vue"
-  import BaseToggle from "../ui-kit/BaseToggle.vue"
+  import BaseModal from "../ui-kit/BaseModal.vue"
   import BaseSelect from "../ui-kit/BaseSelect.vue"
+  import BaseToggle from "../ui-kit/BaseToggle.vue"
 
   const LEVEL = ["beginner", "intermediate", "advanced"]
   const TAGS = [
@@ -103,10 +104,11 @@
     </template>
 
     <template #content>
-      <p class="relative flex w-full top-4 self-start">
+      <p class="relative flex w-full top-4 mb-4 justify-between items-center">
+        <BaseButton>Edit</BaseButton>
         <router-link
           :to="`/app/projects/${props.client._id}`"
-          class="see-projects-link link"
+          class="see-projects-link relative block link text-right mr-1"
           >See projects</router-link
         >
       </p>
@@ -169,9 +171,9 @@
 
         <div class="form-group">
           <BaseSelect
-            :list="LEVEL"
+            :options="LEVEL"
             :initial-selection="props.client.level"
-            name="level"
+            field-name="level"
             label="Client's level"
             blank-option-label="Select client's level"
             @selected-tags="updateClient('level', $event)"
@@ -180,9 +182,9 @@
 
         <div class="form-group">
           <BaseSelect
-            :list="SERVICE_TYPE"
+            :options="SERVICE_TYPE"
             :initial-selection="props.client.serviceType"
-            name="servicetype"
+            field-name="servicetype"
             label="Service type"
             blank-option-label="Service type."
             @selected-tags="updateClient('serviceType', $event)"
@@ -202,13 +204,12 @@
         <div class="form-group">
           <BaseSelect
             :value="props.client.tags"
-            :list="TAGS"
+            :options="TAGS"
             :initial-selection="props.client.tags"
             :is-multi="true"
-            name="tags"
+            field-name="tags"
             label="Tags"
             blank-option-label="Select one or more tags."
-            field-name="tags"
             data-cy="edit-client-tags"
             @selected-tags="updateClient('tags', $event)"
           />

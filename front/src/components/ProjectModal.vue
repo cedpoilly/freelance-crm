@@ -1,10 +1,10 @@
 <script setup>
   import { computed, nextTick, ref, toRaw, watch } from "vue"
 
-  import BaseModal from "../ui-kit/BaseModal.vue"
   import BaseInput from "../ui-kit/BaseInput.vue"
-  import BaseToggle from "../ui-kit/BaseToggle.vue"
+  import BaseModal from "../ui-kit/BaseModal.vue"
   import BaseSelect from "../ui-kit/BaseSelect.vue"
+  import BaseToggle from "../ui-kit/BaseToggle.vue"
 
   const PAYMENT_METHODS = ["codementor", "bank", "paypal"]
 
@@ -105,11 +105,10 @@
           <div class="form-group">
             <BaseSelect
               :initial-selection="props.project.client"
-              :list="props.clients"
+              :options="props.clients"
               class="client"
-              field-name="client"
               label="Client *"
-              name="client"
+              field-name="client"
               blank-option-label="Client name"
               data-cy="edit-project-client"
               @selected-tags="updateProject('client', $event)"
@@ -153,11 +152,10 @@
           <div class="form-group">
             <BaseSelect
               :initial-selection="props.project.paymentMethod"
-              :list="PAYMENT_METHODS"
+              :options="PAYMENT_METHODS"
               class="payment-method"
-              field-name="payment-method"
               label="Payment method *"
-              name="paymentmethod"
+              field-name="paymentmethod"
               blank-option-label="Payment method"
               data-cy="edit-project-payment-method"
               @selected-tags="updateProject('paymentMethod', $event)"

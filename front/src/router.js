@@ -5,6 +5,7 @@ import useGlobalState from "./app/global-state"
 import Dashboard from "./views/Dashboard.vue"
 import Projects from "./views/Projects.vue"
 import Settings from "./views/Settings.vue"
+import UiKit from "./views/UiKit.vue"
 import NotFound from "./views/NotFound.vue"
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
   },
   { path: "/app/projects/:clientId?", name: "projects", component: Projects },
   { path: "/app/settings", name: "settings", component: Settings },
+  { path: "/app/ui-kit", name: "ui-kit", component: UiKit },
   { path: "/:pathMatch(.*)*", name: "not-found", component: NotFound },
 ]
 

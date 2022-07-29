@@ -201,7 +201,7 @@
 
   .table-body,
   .no-data-message {
-    @apply w-full h-[41rem] my-0 h-full;
+    @apply w-full my-0 h-full;
   }
 
   .no-data-message {

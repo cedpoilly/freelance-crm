@@ -13,17 +13,33 @@
 }
 
 @layer base {
+
+  .h1 {
+    @apply text-2xl font-bold;
+    @apply my-4;
+  }
+  .h2 {
+    @apply text-xl font-bold;
+    @apply my-3;
+    
+  }
+  .h3 {
+    @apply text-lg font-bold;
+    @apply my-2;
+  }
+
+
   button {
     -webkit-tap-highlight-color: transparent;
   }
 
   .link {
-    @apply break-all font-medium underline text-sky-500 hover:font-bold
+    @apply break-all font-medium underline text-sky-500 hover:font-bold;
   }
 
   .select-element {
     @apply 
-      appearance-none block px-3 py-1.5 bg-clip-padding 
+      appearance-none block px-3 py-1.5
       text-base font-normal text-slate-700 dark:text-slate-100
       bg-clip-padding bg-no-repeat bg-slate-100 dark:bg-slate-700
       rounded border border-solid border-gray-300 dark:border-slate-600  
@@ -102,7 +118,7 @@
   
   .button-text.button-text--cancel {
     @apply bg-slate-400 dark:bg-neutral-800
-    text-slate-100 dark:text-slate-300
+    text-slate-100 dark:text-slate-300;
   }
 
   .button-icon {
