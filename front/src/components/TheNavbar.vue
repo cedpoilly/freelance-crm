@@ -26,20 +26,14 @@
 
 <template>
   <nav class="navbar">
-    <ThemeSwitchButton
+    <!-- <ThemeSwitchButton
       :is-dark="isDark"
       class="!w-12 h-12 self-center"
       data-cy="mode-switch-button"
       @is-dark-update="updateIsDark"
-    />
+    /> -->
 
     <div class="routes">
-      <router-link
-        :class="{ active: isActiveRoute('settings') }"
-        class="nav-route"
-        to="/app/settings"
-        >🔧
-      </router-link>
       <router-link
         ref="firstRoute"
         :class="{ active: isActiveRoute('dashboard') }"
@@ -54,7 +48,21 @@
         to="/app/projects"
         >Projects
       </router-link>
+
+      <router-link
+        :class="{ active: isActiveRoute('settings') }"
+        class="nav-route"
+        to="/app/settings"
+        >🔧
+      </router-link>
     </div>
+
+    <ThemeSwitchButton
+      :is-dark="isDark"
+      class="!w-12 h-12 self-center mr-8 md:mr-12 lg:mr-14"
+      data-cy="mode-switch-button"
+      @is-dark-update="updateIsDark"
+    />
   </nav>
 </template>
 
