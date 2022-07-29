@@ -33,7 +33,7 @@
 
 <template>
   <div
-    class="base-accordion"
+    class="base-accordion select-none"
     :class="{ active: isActive }"
     v-click-outside="() => close()"
   >
