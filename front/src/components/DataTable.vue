@@ -190,7 +190,8 @@
   .header-cell,
   .data-cell,
   .footer-cell {
-    @apply px-4 md:px-10 py-2 flex items-center;
+    @apply mx-4 md:mx-10 py-2;
+    @apply grid items-center;
   }
 
   .header-cell,

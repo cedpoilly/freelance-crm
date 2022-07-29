@@ -2,7 +2,7 @@ export default {
   title: {
     id: "title",
     name: "Title",
-    width: "sm:w-7/12",
+    width: "w-6/12 md:w-8/12 truncate",
   },
 
   paymentMethod: {
@@ -18,13 +18,16 @@ export default {
   budget: {
     id: "budget",
     name: "Budget",
-    width: "w-2/12",
+    width: "w-3/12 md:w-3/12",
+    formatter: rate => {
+      return `$ ${rate}`
+    },
   },
 
   isCompleted: {
     id: "isCompleted",
     name: "Done?",
-    width: "w-2/12",
+    width: "w-3/12 text-center",
     formatter: isCodementor => {
       return isCodementor ? "Yes" : "No"
     },

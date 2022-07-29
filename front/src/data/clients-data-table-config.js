@@ -40,8 +40,7 @@ export default {
   rate: {
     id: "rate",
     name: "Rate (USD)",
-    width:
-      "w-6/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis flex place-content-end",
+    width: "w-6/24 md:w-5/24 lg:w-3/24 overflow-hidden ellipsis",
     formatter: rate => {
       return `$ ${rate}`
     },
