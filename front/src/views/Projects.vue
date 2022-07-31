@@ -71,13 +71,16 @@
       ref="dataTable"
       :columns-config="columnsConfig"
       :data="data"
+      class="data-table"
       @open-modal="openModal"
     >
-      <span v-if="route.params.clientId">
+      <template v-slot:no-data-message v-if="route.params.clientId">
         There are no projects for this client. 🤷
-      </span>
+      </template>
 
-      <span v-else>No data to show at the moment. 🤷 </span>
+      <template v-slot:no-data-message v-else
+        >No data to show at the moment. 🤷
+      </template>
     </DataTable>
 
     <ProjectModal

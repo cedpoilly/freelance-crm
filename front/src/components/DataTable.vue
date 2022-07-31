@@ -166,13 +166,13 @@
   </div>
 
   <h2 v-else class="no-data-message">
-    <slot></slot>
+    <slot name="no-data-message"></slot>
   </h2>
 </template>
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-full md:w-11/12  mx-auto;
+    @apply w-full md:w-11/12 mx-auto;
     @apply overflow-y-hidden;
     @apply grid;
 
@@ -258,11 +258,9 @@
   }
 
   .no-data-message {
-    @apply w-full my-0 h-full;
-  }
-
-  .no-data-message {
-    @apply text-xl mx-auto w-full text-center;
+    @apply my-0 h-full;
+    @apply grid place-items-center;
+    @apply text-xl text-center;
   }
 </style>
 

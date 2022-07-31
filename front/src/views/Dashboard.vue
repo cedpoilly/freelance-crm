@@ -57,7 +57,9 @@
       class="data-table"
       @open-modal="openModal"
     >
-      <span>No clients to show at the moment. 🤷 </span>
+      <template v-slot:no-data-message
+        >No clients to show at the moment. 🤷</template
+      >
     </DataTable>
 
     <ClientModal
