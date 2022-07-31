@@ -116,7 +116,7 @@
     id="datatable"
     ref="dataTable"
     tabindex="0"
-    data-borders="sides"
+    data-borders="all"
     data-rows-border="horizontal"
     class="data-table"
   >
@@ -223,8 +223,11 @@
       @apply relative flex w-full items-center;
       @apply bg-slate-50 dark:bg-slate-800;
 
+      @apply duration-500 ease-out;
+
       @apply cursor-pointer;
       @apply focus:bg-sky-100 dark:focus:bg-sky-900;
+      @apply hover:bg-sky-200 dark:hover:bg-sky-800;
 
       .data-cell {
         @apply h-14 md:h-16 lg:h-20;
