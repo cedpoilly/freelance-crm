@@ -80,4 +80,8 @@
   .app {
     @apply overflow-y-hidden grid  dark:bg-slate-900 dark:text-slate-100 bg-gray-100;
   }
+
+  * {
+    scroll-behavior: smooth;
+  }
 </style>
