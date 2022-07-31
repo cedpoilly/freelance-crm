@@ -109,7 +109,8 @@
 
 <style lang="scss" scoped>
   .toolbar {
-    @apply w-11/12 mx-auto my-0 p-0 mb-3 flex flex-col;
+    @apply w-full md:w-11/12 mx-auto;
+    @apply my-0 p-0 mb-3 flex flex-col;
   }
 
   .filters {

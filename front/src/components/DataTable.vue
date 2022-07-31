@@ -116,6 +116,8 @@
     id="datatable"
     ref="dataTable"
     tabindex="0"
+    data-borders="sides"
+    data-rows-border="horizontal"
     class="data-table"
   >
     <div class="data-table-header">
@@ -170,19 +172,19 @@
 
 <style lang="scss" scoped>
   .data-table {
-    @apply w-11/12  mx-auto;
+    @apply w-full md:w-11/12  mx-auto;
     @apply overflow-y-hidden;
     @apply grid;
 
-    @apply drop-shadow-xl rounded-md;
-    @apply dark:border dark:border-slate-700;
+    @apply dark:border-slate-700;
     @apply dark:text-slate-100;
     @apply bg-slate-50 dark:bg-slate-800;
+    @apply dark:border-slate-700;
   }
 
   .data-table .data-table-header,
   .data-table .data-table-footer {
-    @apply w-full flex border-t border-b dark:border-slate-700 overflow-hidden;
+    @apply w-full flex overflow-hidden;
     @apply bg-slate-100 dark:bg-gray-900;
   }
 
@@ -191,6 +193,14 @@
   }
   .data-table .data-table-footer {
     @apply h-10 md:h-12 lg:h-14;
+  }
+
+  .data-table[data-borders="all"] {
+    @apply border;
+  }
+
+  .data-table[data-borders="sides"] {
+    @apply border-x;
   }
 
   .header-cell,
@@ -205,17 +215,21 @@
     @apply font-bold;
   }
 
-  .no-data-message {
-    @apply w-full my-0 h-full;
-  }
-
-  .no-data-message {
-    @apply text-xl mx-auto w-full text-center;
-  }
-
   .table-body {
     @apply flex flex-col;
     @apply overflow-x-hidden overflow-y-scroll;
+
+    .table-body-row {
+      @apply relative flex w-full items-center;
+      @apply bg-slate-50 dark:bg-slate-800;
+
+      @apply cursor-pointer;
+      @apply focus:bg-sky-100 dark:focus:bg-sky-900;
+
+      .data-cell {
+        @apply h-14 md:h-16 lg:h-20;
+      }
+    }
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -235,17 +249,20 @@
     }
   }
 
-  .table-body-row {
-    @apply relative flex w-full items-center;
-    @apply border-b;
-    @apply dark:border-slate-700;
-    @apply bg-slate-50 dark:bg-slate-800;
+  .data-table[data-rows-border="horizontal"] .table-body-row {
+    @apply border-b border-slate-200 dark:border-slate-900;
 
-    @apply cursor-pointer focus:bg-sky-100;
+    &:first-child {
+      @apply border-t;
+    }
   }
 
-  .data-cell {
-    @apply h-14 md:h-16 lg:h-20;
+  .no-data-message {
+    @apply w-full my-0 h-full;
+  }
+
+  .no-data-message {
+    @apply text-xl mx-auto w-full text-center;
   }
 </style>
 
