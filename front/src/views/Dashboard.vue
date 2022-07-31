@@ -72,8 +72,4 @@
   .view-container {
     @apply py-6 md:py-10;
   }
-
-  .toolbar {
-    @apply mb-4 md:mb-10;
-  }
 </style>
