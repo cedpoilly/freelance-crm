@@ -54,6 +54,13 @@
     }
   }
 
+  .base-toggle-cb-container:focus-visible,
+  .base-toggle-cb-container:focus-within,
+  .base-toggle-cb-container:focus,
+  .base-toggle-cb-container:active {
+    @apply border-4 border-slate-500 dark:border-white outline-none;
+  }
+
   .base-toggle[disabled] {
     @apply opacity-70 cursor-not-allowed;
     & .base-toggle-cb-container {

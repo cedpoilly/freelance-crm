@@ -52,36 +52,85 @@
     @apply px-4 py-2;
     @apply rounded;
     @apply text-white dark:text-slate-100;
-    @apply bg-slate-700 dark:bg-slate-600;
+    @apply bg-slate-500 dark:bg-slate-500;
 
     &:focus {
-      @apply ring ring-black ring-offset-4;
+      @apply outline-none;
+      @apply ring ring-offset-4;
+      @apply ring-offset-slate-100 dark:ring-offset-slate-700 ring-slate-500 dark:ring-slate-100;
+
+      @apply bg-slate-500 dark:bg-slate-500;
     }
     &:hover {
-      @apply bg-slate-500 dark:bg-slate-800;
+      @apply bg-slate-500 dark:bg-slate-500;
     }
+
     &:active {
-      @apply bg-slate-700 dark:bg-slate-600;
+      @apply bg-slate-400 dark:bg-slate-400;
     }
   }
 
   .base-button.base-button--primary,
   .base-button.base-button--action {
-    @apply bg-blue;
+    @apply bg-sky-700;
+
+    // prevent unwanted highlight when disabled
+    &:disabled:hover {
+      @apply bg-sky-600;
+    }
+
+    &:focus {
+      @apply bg-sky-500;
+    }
+    &:hover {
+      @apply bg-sky-400;
+    }
+    &:active {
+      @apply bg-sky-300;
+    }
   }
 
-  .base-button.base-button--action:disabled {
-    @apply cursor-not-allowed;
-    @apply text-gray-400 bg-gray-700;
+  .base-button.base-button--secondary {
+    @apply bg-orange-700;
+
+    // prevent unwanted highlight when disabled
+    &:disabled:hover {
+      @apply bg-orange-700;
+    }
+
+    &:focus {
+      @apply bg-orange-700;
+    }
+    &:hover {
+      @apply bg-orange-700;
+    }
+    &:active {
+      @apply bg-orange-600;
+    }
   }
 
   .base-button.base-button--cancel {
-    @apply bg-slate-400 dark:bg-neutral-800
-    text-slate-100 dark:text-slate-300;
+    @apply bg-gray-700;
+
+    // prevent unwanted highlight when disabled
+    &:disabled:hover {
+      @apply bg-gray-700;
+    }
+
+    &:focus {
+      @apply bg-gray-600;
+    }
+    &:hover {
+      @apply bg-gray-500;
+    }
+    &:active {
+      @apply bg-gray-400;
+    }
   }
-  .base-button.base-button--disabled,
-  .base-button.base-button--loading {
-    @apply opacity-70 cursor-not-allowed;
+
+  .base-button:disabled {
+    @apply cursor-not-allowed;
+    @apply opacity-70;
   }
 
   .button-icon {

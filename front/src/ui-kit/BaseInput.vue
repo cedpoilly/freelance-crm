@@ -44,6 +44,24 @@
     @apply text-slate-900 dark:text-slate-100;
   }
 
+  .base-input:focus,
+  .base-input:focus-within,
+  .base-input:active {
+    @apply dark:text-slate-100;
+  }
+
+  .base-input .base-input-element:focus-visible,
+  .base-input .base-input-element:focus-within,
+  .base-input .base-input-element:focus,
+  .base-input .base-input-element:active {
+    @apply border-4 border-slate-500 dark:border-white outline-none;
+  }
+
+  // disable visual changes on disabled but activated input elements
+  .base-input [disabled].base-input-element:active {
+    @apply border border-slate-400 dark:border-slate-400;
+  }
+
   .base-input [disabled],
   .base-input [disabled] .base-input-label {
     @apply cursor-not-allowed;

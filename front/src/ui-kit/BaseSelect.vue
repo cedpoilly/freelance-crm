@@ -329,6 +329,13 @@
     @apply border-slate-400 dark:border-slate-400;
   }
 
+  .select .select-trigger:focus-visible,
+  .select .select-trigger:focus-within,
+  .select .select-trigger:focus,
+  .select .select-trigger:active {
+    @apply border-4 border-slate-500 dark:border-slate-100 outline-none;
+  }
+
   .select[disabled] .select-trigger,
   .select[disabled] .base-input-label {
     @apply cursor-not-allowed;
@@ -366,6 +373,7 @@
     @apply max-h-[15rem] h-60;
     @apply border z-10 drop-shadow-xl;
     @apply bg-white dark:bg-slate-900;
+    @apply border-4 border-slate-500 dark:border-slate-100 outline-none;
 
     // * specific to the `dropUp` feature
     @apply top-24 bottom-0;
