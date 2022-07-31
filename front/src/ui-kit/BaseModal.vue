@@ -131,22 +131,26 @@
 <style lang="scss" scoped>
   .modal-container {
     @apply text-black dark:text-white mx-auto fixed inset-0 flex items-center z-50;
-    @apply fixed top-0 left-0 z-20 w-screen h-screen;
+    @apply absolute top-0 left-0 z-20;
   }
 
   .modal {
-    @apply absolute z-10 mx-auto;
-    @apply flex flex-col items-center justify-between;
-    @apply bg-slate-100 dark:bg-slate-900;
+    @apply z-10 mx-auto;
+    @apply grid;
+    grid-template-rows: auto 1fr auto;
 
-    @apply h-full px-7 py-7;
+    @apply bg-slate-100 dark:bg-slate-800;
+
+    @apply max-h-screen px-7 py-7;
     @apply w-full sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
     @apply md:w-11/12 md:h-5/6 md:my-4 md:left-4 md:right-4 md:px-10 md:py-8 md:text-lg md:rounded-md;
     @apply lg:w-11/12;
     @apply xl:w-11/12;
 
+    @apply overflow-y-hidden grid;
+
     .modal-title {
-      @apply relative w-full mb-5 flex justify-between items-center;
+      @apply w-full mb-5 flex justify-between items-center;
 
       .modal-title-text {
         @apply w-full flex font-bold md:text-lg;
@@ -157,8 +161,9 @@
     }
 
     .modal-content {
-      @apply relative h-full w-full;
-      @apply flex flex-col justify-center items-center overflow-y-auto;
+      @apply h-full w-full overflow-y-auto;
+      @apply grid;
+
       @apply py-4 md:py-6 lg:py-6 xl:py-4;
       @apply whitespace-pre-wrap;
     }

@@ -105,11 +105,11 @@
     </template>
 
     <template #content>
-      <p class="relative flex w-full top-4 mb-4 justify-between items-center">
+      <p class="flex w-full justify-between items-center">
         <BaseButton>Edit</BaseButton>
         <router-link
           :to="`/app/projects/${props.client._id}`"
-          class="see-projects-link relative block link text-right mr-1"
+          class="see-projects-link mr-1"
           >See projects</router-link
         >
       </p>
@@ -259,6 +259,6 @@
   }
 
   .see-projects-link {
-    @apply inline-block self-end justify-self-end;
+    @apply link text-right;
   }
 </style>
