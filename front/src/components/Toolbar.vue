@@ -94,8 +94,8 @@
 
         <BaseButton
           title="Create a new client!"
-          @add-item="emitOpenModal"
           class="create-new"
+          @click="emitOpenModal"
           >Create</BaseButton
         >
       </div>
