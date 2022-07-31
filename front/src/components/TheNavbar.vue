@@ -68,8 +68,6 @@
 
 <style lang="scss" scoped>
   .navbar {
-    transition: all 0.3s linear;
-
     @apply w-full sm:h-16 md:h-20 flex justify-end;
     @apply shadow dark:shadow-slate-800 mb-1;
   }

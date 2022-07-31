@@ -64,8 +64,6 @@
 
 <style lang="scss" scoped>
   .base-accordion {
-    transition: all 1s linear;
-
     @apply overflow-hidden;
     @apply px-4 md:px-10 py-0;
     @apply bg-white dark:bg-slate-800;
