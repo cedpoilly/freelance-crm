@@ -33,9 +33,10 @@
 
 <template>
   <div
-    class="base-accordion select-none"
-    :class="{ active: isActive }"
     v-click-outside="() => close()"
+    :class="{ active: isActive }"
+    class="base-accordion select-none"
+    data-borders="not-bottom"
   >
     <label
       class="base-accordion-top"
@@ -63,20 +64,42 @@
 
 <style lang="scss" scoped>
   .base-accordion {
+    transition: all 1s linear;
+
     @apply overflow-hidden;
+    @apply px-4 md:px-10 py-0;
+    @apply bg-white dark:bg-slate-800;
   }
 
-  .base-accordion-top {
-    @apply w-full  px-4 py-2;
-    @apply flex justify-between items-center;
-    @apply h-12 md:h-14;
-    @apply rounded;
-    @apply bg-white dark:bg-slate-800;
+  .base-accordion[data-borders="all"] {
+    @apply border;
+  }
+
+  .base-accordion[data-borders="sides"] {
+    @apply border-x;
+  }
+
+  .base-accordion[data-borders="not-bottom"] {
+    @apply border-x border-t border-b-0;
     @apply border dark:border dark:border-slate-700;
   }
 
+  .base-accordion-top {
+    @apply flex justify-start items-center;
+    @apply w-full py-4;
+    @apply bg-white dark:bg-slate-800;
+
+    & * {
+      @apply mr-4;
+    }
+  }
+
+  .base-accordion-top.active {
+    @apply border-b dark:border-slate-600;
+  }
+
   .base-accordion-top__icon {
-    @apply transition duration-500;
+    @apply transition duration-200;
   }
 
   .base-accordion-top__icon--clear {
@@ -97,8 +120,5 @@
     @apply bg-white dark:bg-slate-800;
 
     @apply overflow-hidden;
-
-    @apply px-4 py-4;
-    @apply lg:px-4 lg:py-4;
   }
 </style>

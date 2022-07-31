@@ -1,10 +1,10 @@
 <script setup>
   import { ref } from "vue"
   import BaseAccordion from "../ui-kit/BaseAccordion.vue"
+  import BaseButton from "../ui-kit/BaseButton.vue"
   import BaseInput from "../ui-kit/BaseInput.vue"
   import BaseSelect from "../ui-kit/BaseSelect.vue"
   import BaseToggle from "../ui-kit/BaseToggle.vue"
-  import AddItemButton from "./AddItemButton.vue"
 
   const emits = defineEmits([
     "search-input",
@@ -92,16 +92,12 @@
           />
         </form>
 
-        <div class="create-new">
-          <label class="create-new-label">
-            <AddItemButton
-              :can-add="true"
-              title="Create a new client!"
-              @add-item="emitOpenModal"
-            />
-            <span class="label px-3">Create new </span>
-          </label>
-        </div>
+        <BaseButton
+          title="Create a new client!"
+          @add-item="emitOpenModal"
+          class="create-new"
+          >Create</BaseButton
+        >
       </div>
     </BaseAccordion>
   </section>
@@ -110,11 +106,12 @@
 <style lang="scss" scoped>
   .toolbar {
     @apply w-full md:w-11/12 mx-auto;
-    @apply my-0 p-0 mb-3 flex flex-col;
+    @apply my-0 p-0 flex flex-col;
   }
 
   .filters {
     @apply w-full grid justify-start content-center items-center;
+    @apply py-5 md:pt-7 md:pb-10;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: 1rem;
   }
@@ -124,24 +121,20 @@
   }
 
   .create-new {
-    @apply flex h-16 w-auto items-center xl:justify-self-end self-end cursor-pointer;
-  }
-
-  .create-new-label {
-    @apply flex items-center gap-0 px-3 py-2 cursor-pointer
-    rounded-md
-    hover:text-green-900 hover:bg-sky-100 active:bg-sky-200;
+    @apply flex h-auto items-center justify-self-start self-end w-auto cursor-pointer;
   }
 
   @media (min-width: 900px) {
     .filters {
-      @apply w-full mx-auto gap-3;
+      @apply w-full mx-auto gap-6;
       grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
     }
   }
 
   @media (min-width: 1368px) {
     .filters {
+      @apply gap-8;
+
       grid-template-columns: repeat(4, 1fr);
     }
   }
