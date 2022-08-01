@@ -4,13 +4,15 @@ import useHelpers from "../app/helpers"
 
 import Project from "../models/Project"
 
+import { getClients } from "../api/client" // todo: get list with Id & name only
 import {
+  createProject,
   getProjects,
   getProjectsByClientId,
-  createProject,
   updateProject,
 } from "../api/project"
-import { getClients } from "../api/client" // todo: get list with Id & name only
+
+import localData from "../local-data/projects.json"
 
 const { searchStringInList, getCopy } = useHelpers()
 
@@ -102,14 +104,25 @@ async function fetchTableData(route = null) {
   const call = clientId ? getProjectsByClientId(clientId) : getProjects()
   const calls = [call, getClients]
 
-  const [projectResponse] = await Promise.all(calls)
-  const dataFromServer = await projectResponse.json()
+  try {
+    const [projectResponse] = await Promise.all(calls)
+    const dataFromServer = await projectResponse.json()
 
-  data.value = [...dataFromServer]
-  initialData = [...dataFromServer]
+    data.value = [...dataFromServer]
+    initialData = [...dataFromServer]
 
-  const clientsResponses = await getClients()
-  clients.value = await clientsResponses.json()
+    const clientsResponses = await getClients()
+    clients.value = await clientsResponses.json()
+  } catch (error) {
+    const isDev = import.meta.env.DEV
+    if (isDev) {
+      data.value = localData
+      initialData = localData
+      console.warn("Failed to fetch projects(s).")
+    } else {
+      alert("Failed to fetch projects(s).")
+    }
+  }
 }
 
 function filter(field, value) {

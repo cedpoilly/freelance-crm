@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "62dfd4ae88a822b54c07b101",
+    "title": "Demo Project",
+    "techs": [],
+    "requirements": "test",
+    "milestones": ["test"],
+    "paymentMethod": "codementor",
+    "budget": 40,
+    "hasDownPayment": false,
+    "wasPaymentDone": false,
+    "isCompleted": false,
+    "isInvoiceSent": false,
+    "wasPaidInFull": false,
+    "client": {
+      "_id": "62dc1fe88f5524aa91c7fa09",
+      "firstName": "Juan",
+      "lastName": "Fernando",
+      "isCodementor": true,
+      "email": "fernando.nj@gmail.com",
+      "whatsAppNumber": "+1 (973) 851-3343",
+      "level": "intermediate",
+      "serviceType": "individual",
+      "rate": 35,
+      "tags": ["JavaScript", "Vue.js", "Front-End"],
+      "__v": 0
+    }
+  }
+]
