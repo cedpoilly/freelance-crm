@@ -10,6 +10,7 @@
   const props = defineProps({
     fieldName: { type: String, required: true },
     label: { type: String, required: true },
+    error: { type: String, required: false },
     blankOptionLabel: { type: String, required: true },
     options: { type: Array, required: true },
     initialSelection: { type: [Array, String, Object], required: false },
@@ -244,11 +245,12 @@
     v-click-outside="() => close()"
     @keyup="toggleViaKeyboard"
   >
-    <label class="base-input-label" :for="props.fieldName">{{
+    <label v-bind="$attrs" class="base-input-label" :for="props.fieldName">{{
       props.label
     }}</label>
     <div
-      :class="{ active: isActive }"
+      v-bind="$attrs"
+      :class="{ active: isActive, 'has-errors': props.error }"
       class="select-trigger base-input-element select-none"
       ref="triggerRef"
       :tabindex="isDisabled ? null : 0"
@@ -308,6 +310,8 @@
         </li>
       </ul>
     </div>
+
+    <span class="error">{{ props.error }}</span>
   </div>
 </template>
 
@@ -365,6 +369,21 @@
 
   .select-trigger.active .select-trigger__icon {
     transform: rotate(180deg);
+  }
+  .base-input .base-input-label[error] {
+    @apply text-sm text-red-500 mt-2;
+  }
+
+  .has-errors {
+    @apply text-red-500;
+  }
+
+  .select .select-trigger.has-errors {
+    @apply border-red-500;
+  }
+
+  .error {
+    @apply w-full flex text-sm text-red-500 h-auto mt-2;
   }
 
   .multi-selected {

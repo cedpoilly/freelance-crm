@@ -113,6 +113,52 @@
           </div>
         </div>
 
+        <div class="enabled container w-full">
+          <h3 class="h3 text-center my-4">Errors</h3>
+          <div
+            class="enabled flex flex-wrap items-center justify-center w-full gap-6"
+          >
+            <BaseInput
+              label="Base input"
+              :error="'Something went wrong'"
+              field-name="base-input"
+            />
+
+            <BaseToggle
+              :is-checked="toggleEnabledUnchecked"
+              label="Base toggle"
+              error="Something went wrong"
+              field-name="base-toggle"
+              @toggled="updateToggleUnChecked($event)"
+            />
+
+            <BaseToggle
+              :is-checked="toggleEnabledChecked"
+              label="Base toggle"
+              error="Something went wrong"
+              field-name="base-toggle"
+              @toggled="updateToggleChecked($event)"
+            />
+
+            <BaseSelect
+              :options="OPTIONS"
+              label="Base select"
+              error="Something went wrong"
+              field-name="base-select"
+              blank-option-label="Select one option."
+            />
+
+            <BaseSelect
+              :is-multi="true"
+              :options="OPTIONS"
+              label="Base multi select"
+              error="Something went wrong"
+              field-name="base-select"
+              blank-option-label="Select one or more option(s)."
+            />
+          </div>
+        </div>
+
         <div class="disabled container w-full">
           <h3 class="h3 text-center my-4">Disabled</h3>
           <div
