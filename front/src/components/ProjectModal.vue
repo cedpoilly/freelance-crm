@@ -176,9 +176,9 @@
 
         <span class="form-group spacer"></span>
 
-        <h3 class="form-section-header">Status</h3>
+        <h3 class="form-section-header mt-8">Status</h3>
 
-        <div class="project-form">
+        <div class="project-form pb-8">
           <div class="form-group">
             <span class="base-input-label"></span>
             <BaseToggle
@@ -248,11 +248,7 @@
 
 <style lang="scss" scoped>
   .main-form {
-    @apply overflow-y-auto flex flex-col my-4;
-    column-gap: 4rem;
-    row-gap: 1.5rem;
-
-    padding-right: 0.3rem;
+    @apply overflow-y-auto overflow-x-hidden flex flex-col;
 
     &::-webkit-scrollbar {
       @apply w-10;
@@ -271,15 +267,12 @@
   }
 
   .form-section-header {
-    @apply relative w-full text-2xl text-left font-bold;
+    @apply relative w-full text-2xl text-left font-bold py-4 pb-8;
   }
 
   .project-form {
-    display: grid;
+    @apply grid gap-8;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    grid-auto-rows: 7rem;
-    column-gap: 4rem;
-    row-gap: 1.5rem;
 
     @apply sm:w-11/12;
     @apply w-full px-0 py-0 my-auto content-center;

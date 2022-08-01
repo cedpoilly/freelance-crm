@@ -105,15 +105,15 @@
     </template>
 
     <template #content>
-      <div class="py-4 md:pb-8 client-view-container grid auto-rows-max">
+      <div class="client-view-container">
         <p
-          class="client-form-header pb-4 h-fit flex w-full justify-between items-center"
+          class="client-form-header h-fit flex w-full justify-between items-center"
         >
           <BaseButton>Edit</BaseButton>
 
           <router-link
             :to="`/app/projects/${props.client._id}`"
-            class="see-projects-link mr-1"
+            class="see-projects-link mr-1 self-end"
             >See projects</router-link
           >
         </p>
@@ -225,6 +225,10 @@
 </style>
 
 <style lang="scss" scoped>
+  .client-view-container {
+    @apply py-4 md:pb-8 grid auto-rows-max;
+  }
+
   .client-form {
     @apply sm:w-full h-auto;
 
