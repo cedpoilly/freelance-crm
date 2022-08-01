@@ -73,7 +73,8 @@
   }
 
   .routes {
-    @apply my-auto px-5 py-4 self-end;
+    @apply flex;
+    @apply my-auto px-5 py-4;
   }
 
   .nav-route {
