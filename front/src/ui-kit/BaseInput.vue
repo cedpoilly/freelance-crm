@@ -13,6 +13,7 @@
     <span v-bind="$attrs" role="label" class="base-input-label">
       {{ props.label }}
     </span>
+
     <input
       v-bind="$attrs"
       :id="props.label"
@@ -62,8 +63,12 @@
     @apply border border-slate-400 dark:border-slate-400;
   }
 
-  .base-input [disabled],
-  .base-input [disabled] .base-input-label {
+  .base-input[disabled] .base-input-element,
+  .base-input[disabled] .base-input-label {
+    @apply text-slate-900 dark:text-slate-400;
+  }
+
+  .base-input[disabled] .base-input-element {
     @apply cursor-not-allowed;
     @apply bg-slate-100 dark:bg-slate-800 dark:border-slate-500;
     @apply text-slate-900 dark:text-slate-400;

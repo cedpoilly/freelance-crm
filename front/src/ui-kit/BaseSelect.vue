@@ -342,6 +342,9 @@
 
   .select[disabled] .select-trigger,
   .select[disabled] .base-input-label {
+    @apply text-slate-900 dark:text-slate-400;
+  }
+  .select[disabled] .base-input-element {
     @apply cursor-not-allowed;
     @apply bg-slate-100 dark:bg-slate-800 dark:border-slate-500;
     @apply text-slate-900 dark:text-slate-400;
