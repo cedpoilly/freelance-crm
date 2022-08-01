@@ -160,6 +160,6 @@
 <style lang="scss" scoped>
   .ui-kit-container {
     max-width: 40rem;
-    @apply bg-slate-100 dark:bg-slate-800;
+    @apply bg-slate-100 dark:bg-slate-900;
   }
 </style>
