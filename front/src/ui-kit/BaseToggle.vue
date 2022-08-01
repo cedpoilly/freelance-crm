@@ -61,6 +61,10 @@
     @apply border-4 border-slate-500 dark:border-white outline-none;
   }
 
+  .base-toggle[disabled] .base-input-element:active {
+    @apply border border-slate-400 dark:border-slate-400;
+  }
+
   .base-toggle[disabled] {
     @apply opacity-70 cursor-not-allowed;
     & .base-toggle-cb-container {

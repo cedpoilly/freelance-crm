@@ -336,6 +336,10 @@
     @apply border-4 border-slate-500 dark:border-slate-100 outline-none;
   }
 
+  .select[disabled] .select-trigger:active {
+    @apply border border-slate-400 dark:border-slate-400;
+  }
+
   .select[disabled] .select-trigger,
   .select[disabled] .base-input-label {
     @apply cursor-not-allowed;

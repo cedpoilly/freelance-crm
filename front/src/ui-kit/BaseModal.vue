@@ -156,7 +156,7 @@
     .modal-title {
       @apply overflow-hidden;
 
-      @apply w-full mb-5 flex justify-between items-center;
+      @apply w-full mb-5 py-2 flex justify-between items-center;
 
       .modal-title-text {
         @apply overflow-hidden truncate;
