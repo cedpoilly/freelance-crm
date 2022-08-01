@@ -57,5 +57,7 @@
 <style scoped>
   .mode-switch-button {
     @apply select-none sm:z-10 relative;
+    @apply bg-slate-300;
+    @apply h-8 !w-8 py-0 px-0 rounded;
   }
 </style>

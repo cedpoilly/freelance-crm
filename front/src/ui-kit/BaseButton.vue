@@ -10,13 +10,22 @@
   <button
     class="base-button"
     :class="{
-      'base-button--text': !props.isIconButton,
-      'base-button--primary': props.variant === 'primary',
-      'base-button--secondary': props.variant === 'secondary',
-      'base-button--cancel': props.variant === 'cancel',
-      'base-button--default': props.variant === 'default' || !props.variant,
-      'base-button--disabled': !!$attrs.disabled,
-      'base-button--loading': !!props.isLoading,
+      'base-button--text':
+        !$attrs.hasOwnProperty('icon') && !props.isIconButton,
+      'base-button--primary':
+        !$attrs.hasOwnProperty('icon') && props.variant === 'primary',
+      'base-button--secondary':
+        !$attrs.hasOwnProperty('icon') && props.variant === 'secondary',
+      'base-button--cancel':
+        !$attrs.hasOwnProperty('icon') && props.variant === 'cancel',
+      'base-button--default':
+        (!$attrs.hasOwnProperty('icon') && props.variant === 'default') ||
+        !props.variant,
+      'base-button--disabled':
+        !$attrs.hasOwnProperty('icon') && !!$attrs.disabled,
+      'base-button--loading':
+        !$attrs.hasOwnProperty('icon') && !!props.isLoading,
+      'button-icon': $attrs.hasOwnProperty('icon'),
     }"
     v-bind="$attrs"
     @click.stop="$emit('button-click', $event)"
@@ -42,7 +51,7 @@
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       ></path>
     </svg>
-    <slot></slot>
+    <slot v-if="!$attrs.hasOwnProperty('icon')"></slot>
   </button>
 </template>
 
@@ -132,9 +141,62 @@
     @apply cursor-not-allowed;
     @apply opacity-70;
   }
+</style>
 
+<style lang="scss" scoped>
+  .base-button[icon] {
+    position: relative;
+    @apply w-8 h-8 rounded;
+  }
+  .base-button[icon="menu_toggle"] {
+    position: relative;
+
+    @apply bg-slate-300 dark:bg-slate-700;
+    @apply w-8 h-8 rounded;
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      content: "";
+      width: 1rem;
+      height: 2px;
+      z-index: 10;
+      @apply bg-slate-600 dark:bg-slate-400;
+    }
+    &:before {
+      // top: 0;
+      // transform: translate(-40%, -40%);
+      top: 41%;
+    }
+    &:after {
+      // transform: translate(-60%, -60%);
+      top: 59%;
+
+      // top: 1rem;
+    }
+  }
   .button-icon {
-    @apply rounded-full hover:bg-slate-200 dark:bg-slate-700 w-10 p-2;
+    @apply rounded-full hover:bg-slate-200  w-10 p-2;
+
+    @apply bg-none dark:bg-none;
+
+    &:focus {
+      @apply outline-none;
+      @apply ring-0;
+      @apply ring-offset-0 dark:ring-offset-0 ring-0 dark:ring-0;
+
+      @apply bg-none dark:bg-none;
+    }
+    &:hover {
+      @apply bg-none dark:bg-none;
+    }
+
+    &:active {
+      @apply bg-none dark:bg-none;
+    }
   }
 
   .button-icon--with-emoji {
