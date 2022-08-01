@@ -42,6 +42,7 @@
   <div class="view-container">
     <Toolbar
       ref="toolbar"
+      data-header="none"
       class="toolbar"
       tags-label="Client's tags"
       @create-new="openModal({ mode: 'create' })"
@@ -54,6 +55,8 @@
       ref="dataTable"
       :data="data"
       :columns-config="columnsConfig"
+      data-borders="none"
+      data-header="none"
       class="data-table"
       @open-modal="openModal"
     >

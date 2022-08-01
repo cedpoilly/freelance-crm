@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue"
+  import { nextTick, ref, watch } from "vue"
 
   const emits = defineEmits(["selected-tags"])
 
@@ -7,12 +7,36 @@
     title: { type: String, required: true },
   })
 
+  const externalClasses = ref([])
+
   const isActive = ref(false)
-  // * template ref
+
+  // * template refs
+  const root = ref(null)
   const contentRef = ref(null)
+
+  watch(
+    () => root.value,
+    element =>
+      removeExternalClasslistFromElement(element, externalClasses.value)
+  )
+
+  async function removeExternalClasslistFromElement(element, classes) {
+    const classListString = classes
+    if (!classListString) {
+      return
+    }
+
+    await nextTick()
+
+    classes = classListString.split(" ")
+    classes.forEach(className => element.classList.remove(className))
+  }
 
   async function toggleActive() {
     isActive.value = !isActive.value
+
+    removeExternalClasslistFromElement(root.value, externalClasses.value)
   }
 
   function toggleViaKeyboard(event) {
@@ -34,9 +58,10 @@
 <template>
   <div
     v-click-outside="() => close()"
-    :class="{ active: isActive }"
+    ref="root"
+    :data-clear="(externalClasses = $attrs.class)"
     class="base-accordion select-none"
-    data-borders="not-bottom"
+    :class="{ active: isActive }"
   >
     <label
       class="base-accordion-top"
@@ -65,12 +90,17 @@
 <style lang="scss" scoped>
   .base-accordion {
     @apply overflow-hidden;
-    @apply px-4 md:px-10 py-0;
+    @apply w-full mx-0 py-0 px-4 md:px-10;
+
     @apply bg-white dark:bg-slate-800;
   }
 
   .base-accordion[data-borders="all"] {
     @apply border;
+  }
+
+  .base-accordion[data-borders="none"] {
+    @apply border-none;
   }
 
   .base-accordion[data-borders="sides"] {
@@ -82,10 +112,13 @@
     @apply border dark:border dark:border-slate-700;
   }
 
+  .base-accordion[data-header="color"] {
+    @apply bg-slate-200 dark:bg-gray-700;
+  }
+
   .base-accordion-top {
     @apply flex justify-start items-center;
-    @apply w-full py-4;
-    @apply bg-white dark:bg-slate-800;
+    @apply w-full py-4 md:py-8;
 
     & * {
       @apply mr-4;
@@ -115,7 +148,6 @@
 
   .base-accordion-content {
     @apply flex justify-center items-center;
-    @apply bg-white dark:bg-slate-800;
 
     @apply overflow-hidden;
   }

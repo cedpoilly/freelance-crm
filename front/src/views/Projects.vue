@@ -52,6 +52,7 @@
   <div class="view-container">
     <Toolbar
       ref="toolbar"
+      data-header="none"
       class="project-toolbar"
       tags-label="Project's technologies"
       @create-new="openModal({ mode: 'create' })"
@@ -71,6 +72,8 @@
       ref="dataTable"
       :columns-config="columnsConfig"
       :data="data"
+      data-borders="none"
+      data-header="none"
       class="data-table"
       @open-modal="openModal"
     >

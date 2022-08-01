@@ -60,7 +60,7 @@
 
 <template>
   <section class="toolbar">
-    <BaseAccordion title="Show/hide filters">
+    <BaseAccordion title="Filters" data-borders="none" v-bind="$attrs">
       <div class="filters">
         <form @submit.prevent class="filter">
           <BaseInput
@@ -114,6 +114,7 @@
     @apply py-5 md:pt-7 md:pb-10;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: 1rem;
+    @apply border-b border-slate-700;
   }
 
   .filter {

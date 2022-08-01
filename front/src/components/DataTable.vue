@@ -113,6 +113,7 @@
 <template>
   <div
     v-if="hasData"
+    v-bind="$attrs"
     id="datatable"
     ref="dataTable"
     tabindex="0"
@@ -185,7 +186,10 @@
   .data-table .data-table-header,
   .data-table .data-table-footer {
     @apply w-full flex overflow-hidden;
-    @apply bg-slate-100 dark:bg-gray-900;
+  }
+  .data-table[data-header="color"] .data-table-header,
+  .data-table[data-header="color"] .data-table-footer {
+    @apply bg-slate-200 dark:bg-gray-700;
   }
 
   .data-table .data-table-header {
