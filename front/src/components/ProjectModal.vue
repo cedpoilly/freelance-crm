@@ -88,7 +88,7 @@
 
     <template #content>
       <form class="main-form">
-        <span class="form-section-header"> Info </span>
+        <h3 class="form-section-header">Info</h3>
 
         <div class="project-form">
           <div class="form-group">
@@ -176,9 +176,9 @@
 
         <span class="form-group spacer"></span>
 
-        <span class="form-section-header mt-10"> Status </span>
+        <h3 class="form-section-header">Status</h3>
 
-        <div class="project-form mt-10 pt-10">
+        <div class="project-form">
           <div class="form-group">
             <span class="base-input-label"></span>
             <BaseToggle
@@ -248,7 +248,7 @@
 
 <style lang="scss" scoped>
   .main-form {
-    @apply overflow-y-auto flex flex-col;
+    @apply overflow-y-auto flex flex-col my-4;
     column-gap: 4rem;
     row-gap: 1.5rem;
 
@@ -271,17 +271,9 @@
   }
 
   .form-section-header {
-    @apply relative block w-full mb-5 text-center font-bold self-center;
-    &::before {
-      content: "";
-      @apply absolute left-0 top-3 w-5/12 border-b border-gray-200;
-    }
-
-    &::after {
-      content: "";
-      @apply absolute right-0 top-3 w-5/12 border-b border-gray-200;
-    }
+    @apply relative w-full text-2xl text-left font-bold;
   }
+
   .project-form {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));

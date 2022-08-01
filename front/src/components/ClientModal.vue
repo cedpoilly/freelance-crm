@@ -89,133 +89,131 @@
     ref="dialog"
     key="EDIT_CLIENT_DIALOG"
   >
-    <template #title class="tile-container">
-      <p class="flex w-full sm:w-full md:w-9/12 lg:w-full">
-        <span class="block w-24 md:w-auto"
+    <template #title>
+      <span class="flex items-center h-fit overflow-hidden md:w-9/12 lg:w-full">
+        <span class="flex items-center min-w-max truncate md:max-w-max"
           >{{ currentAction }} client &nbsp;</span
         >
         <span
           v-if="isEditing"
-          class="italic block truncate max-w-[10rem] md:max-w-max"
+          class="italic flex items-center text-ellipsis overflow-hidden"
         >
           {{ props.client?.firstName }}
           {{ props.client?.lastName }}
         </span>
-      </p>
+      </span>
     </template>
 
     <template #content>
-      <p class="flex w-full justify-between items-center">
-        <BaseButton>Edit</BaseButton>
-        <router-link
-          :to="`/app/projects/${props.client._id}`"
-          class="see-projects-link mr-1"
-          >See projects</router-link
+      <div class="py-4 md:pb-8 client-view-container grid auto-rows-max">
+        <p
+          class="client-form-header pb-4 h-fit flex w-full justify-between items-center"
         >
-      </p>
-      <form class="client-form">
-        <div class="form-group">
-          <BaseInput
-            :value="props.client.firstName"
-            data-ref="first-input"
-            class="first-name"
-            field-name="firstname"
-            label="First Name"
-            data-cy="edit-client-firstname"
-            @input="updateClient('firstName', $event.target.value)"
-          />
-        </div>
+          <BaseButton>Edit</BaseButton>
 
-        <div class="form-group">
-          <BaseInput
-            :value="props.client.lastName"
-            class="last-name"
-            field-name="lastname"
-            label="Last Name"
-            data-cy="edit-client-lastname"
-            @input="updateClient('lastName', $event.target.value)"
-          />
-        </div>
+          <router-link
+            :to="`/app/projects/${props.client._id}`"
+            class="see-projects-link mr-1"
+            >See projects</router-link
+          >
+        </p>
 
-        <div class="form-group">
-          <BaseInput
-            :value="props.client.email"
-            class="email"
-            field-name="email"
-            label="Email"
-            data-cy="edit-client-email"
-            @input="updateClient('email', $event.target.value)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseInput
-            :value="props.client.whatsAppNumber"
-            class="whatsapp-number"
-            field-name="whatsappnumber"
-            label="WhatsApp number"
-            data-cy="edit-client-whatsapp"
-            @input="updateClient('whatsAppNumber', $event.target.value)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseToggle
-            :is-checked="props.client.isCodementor"
-            class="is-codementor"
-            field-name="iscodementor"
-            label="Is from codementor.io"
-            data-cy="edit-client-iscodementor"
-            @toggled="updateClient('isCodementor', $event)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseSelect
-            :options="LEVEL"
-            :initial-selection="props.client.level"
-            field-name="level"
-            label="Client's level"
-            blank-option-label="Select client's level"
-            @selected-tags="updateClient('level', $event)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseSelect
-            :options="SERVICE_TYPE"
-            :initial-selection="props.client.serviceType"
-            field-name="servicetype"
-            label="Service type"
-            blank-option-label="Service type."
-            @selected-tags="updateClient('serviceType', $event)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseInput
-            :value="props.client.rate"
-            field-name="rate"
-            label="Rate"
-            data-cy="edit-client-rate"
-            @input="updateClient('rate', $event.target.value)"
-          />
-        </div>
-
-        <div class="form-group">
-          <BaseSelect
-            :value="props.client.tags"
-            :options="TAGS"
-            :initial-selection="props.client.tags"
-            :is-multi="true"
-            field-name="tags"
-            label="Tags"
-            blank-option-label="Select one or more tags."
-            data-cy="edit-client-tags"
-            @selected-tags="updateClient('tags', $event)"
-          />
-        </div>
-      </form>
+        <form class="client-form h-fit gap-8 py-8">
+          <div class="form-group">
+            <BaseInput
+              :value="props.client.firstName"
+              data-ref="first-input"
+              class="first-name"
+              field-name="firstname"
+              label="First Name"
+              data-cy="edit-client-firstname"
+              @input="updateClient('firstName', $event.target.value)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.client.lastName"
+              class="last-name"
+              field-name="lastname"
+              label="Last Name"
+              data-cy="edit-client-lastname"
+              @input="updateClient('lastName', $event.target.value)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.client.email"
+              class="email"
+              field-name="email"
+              label="Email"
+              data-cy="edit-client-email"
+              @input="updateClient('email', $event.target.value)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.client.whatsAppNumber"
+              class="whatsapp-number"
+              field-name="whatsappnumber"
+              label="WhatsApp number"
+              data-cy="edit-client-whatsapp"
+              @input="updateClient('whatsAppNumber', $event.target.value)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseToggle
+              :is-checked="props.client.isCodementor"
+              class="is-codementor"
+              field-name="iscodementor"
+              label="Is from codementor.io"
+              data-cy="edit-client-iscodementor"
+              @toggled="updateClient('isCodementor', $event)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseSelect
+              :options="LEVEL"
+              :initial-selection="props.client.level"
+              field-name="level"
+              label="Client's level"
+              blank-option-label="Select client's level"
+              @selected-tags="updateClient('level', $event)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseSelect
+              :options="SERVICE_TYPE"
+              :initial-selection="props.client.serviceType"
+              field-name="servicetype"
+              label="Service type"
+              blank-option-label="Service type."
+              @selected-tags="updateClient('serviceType', $event)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseInput
+              :value="props.client.rate"
+              field-name="rate"
+              label="Rate"
+              data-cy="edit-client-rate"
+              @input="updateClient('rate', $event.target.value)"
+            />
+          </div>
+          <div class="form-group">
+            <BaseSelect
+              :value="props.client.tags"
+              :options="TAGS"
+              :initial-selection="props.client.tags"
+              :is-multi="true"
+              field-name="tags"
+              label="Tags"
+              blank-option-label="Select one or more tags."
+              data-cy="edit-client-tags"
+              @selected-tags="updateClient('tags', $event)"
+            />
+          </div>
+        </form>
+      </div>
     </template>
   </BaseModal>
 </template>
@@ -228,15 +226,10 @@
 
 <style lang="scss" scoped>
   .client-form {
-    @apply sm:w-full h-full;
-    @apply my-4 md:my-6 lg:my-8 xl:my-10;
+    @apply sm:w-full h-auto;
 
     @apply grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    grid-auto-rows: 5.7rem;
-    column-gap: 4rem;
-    row-gap: 1.5rem;
-    padding-right: 0.3rem;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
 
     &::-webkit-scrollbar {
       @apply w-10;

@@ -135,6 +135,8 @@
   }
 
   .modal {
+    @apply overflow-hidden;
+
     @apply z-10 mx-auto;
     @apply grid;
     grid-template-rows: auto 1fr auto;
@@ -142,18 +144,23 @@
     @apply bg-slate-100 dark:bg-slate-800;
 
     @apply max-h-screen px-7 py-7;
-    @apply w-full sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
+    @apply max-w-screen-sm w-screen sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
     @apply md:w-11/12 md:h-5/6 md:my-4 md:left-4 md:right-4 md:px-10 md:py-8 md:text-lg md:rounded-md;
     @apply lg:w-11/12;
-    @apply xl:w-11/12;
+    @apply xl:w-10/12;
+    @apply 2xl:w-9/12;
 
     @apply overflow-y-hidden grid;
 
     .modal-title {
+      @apply overflow-hidden;
+
       @apply w-full mb-5 flex justify-between items-center;
 
       .modal-title-text {
-        @apply w-full flex font-bold md:text-lg;
+        @apply overflow-hidden truncate;
+
+        @apply w-full flex font-bold md:text-lg overflow-hidden;
         @apply flex-col justify-items-stretch;
         @apply md:flex-row;
         @apply mr-4;
@@ -161,8 +168,10 @@
     }
 
     .modal-content {
-      @apply h-full w-full overflow-y-auto;
+      @apply h-full w-full overflow-x-hidden overflow-y-auto;
       @apply grid;
+
+      @apply border-y dark:border-slate-900;
 
       @apply py-4 md:py-6 lg:py-6 xl:py-4;
       @apply whitespace-pre-wrap;
