@@ -83,5 +83,6 @@
 
   * {
     scroll-behavior: smooth;
+    @apply transition-all;
   }
 </style>
