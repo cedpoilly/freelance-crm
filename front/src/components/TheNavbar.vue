@@ -26,13 +26,6 @@
 
 <template>
   <nav class="navbar">
-    <!-- <ThemeSwitchButton
-      :is-dark="isDark"
-      class="!w-12 h-12 self-center"
-      data-cy="mode-switch-button"
-      @is-dark-update="updateIsDark"
-    /> -->
-
     <div class="routes">
       <router-link
         ref="firstRoute"
