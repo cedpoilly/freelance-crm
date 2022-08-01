@@ -26,6 +26,7 @@
     client: { type: Object, required: true },
   })
 
+  // * templateRef
   const dialog = ref(null)
 
   defineExpose({ open, close, cancelAndClose })
@@ -44,6 +45,11 @@
   const isEditing = computed(() => !!props.client?.firstName)
   const currentAction = computed(() => (isEditing.value ? "Edit" : "Create"))
 
+  const isNotEditing = ref(true)
+  function toggleIsNotEditing() {
+    isNotEditing.value = !isNotEditing.value
+  }
+
   async function open(callback) {
     await setIsOpen(true)
 
@@ -59,6 +65,7 @@
   function close() {
     return dialog?.value?.close()
   }
+
   function cancelAndClose() {
     return dialog?.value?.cancelAndClose()
   }
@@ -109,7 +116,9 @@
         <p
           class="client-form-header h-fit flex w-full justify-between items-center"
         >
-          <BaseButton>Edit</BaseButton>
+          <BaseButton @click="toggleIsNotEditing">{{
+            isNotEditing ? "Edit" : "Lock"
+          }}</BaseButton>
 
           <router-link
             :to="`/app/projects/${props.client._id}`"
@@ -121,6 +130,7 @@
         <form class="client-form h-fit gap-8 py-8">
           <div class="form-group">
             <BaseInput
+              :disabled="isNotEditing"
               :value="props.client.firstName"
               data-ref="first-input"
               class="first-name"
@@ -132,6 +142,7 @@
           </div>
           <div class="form-group">
             <BaseInput
+              :disabled="isNotEditing"
               :value="props.client.lastName"
               class="last-name"
               field-name="lastname"
@@ -142,6 +153,7 @@
           </div>
           <div class="form-group">
             <BaseInput
+              :disabled="isNotEditing"
               :value="props.client.email"
               class="email"
               field-name="email"
@@ -152,6 +164,7 @@
           </div>
           <div class="form-group">
             <BaseInput
+              :disabled="isNotEditing"
               :value="props.client.whatsAppNumber"
               class="whatsapp-number"
               field-name="whatsappnumber"
@@ -162,6 +175,7 @@
           </div>
           <div class="form-group">
             <BaseToggle
+              :disabled="isNotEditing"
               :is-checked="props.client.isCodementor"
               class="is-codementor"
               field-name="iscodementor"
@@ -172,6 +186,7 @@
           </div>
           <div class="form-group">
             <BaseSelect
+              :disabled="isNotEditing"
               :options="LEVEL"
               :initial-selection="props.client.level"
               field-name="level"
@@ -182,6 +197,7 @@
           </div>
           <div class="form-group">
             <BaseSelect
+              :disabled="isNotEditing"
               :options="SERVICE_TYPE"
               :initial-selection="props.client.serviceType"
               field-name="servicetype"
@@ -192,6 +208,7 @@
           </div>
           <div class="form-group">
             <BaseInput
+              :disabled="isNotEditing"
               :value="props.client.rate"
               field-name="rate"
               label="Rate"
@@ -201,6 +218,7 @@
           </div>
           <div class="form-group">
             <BaseSelect
+              :disabled="isNotEditing"
               :value="props.client.tags"
               :options="TAGS"
               :initial-selection="props.client.tags"
