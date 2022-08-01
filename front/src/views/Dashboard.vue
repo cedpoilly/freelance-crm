@@ -66,6 +66,7 @@
     </DataTable>
 
     <ClientModal
+      data-size="full"
       ref="modal"
       :client="selectedClient"
       title="View/Edit the client"

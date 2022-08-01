@@ -90,6 +90,7 @@
       ref="modal"
       :project="selectedProject"
       :clients="clients"
+      data-size="full"
       title="View/Edit the project"
     />
   </div>

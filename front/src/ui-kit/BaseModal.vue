@@ -52,7 +52,7 @@
       tabindex="0"
       @keydown.esc="cancelAndClose"
     >
-      <div class="modal">
+      <div class="modal" v-bind="$attrs">
         <div class="modal-title">
           <h4 class="modal-title-text">
             <slot name="title"></slot>
@@ -141,22 +141,24 @@
     @apply grid;
     grid-template-rows: auto 1fr auto;
 
-    @apply bg-slate-100 dark:bg-slate-800;
+    @apply bg-slate-100 dark:bg-slate-900;
 
-    @apply h-full;
-    @apply max-h-screen px-7 py-7;
-    @apply max-w-screen-sm w-screen sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
-    @apply md:w-11/12 md:h-5/6 md:my-4 md:left-4 md:right-4 md:px-10 md:py-8 md:text-lg md:rounded-md;
-    @apply lg:w-11/12;
-    @apply xl:w-10/12;
-    @apply 2xl:w-9/12;
+    @apply w-full max-w-[30rem];
+
+    @media screen and (min-width: 30rem) {
+      @apply rounded-xl;
+    }
+
+    @apply sm:left-0 sm:right-0;
+    @apply px-6 py-6;
 
     @apply overflow-y-hidden grid;
 
     .modal-title {
       @apply overflow-hidden;
 
-      @apply w-full mb-5 py-2 flex justify-between items-center;
+      @apply w-full flex justify-between items-center;
+      @apply pb-6 md:pb-6 lg:pb-6 xl:pb-4;
 
       .modal-title-text {
         @apply overflow-hidden truncate;
@@ -169,17 +171,15 @@
     }
 
     .modal-content {
-      @apply h-full w-full overflow-x-hidden overflow-y-auto;
+      @apply w-full overflow-x-hidden overflow-y-auto;
       @apply grid;
 
-      @apply border-y dark:border-slate-900;
-
-      @apply py-4 md:py-6 lg:py-6 xl:py-4;
       @apply whitespace-pre-wrap;
     }
 
     .modal-actions {
-      @apply flex justify-end w-full mt-10;
+      @apply flex justify-end w-full;
+      @apply pt-6 md:pt-6 lg:pt-6 xl:pt-4;
     }
 
     .modal-actions .button-text {
@@ -187,8 +187,14 @@
     }
   }
 
+  .modal[data-size="full"] {
+    @apply max-h-screen;
+    @apply md:h-5/6 md:w-[40rem] lg:w-[50rem] xl:w-[60rem];
+    @apply rounded-none md:rounded-xl;
+  }
+
   .modal-overlay {
-    @apply fixed bg-slate-600 w-full h-full opacity-90;
+    @apply fixed bg-slate-600 w-full h-screen opacity-90;
   }
 
   .appear-enter-active,
