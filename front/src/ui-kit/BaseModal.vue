@@ -143,6 +143,7 @@
 
     @apply bg-slate-100 dark:bg-slate-800;
 
+    @apply h-full;
     @apply max-h-screen px-7 py-7;
     @apply max-w-screen-sm w-screen sm:h-full sm:left-0 sm:right-0 sm:px-10 sm:py-8;
     @apply md:w-11/12 md:h-5/6 md:my-4 md:left-4 md:right-4 md:px-10 md:py-8 md:text-lg md:rounded-md;
