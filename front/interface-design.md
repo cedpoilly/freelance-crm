@@ -35,3 +35,14 @@ Actions:
 - [✔️] View all details on click -> View/Edit/Create details modal
 - [ ] Archive on button press
 - [✔️] Open project list -> View projects -> separate list
+
+
+### Components
+
+The Data Table
+
+Revamp the filters:
+
+- [ ] Show a filter icon, that toggles the list of options
+- [ ] The first option is a text search
+- [ ] Other options are a selection of dropdowns & toggles
