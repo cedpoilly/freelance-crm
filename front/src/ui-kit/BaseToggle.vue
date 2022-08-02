@@ -3,6 +3,7 @@
     label: { type: String, required: true },
     fieldName: { type: String, required: true },
     isChecked: { type: Boolean, required: true },
+    isNoLabel: { type: Boolean, required: false },
   })
 
   const emits = defineEmits(["toggled"])
@@ -18,10 +19,18 @@
     class="base-input base-toggle select-none"
     @click="emitToggle"
   >
-    <span class="base-input-label select-none">{{ props.label }}</span>
+    <span v-if="!props.isNoLabel" class="base-input-label select-none"
+      >{{ props.label }}
+    </span>
 
     <div v-bind="$attrs" class="base-input-element base-toggle-cb-container">
-      <span>{{ props.isChecked ? "Yes" : "No" }}</span>
+      <span>{{
+        props.isNoLabel
+          ? `${props.label}: ${props.isChecked ? "Yes" : "No"}`
+          : props.isChecked
+          ? "Yes"
+          : "No"
+      }}</span>
       <input
         v-bind="$attrs"
         :id="props.label"

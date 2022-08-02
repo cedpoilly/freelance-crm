@@ -3,6 +3,7 @@
     label: { type: String, required: true },
     fieldName: { type: String, required: true },
     error: { type: String, required: false },
+    isNoLabel: { type: Boolean, required: false },
     initialValue: { type: String, required: false },
   })
 
@@ -12,6 +13,7 @@
 <template>
   <label class="base-input" :for="props.fieldName">
     <span
+      v-if="!props.isNoLabel"
       v-bind="$attrs"
       :class="{ 'has-errors': props.error }"
       role="label"
@@ -38,7 +40,7 @@
       class="base-input-element"
       @input="$emit('input', $event)"
     />
-    <span class="error">{{ props.error }}</span>
+    <span class="error" v-if="!props.isNoLabel">{{ props.error }}</span>
   </label>
 </template>
 

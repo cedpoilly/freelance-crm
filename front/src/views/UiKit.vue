@@ -29,7 +29,9 @@
     >
       <h2 class="h2">Loaders</h2>
 
-      <div class="flex flex-col items-center justify-center w-full gap-6">
+      <div
+        class="flex flex-col items-center justify-center w-full gap-6 mt-7 mb-20"
+      >
         <Loader class="w-30" />
       </div>
 

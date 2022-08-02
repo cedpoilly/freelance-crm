@@ -51,7 +51,7 @@
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       ></path>
     </svg>
-    <slot v-if="!$attrs.hasOwnProperty('icon')"></slot>
+    <slot></slot>
   </button>
 </template>
 
@@ -147,6 +147,7 @@
   .base-button[icon] {
     position: relative;
     @apply w-8 h-8 rounded;
+    @apply grid place-content-center;
   }
   .base-button[icon="menu_toggle"] {
     position: relative;
@@ -167,19 +168,18 @@
       @apply bg-slate-600 dark:bg-slate-400;
     }
     &:before {
-      // top: 0;
-      // transform: translate(-40%, -40%);
       top: 41%;
     }
     &:after {
-      // transform: translate(-60%, -60%);
       top: 59%;
-
-      // top: 1rem;
     }
   }
   .button-icon {
-    @apply rounded-full hover:bg-slate-200  w-10 p-2;
+    @apply rounded-full;
+    @apply bg-slate-300 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-400;
+    @apply fill-slate-900 dark:fill-slate-100;
+    @apply w-12;
+    @apply p-0;
 
     @apply bg-none dark:bg-none;
 
