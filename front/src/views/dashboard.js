@@ -1,10 +1,11 @@
 import { ref } from "vue"
 
+import useGlobalState from "../app/global-state"
 import useHelpers from "../app/helpers"
 
 import Client from "../models/Client"
 
-import { getClients, createClient, updateClient } from "../api/client"
+import { createClient, getClients, updateClient } from "../api/client"
 
 import localData from "../local-data/clients.json"
 
@@ -85,6 +86,10 @@ function focusDataTable({ itemIndex } = {}) {
 }
 
 async function fetchTableData() {
+  const { startLoadingState, stopLoadingState } = useGlobalState()
+
+  startLoadingState()
+
   try {
     const response = await getClients()
     const dataFromServer = await response.json()
@@ -100,6 +105,8 @@ async function fetchTableData() {
       alert("Failed to fetch clients.")
     }
   }
+
+  stopLoadingState()
 }
 
 function filter(field, value) {

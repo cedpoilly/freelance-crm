@@ -3,6 +3,7 @@
   import { ref, watch } from "vue"
 
   import BaseButton from "../ui-kit/BaseButton.vue"
+  import Loader from "../ui-kit/Loader.vue"
 
   const ACTION_HEADERS = [
     {
@@ -15,6 +16,7 @@
   const props = defineProps({
     data: { type: Array, required: true },
     columnsConfig: { type: Object, required: true },
+    isLoading: { type: Boolean, required: false },
   })
 
   const emits = defineEmits(["open-modal"])
@@ -130,6 +132,8 @@
         >{{ header.name }}</span
       >
     </div>
+
+    <Loader v-if="isLoading" />
 
     <div class="table-body">
       <div
@@ -253,6 +257,27 @@
       border-radius: 2rem;
       background-color: #ccc;
       @apply dark:bg-slate-400;
+    }
+  }
+
+  .data-table[data-is-loading="true"] {
+    .table-body-row {
+      animation: 2s bg-wave linear infinite alternate;
+    }
+
+    @keyframes bg-wave {
+      0% {
+        @apply bg-gradient-to-r from-slate-800;
+        @apply bg-slate-700;
+      }
+      50% {
+        @apply bg-gradient-to-r from-slate-700;
+        @apply bg-slate-600;
+      }
+      100% {
+        @apply bg-gradient-to-r from-slate-600;
+        @apply bg-slate-500;
+      }
     }
   }
 

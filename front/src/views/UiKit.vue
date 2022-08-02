@@ -5,6 +5,7 @@
   import BaseInput from "../ui-kit/BaseInput.vue"
   import BaseSelect from "../ui-kit/BaseSelect.vue"
   import BaseToggle from "../ui-kit/BaseToggle.vue"
+  import Loader from "../ui-kit/Loader.vue"
 
   const OPTIONS = ["option 1", "option 2", "option 3"]
 
@@ -26,6 +27,12 @@
       class="ui-kit-container px-10 py-10 my-4 container mx-auto flex flex-col justify-center items-center rounded-sm"
       style="max-width: 40rem"
     >
+      <h2 class="h2">Loaders</h2>
+
+      <div class="flex flex-col items-center justify-center w-full gap-6">
+        <Loader class="w-30" />
+      </div>
+
       <h2 class="h2">Buttons</h2>
       <div class="flex flex-col items-center justify-center w-full gap-6">
         <div class="container w-auto">

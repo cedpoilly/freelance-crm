@@ -2,21 +2,24 @@ import { readonly, ref } from "vue"
 
 import constants from "../constants/constants.json"
 
-import useAlert from '../app/alert'
+import useAlert from "../app/alert"
 
 const { alert } = useAlert()
 
 const loading = ref(false)
 const isLoading = readonly(loading)
 
-// * Consumed and updated globally 
+// * Consumed and updated globally
 const routingDirection = ref("")
 
 const setScrollSmooth = ref(false)
 
 export default function useGlobalState() {
   return {
-    isLoading, asyncLoadingWrap,
+    isLoading,
+    startLoadingState,
+    stopLoadingState,
+    asyncLoadingWrap,
     routingDirection,
     setScrollSmooth,
   }
@@ -25,7 +28,7 @@ export default function useGlobalState() {
 /**
  * Updates the `isLoading` state to `true` before the function's execution and
  * reverts it to `false` once done.
- * The `isLoading` state is used universally in this app. It allows the 
+ * The `isLoading` state is used universally in this app. It allows the
  * UI to update its state when an async operation is in progress.
  * @param {Function} fn The aynsc function to execute
  * @param  {...any} args The arguments to be passed to the function
@@ -39,18 +42,22 @@ async function asyncLoadingWrap(fn, ...args) {
 
   try {
     response = await fn(...args)
-
   } catch (caughtError) {
     error = true
     const title = constants.alert.warning.title
     const text = "Something went wrong: \n" + caughtError.message
     await alert({ title, text })
-
-  } finally { stopLoadingState() }
+  } finally {
+    stopLoadingState()
+  }
 
   return { response, error }
 }
 
-function startLoadingState() { loading.value = true }
+function startLoadingState() {
+  loading.value = true
+}
 
-function stopLoadingState() { loading.value = false }
+function stopLoadingState() {
+  loading.value = false
+}

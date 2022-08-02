@@ -1,6 +1,8 @@
 <script>
   import { onBeforeMount, onMounted } from "vue"
 
+  import useGlobalState from "../app/global-state"
+
   import useDasboard from "./dashboard"
   import useListViewCommons from "./list-view-commons"
 
@@ -18,6 +20,8 @@
 <script setup>
   // * must stay in `<script setup>`
   const emits = defineEmits(["focus-navbar", "notification"])
+
+  const { isLoading } = useGlobalState()
 
   onBeforeMount(() => fetchTableData())
 
@@ -53,6 +57,8 @@
 
     <DataTable
       ref="dataTable"
+      :is-loading="isLoading"
+      :data-is-loading="isLoading"
       :data="data"
       :columns-config="columnsConfig"
       data-borders="none"

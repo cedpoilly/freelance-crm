@@ -1,5 +1,6 @@
 import { computed, ref } from "vue"
 
+import useGlobalState from "../app/global-state"
 import useHelpers from "../app/helpers"
 
 import Project from "../models/Project"
@@ -99,6 +100,9 @@ function focusDataTable({ itemIndex } = {}) {
 }
 
 async function fetchTableData(route = null) {
+  const { startLoadingState, stopLoadingState } = useGlobalState()
+  startLoadingState()
+
   const clientId = route?.params.clientId
 
   const call = clientId ? getProjectsByClientId(clientId) : getProjects()
@@ -123,6 +127,8 @@ async function fetchTableData(route = null) {
       alert("Failed to fetch projects(s).")
     }
   }
+
+  stopLoadingState()
 }
 
 function filter(field, value) {
